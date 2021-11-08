@@ -4,6 +4,7 @@ import 'package:yomikun/models/namedata.dart';
 import 'package:yomikun/models/query.dart';
 
 import 'package:collection/collection.dart';
+import 'package:yomikun/util/locale.dart';
 
 final List<Color> pieChartColors = [
   Colors.green,
@@ -53,7 +54,8 @@ class DetailScreen extends StatelessWidget {
         // Make a ListTile for each item in sortedResults.
         for (var row in sortedResults)
           ListTile(
-            title: Text(query.ky == KakiYomi.yomi ? row.kaki : row.yomi),
+            title: Text(query.ky == KakiYomi.yomi ? row.kaki : row.yomi,
+                locale: japaneseLocale),
             subtitle: Text("${addThousands(row.hitsTotal)} hits"),
           ),
       ],
@@ -69,7 +71,7 @@ class DetailScreen extends StatelessWidget {
   }
 
   Widget heading(BuildContext context) {
-    final String part = query.part! == NamePart.mei ? '名前' : '性';
+    final String part = query.part! == NamePart.mei ? '名前' : '姓';
     final String ky = query.ky! == KakiYomi.yomi ? '読み' : '漢字';
     return ListTile(
       title: Text("${query.query} ($part, $ky)",
