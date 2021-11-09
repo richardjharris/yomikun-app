@@ -58,10 +58,9 @@ class SearchScreenState extends State<SearchScreen> {
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             var query = snapshot.data!;
+
             switch (query.mode) {
               case "Mei":
-                return DetailScreen(query: query);
-              case "MeiKana":
                 return DetailScreen(query: query);
               case "Sei":
                 return DetailScreen(query: query);
@@ -120,20 +119,23 @@ class SearchScreenState extends State<SearchScreen> {
             (await NameDatabase.getResults(query, NamePart.sei, ky)).toList();
         part = NamePart.sei;
         break;
-      case "MeiKana":
-        // This mode forces mei to be interpreted as written form even if it
-        // is kana-only
-        results =
-            (await NameDatabase.getResults(query, NamePart.mei, KakiYomi.kaki))
-                .toList();
-        ky = KakiYomi.kaki;
-        part = NamePart.mei;
-        break;
       case "Browse":
         results = (await NameDatabase.search(query)).toList();
         break;
       default:
         return Future.error("Unknown mode: $mode");
+    }
+
+    if (results.isEmpty && (mode == "Mei" || mode == "Sei")) {
+      assert(ky != null);
+      // Try changing Mei to Sei (or vice versa) and repeating the search
+      final newNamePart = part == NamePart.mei ? NamePart.sei : NamePart.mei;
+      final newResults =
+          (await NameDatabase.getResults(query, newNamePart, ky!)).toList();
+      if (newResults.isNotEmpty) {
+        results = newResults;
+        part = newNamePart;
+      }
     }
 
     var q =
