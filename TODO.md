@@ -7,3 +7,9 @@ Clean up pie charts ('other' category?)
 Show gender info on mei page
 Allow filtering by gender
 Browse needs to highlight part of speech
+
+Settings:
+
+- romaji on/off
+- more visible dakuten on/off
+- light mode / dark mode
