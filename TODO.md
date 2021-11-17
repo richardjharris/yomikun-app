@@ -13,3 +13,5 @@ Settings:
 - romaji on/off
 - more visible dakuten on/off
 - light mode / dark mode
+
+Trim query.

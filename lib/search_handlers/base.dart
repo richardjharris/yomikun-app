@@ -1,6 +1,6 @@
 import 'package:yomikun/models/namedata.dart';
-import 'package:yomikun/services/database.dart';
-
+import 'package:yomikun/services/name_database.dart';
+/*
 class NamePatterns {
   static var seiChars = r'\p{Script=Han}ケヶヵノツ';
   static var seiWithKana =
@@ -118,3 +118,4 @@ class FullNameHandler implements SearchHandler {
     return Future.value(true);
   }
 }
+*/

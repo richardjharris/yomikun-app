@@ -2,10 +2,10 @@ import 'dart:io';
 
 import 'package:easy_dynamic_theme/easy_dynamic_theme.dart';
 import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:yomikun/screens/search_screen.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
-import 'package:yomikun/services/database.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -13,8 +13,7 @@ void main() async {
     sqfliteFfiInit();
     databaseFactory = databaseFactoryFfi;
   }
-  await NameDatabase.initialize();
-  runApp(EasyDynamicThemeWidget(child: const MyApp()));
+  runApp(ProviderScope(child: EasyDynamicThemeWidget(child: const MyApp())));
 }
 
 /// App entry point

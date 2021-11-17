@@ -1,23 +1,48 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:yomikun/models/query_mode.dart';
 
-final modes = ['Mei', 'Sei', 'Browse'];
-final icons = ['名', '姓', '＊'];
+class SearchBoxInner extends HookWidget {
+  final QueryMode queryMode;
+  final Function(QueryMode?) onQueryModeChanged;
+  final Function(String?) onSearchTextChanged;
 
-class SearchBox extends StatelessWidget {
-  final TextEditingController controller;
-  final String dropdownValue;
-  final Function(String?) onDropdownValueChanged;
-
-  const SearchBox(
-      {required this.controller,
-      required this.dropdownValue,
-      required this.onDropdownValueChanged,
-      key})
+  const SearchBoxInner(
+      {Key? key,
+      required this.onSearchTextChanged,
+      required this.queryMode,
+      required this.onQueryModeChanged})
       : super(key: key);
+
+  String _queryModeToIcon(QueryMode mode) {
+    switch (mode) {
+      case QueryMode.mei:
+        return '名';
+      case QueryMode.sei:
+        return '姓';
+      case QueryMode.browse:
+        return '＊';
+      case QueryMode.person:
+        return '人';
+    }
+  }
+
+  QueryMode _nextQueryMode(QueryMode curMode) {
+    // get next queryMode according to the Enum definition
+    // we could define our own order if we liked.
+    return QueryMode.values[(curMode.index + 1) % QueryMode.values.length];
+  }
 
   @override
   Widget build(BuildContext context) {
-    final modeIndex = modes.indexOf(dropdownValue);
+    final controller = useTextEditingController();
+    useEffect(() {
+      void listener() => onSearchTextChanged(controller.text);
+      controller.addListener(listener);
+      return () => controller.removeListener(listener);
+    }, [controller]);
+
     return Row(children: [
       Expanded(
           child: TextField(
@@ -37,7 +62,7 @@ class SearchBox extends StatelessWidget {
       )),
       const SizedBox(width: 10),
       IconButton(
-        icon: Text(icons[modeIndex]),
+        icon: Text(_queryModeToIcon(queryMode)),
         onPressed: advanceMode,
         iconSize: 30,
       ),
@@ -46,9 +71,6 @@ class SearchBox extends StatelessWidget {
 
   void advanceMode() {
     // advance to next mode
-    final index = modes.indexOf(dropdownValue);
-    final nextIndex = (index + 1) % modes.length;
-    final nextMode = modes[nextIndex];
-    onDropdownValueChanged(nextMode);
+    onQueryModeChanged(_nextQueryMode(queryMode));
   }
 }

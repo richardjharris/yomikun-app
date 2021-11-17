@@ -7,19 +7,22 @@ import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:yomikun/models/namedata.dart';
 
-class NameDatabase {
-  static Database? _db;
+import 'name_repository.dart';
 
-  static Future<Database> get database async {
+class NameDatabase implements NameRepository {
+  Database? _db;
+
+  // TODO locking?
+  Future<Database> get database async {
     if (_db != null) {
       return Future.value(_db);
     }
-    _db = await initialize();
+    _db = await _initialize();
     return Future.value(_db);
   }
 
   /// Initialise the database, requesting permissions.
-  static Future<Database> initialize() async {
+  static Future<Database> _initialize() async {
     // Copy the database into the documents dir
     // Construct a file path to copy database to
     Directory documentsDirectory = await getApplicationDocumentsDirectory();
@@ -41,8 +44,8 @@ class NameDatabase {
 
   /// Returns bool indicating if a name exists (kaki or yomi) for the given
   /// part of speech.
-  static Future<bool> hasPrefix(
-      String prefix, NamePart part, KakiYomi ky) async {
+  @override
+  Future<bool> hasPrefix(String prefix, NamePart part, KakiYomi ky) async {
     var db = await database;
     var column = ky.name;
     final result = await db.rawQuery('''
@@ -55,7 +58,8 @@ class NameDatabase {
 
   /// Returns all results with kaki/yomi equal to the given string, for the
   /// given part of speech.
-  static Future<Iterable<NameData>> getResults(
+  @override
+  Future<Iterable<NameData>> getResults(
       String query, NamePart part, KakiYomi ky) async {
     var db = await database;
     var column = ky.name;
@@ -69,7 +73,8 @@ class NameDatabase {
 
   /// Perform a general database search given the specified query.
   /// Query may contain wildcards */?
-  static Future<Iterable<NameData>> search(String query) async {
+  @override
+  Future<Iterable<NameData>> search(String query) async {
     // Convert query to SQL like form
     query = query.replaceAll(RegExp(r'[\*＊]', unicode: true), '%');
     query = query.replaceAll(RegExp(r'[\?？]', unicode: true), '_');
@@ -85,7 +90,7 @@ class NameDatabase {
   }
 
   /// Returns the data for a specific item, if present
-  static Future<NameData?> get(String kaki, String yomi, NamePart part) async {
+  Future<NameData?> get(String kaki, String yomi, NamePart part) async {
     var db = await database;
     final result = await db.query(
       'names',
