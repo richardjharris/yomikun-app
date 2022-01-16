@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-enum NamePart { mei, sei, unknown }
+enum NamePart { mei, sei, unknown, person }
 
 enum KakiYomi { kaki, yomi }
 

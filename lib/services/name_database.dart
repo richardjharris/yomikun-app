@@ -50,7 +50,7 @@ class NameDatabase implements NameRepository {
     var column = ky.name;
     final result = await db.rawQuery('''
       SELECT 1 FROM names
-      WHERE $column LIKE CONCAT(?, '%') AND part = ?
+      WHERE $column LIKE ? || '%' AND part = ?
       LIMIT 1
     ''', [prefix, part.name]);
     return Future.value(result.isNotEmpty);

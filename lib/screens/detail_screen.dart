@@ -1,11 +1,11 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:yomikun/models/namedata.dart';
-import 'package:yomikun/models/query.dart';
+import 'package:yomikun/models/query_result.dart';
 
 import 'package:collection/collection.dart';
-import 'package:yomikun/util/dakuten.dart';
-import 'package:yomikun/util/locale.dart';
+import 'package:yomikun/core/dakuten.dart';
+import 'package:yomikun/core/locale.dart';
 
 final List<Color> pieChartColorsLightMode = [
   Colors.green,
@@ -38,7 +38,7 @@ final List<Color> pieChartColorsDarkMode = pieChartColorsLightMode.map((c) {
 
 /// Screen for showing details about a particular name.
 class DetailScreen extends StatelessWidget {
-  final Query query;
+  final QueryResult query;
 
   const DetailScreen({Key? key, required this.query}) : super(key: key);
 
@@ -77,10 +77,10 @@ class DetailScreen extends StatelessWidget {
   }
 
   Widget heading(BuildContext context) {
-    final String part = query.part! == NamePart.mei ? '名前' : '姓';
-    final String ky = query.ky! == KakiYomi.yomi ? '読み' : '漢字';
+    final String part = query.mode == QueryMode.mei ? '名前' : '姓';
+    final String ky = query.ky == KakiYomi.yomi ? '読み' : '漢字';
     return ListTile(
-      title: Text("${query.query} ($part, $ky)",
+      title: Text("${query.text} ($part, $ky)",
           style: Theme.of(context).textTheme.headline6,
           textAlign: TextAlign.center),
     );

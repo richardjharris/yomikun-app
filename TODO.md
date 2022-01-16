@@ -1,3 +1,10 @@
+SearchBox:
+ - holds its own state (text, mode)
+ - when text changes, queries what modes are possible (cached)
+   - while doing this, it is 'disabled'
+ - has a callback to update the current Query.
+
+
 Home page (no results)
 Automatic mode switch
 Mode cycle on click instead of dropdown
