@@ -8,6 +8,7 @@ import 'package:sqflite/sqflite.dart';
 import 'package:yomikun/screens/bookmarks/bookmarks_screen.dart';
 import 'package:yomikun/screens/search/search_screen.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
+//import 'package:window_manager/window_manager.dart';
 
 const favoritesBox = 'favorite_names';
 
@@ -15,10 +16,13 @@ void main() async {
   await Hive.initFlutter();
   await Hive.openBox<String>(favoritesBox);
   WidgetsFlutterBinding.ensureInitialized();
+  //await windowManager.ensureInitialized();
+  //windowManager.setSize(const Size(500, 9000));
   if (Platform.isWindows || Platform.isLinux) {
     sqfliteFfiInit();
     databaseFactory = databaseFactoryFfi;
   }
+
   runApp(ProviderScope(child: EasyDynamicThemeWidget(child: const MyApp())));
 }
 
