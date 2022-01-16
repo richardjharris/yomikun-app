@@ -5,7 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sqflite/sqflite.dart';
+import 'package:yomikun/models/query_result.dart';
 import 'package:yomikun/screens/bookmarks/bookmarks_screen.dart';
+import 'package:yomikun/screens/search/search_box.dart';
 import 'package:yomikun/screens/search/search_screen.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 //import 'package:window_manager/window_manager.dart';
@@ -40,10 +42,17 @@ class MyApp extends StatelessWidget {
       theme: ThemeData.light(),
       darkTheme: ThemeData.dark(),
       themeMode: EasyDynamicTheme.of(context).themeMode,
-      debugShowCheckedModeBanner: false,
+      debugShowCheckedModeBanner: true,
       routes: {
         '/': (context) => const SearchScreen(),
         '/bookmarks': (context) => const BookmarksScreen(),
+        '/makoto': (context) => ProviderScope(
+              overrides: [
+                queryProvider.overrideWithValue(
+                    const AsyncValue.data(Query('まこと', QueryMode.sei))),
+              ],
+              child: const SearchScreen(),
+            ),
       },
     );
   }

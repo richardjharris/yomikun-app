@@ -4,6 +4,12 @@ enum NamePart { mei, sei, unknown, person }
 
 enum KakiYomi { kaki, yomi }
 
+extension KakiYomiMethods on KakiYomi {
+  KakiYomi inverse() {
+    return this == KakiYomi.kaki ? KakiYomi.yomi : KakiYomi.kaki;
+  }
+}
+
 class NameData {
   String kaki;
   String yomi;

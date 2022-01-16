@@ -7,6 +7,7 @@ import 'package:yomikun/models/query_result.dart';
 import 'package:yomikun/providers/core_providers.dart';
 import 'package:yomikun/screens/browse_screen.dart';
 import 'package:yomikun/screens/detail_screen.dart';
+import 'package:yomikun/screens/search/search_results.dart';
 
 final queryResultProvider = FutureProvider<QueryResult>((ref) async {
   /// Listen to the search box result
@@ -15,7 +16,7 @@ final queryResultProvider = FutureProvider<QueryResult>((ref) async {
   return performQuery(db, query.text, query.mode);
 });
 
-enum Commands { darkMode, bookmarks }
+enum Commands { darkMode, bookmarks, makoto }
 
 class SearchScreen extends HookConsumerWidget {
   const SearchScreen({Key? key}) : super(key: key);
@@ -29,7 +30,7 @@ class SearchScreen extends HookConsumerWidget {
         title: const SearchBox(),
         actions: <Widget>[
           Padding(
-              padding: const EdgeInsets.only(right: 15.0),
+              padding: const EdgeInsets.only(right: 10.0),
               child: PopupMenuButton(
                   //icon: Icon(Icons.more_vert),
                   itemBuilder: (context) => <PopupMenuEntry<Commands>>[
@@ -43,6 +44,8 @@ class SearchScreen extends HookConsumerWidget {
                         const PopupMenuItem(
                             value: Commands.bookmarks,
                             child: Text('Bookmarks')),
+                        const PopupMenuItem(
+                            value: Commands.makoto, child: Text('Makoto')),
                       ],
                   onSelected: (Commands command) {
                     _onCommandTap(context, command);
@@ -61,62 +64,14 @@ class SearchScreen extends HookConsumerWidget {
       case Commands.bookmarks:
         Navigator.pushNamed(context, '/bookmarks');
         break;
+      case Commands.makoto:
+        Navigator.pushNamed(context, '/makoto');
+        break;
     }
   }
 
   void _onToggleThemeTap(BuildContext context) {
     EasyDynamicTheme.of(context)
         .changeTheme(dark: Theme.of(context).brightness != Brightness.dark);
-  }
-}
-
-/// TODO: This can go away once riverpod 3 is out
-class SearchResults extends ConsumerStatefulWidget {
-  @override
-  _SearchResultsState createState() => _SearchResultsState();
-}
-
-class _SearchResultsState extends ConsumerState<SearchResults> {
-  QueryResult? previousQueryResult;
-
-  @override
-  Widget build(BuildContext context) {
-    final searchResults = ref.watch(queryResultProvider);
-    return searchResults.when(data: (result) {
-      previousQueryResult = result;
-      return SearchResultInner(result: result);
-    }, loading: () {
-      if (previousQueryResult != null) {
-        return SearchResultInner(result: previousQueryResult!);
-      } else {
-        return const Center(child: CircularProgressIndicator());
-      }
-    }, error: (e, _) {
-      previousQueryResult = null;
-      return Text('Error: $e', style: const TextStyle(color: Colors.red));
-    });
-  }
-}
-
-class SearchResultInner extends StatelessWidget {
-  const SearchResultInner({
-    Key? key,
-    required this.result,
-  }) : super(key: key);
-
-  final QueryResult result;
-
-  @override
-  Widget build(BuildContext context) {
-    switch (result.mode) {
-      case QueryMode.mei:
-      case QueryMode.sei:
-        return DetailScreen(query: result);
-      case QueryMode.wildcard:
-        return BrowseScreen(results: result.results.toList());
-      default:
-        return Text("Error: unknown mode '${result.mode}'",
-            style: const TextStyle(color: Colors.red));
-    }
   }
 }

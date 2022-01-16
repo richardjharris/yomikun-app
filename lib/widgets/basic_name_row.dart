@@ -1,13 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:yomikun/core/locale.dart';
+import 'package:yomikun/core/number_format.dart';
 import 'package:yomikun/models/namedata.dart';
 
-class NameRow extends StatelessWidget {
-  const NameRow({
+/// Shows name data with no interactivity.
+class BasicNameRow extends StatelessWidget {
+  const BasicNameRow({
     required Key key,
     required this.nameData,
+    this.showOnly,
   }) : super(key: key);
 
   final NameData nameData;
+  final KakiYomi? showOnly;
 
   @override
   Widget build(BuildContext context) {
@@ -28,14 +33,24 @@ class NameRow extends StatelessWidget {
       fontWeight: isDark ? FontWeight.w400 : FontWeight.w500,
     );
 
-    double genderScore = nameData.genderMlScore;
-    return ListTile(
-      title: Row(children: [
+    List<Widget> titleWidgets = [];
+    if (showOnly == null) {
+      titleWidgets = [
         Text(nameData.kaki, style: kakiStyle),
         Container(
-            child: Text(nameData.yomi, style: yomiStyle),
+            child:
+                Text(nameData.yomi, style: yomiStyle, locale: japaneseLocale),
             margin: const EdgeInsets.only(left: 10.0)),
-      ]),
+      ];
+    } else if (showOnly == KakiYomi.kaki) {
+      titleWidgets = [Text(nameData.kaki, locale: japaneseLocale)];
+    } else {
+      titleWidgets = [Text(nameData.yomi, locale: japaneseLocale)];
+    }
+
+    double genderScore = nameData.genderMlScore;
+    return ListTile(
+      title: Row(children: titleWidgets),
       subtitle: Row(children: [
         Align(
           child: SizedBox(
@@ -50,7 +65,7 @@ class NameRow extends StatelessWidget {
         ),
         Expanded(
             child: Text(
-          "M: ${nameData.hitsMale} F: ${nameData.hitsFemale} U: ${nameData.hitsUnknown}",
+          "M: ${addThousands(nameData.hitsMale)} F: ${addThousands(nameData.hitsFemale)} U: ${addThousands(nameData.hitsUnknown)}",
           textAlign: TextAlign.right,
           style: hitsStyle,
         )),

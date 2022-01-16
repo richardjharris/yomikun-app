@@ -102,7 +102,7 @@ class QueryModeButton extends HookConsumerWidget {
       case QueryMode.sei:
         return '姓';
       case QueryMode.wildcard:
-        return '＊';
+        return '✴';
       case QueryMode.person:
         return '人';
     }

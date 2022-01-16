@@ -1,11 +1,13 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:yomikun/core/number_format.dart';
 import 'package:yomikun/models/namedata.dart';
 import 'package:yomikun/models/query_result.dart';
 
 import 'package:collection/collection.dart';
 import 'package:yomikun/core/dakuten.dart';
 import 'package:yomikun/core/locale.dart';
+import 'package:yomikun/widgets/slidable_name_row.dart';
 
 final List<Color> pieChartColorsLightMode = [
   Colors.green,
@@ -58,22 +60,13 @@ class DetailScreen extends StatelessWidget {
         ),
         // Make a ListTile for each item in sortedResults.
         for (var row in sortedResults)
-          ListTile(
-            title: Text(
-                query.ky == KakiYomi.yomi ? row.kaki : expandDakuten(row.yomi),
-                locale: japaneseLocale),
-            subtitle: Text("${addThousands(row.hitsTotal)} hits"),
-          ),
+          SlidableNameRow(
+              data: row,
+              key: row.key(),
+              groupTag: sortedResults,
+              showOnly: query.ky!.inverse()),
       ],
     );
-  }
-
-  /// Add thousand separators to a number.
-  /// For example, 123456789 becomes 1,234,567,890.
-  String addThousands(int number) {
-    return number.toString().replaceAllMapped(
-        RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'),
-        (Match match) => '${match.group(1)},');
   }
 
   Widget heading(BuildContext context) {

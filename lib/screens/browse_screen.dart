@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 
-import 'package:yomikun/screens/common/name_row.dart';
 import 'package:yomikun/models/namedata.dart';
+import 'package:yomikun/widgets/slidable_name_row.dart';
 
 /// Screen for browsing names using wildcards.
 class BrowseScreen extends StatelessWidget {
@@ -34,28 +34,8 @@ class BrowseScreen extends StatelessWidget {
 
           final index = i ~/ 2; // divide by two, round down
           final data = results[index];
-          var item = NameRow(nameData: data, key: data.key());
-
-          return Slidable(
-            key: ValueKey(data.key()),
-            child: item,
-            groupTag: results,
-            endActionPane: ActionPane(
-              motion: const ScrollMotion(),
-              children: [
-                SlidableAction(
-                  flex: 1,
-                  backgroundColor: Colors.blue.shade900,
-                  foregroundColor: Colors.white,
-                  onPressed: (context) {
-                    // ...
-                  },
-                  icon: Icons.favorite,
-                  label: 'Bookmark',
-                ),
-              ],
-            ),
-          );
+          return SlidableNameRow(
+              data: data, key: data.key(), groupTag: results);
         },
       ),
     ));
