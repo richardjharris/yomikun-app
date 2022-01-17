@@ -48,6 +48,7 @@ Future<List<QueryMode>> getAllowedQueryModes(
 /// Providers results that update when the query text/mode changes.
 Future<QueryResult> performQuery(
     NameRepository db, String text, QueryMode mode) async {
+  print('performQuery: $text, $mode');
   text = _cleanInputText(text);
 
   final ky = guessKY(text);

@@ -1,20 +1,8 @@
 import 'package:easy_dynamic_theme/easy_dynamic_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:yomikun/core/name_lookup.dart';
 import 'package:yomikun/screens/search/search_box.dart';
-import 'package:yomikun/models/query_result.dart';
-import 'package:yomikun/providers/core_providers.dart';
-import 'package:yomikun/screens/browse_screen.dart';
-import 'package:yomikun/screens/detail_screen.dart';
 import 'package:yomikun/screens/search/search_results.dart';
-
-final queryResultProvider = FutureProvider<QueryResult>((ref) async {
-  /// Listen to the search box result
-  final query = await ref.watch(queryProvider.future);
-  final db = ref.read(databaseProvider);
-  return performQuery(db, query.text, query.mode);
-});
 
 enum Commands { darkMode, bookmarks, makoto }
 
@@ -52,7 +40,7 @@ class SearchScreen extends HookConsumerWidget {
                   })),
         ],
       ),
-      body: SearchResults(),
+      body: SearchResultsFromProvider(),
     );
   }
 
