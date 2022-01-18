@@ -15,8 +15,11 @@ dependencies:
   path_provider: any
   path: ^1.8.0
   easy_dynamic_theme: ^2.2.0
-  fl_chart: ^0.41.0
   collection: ^1.15.0
+
+  # Visualisation
+  fl_chart: ^0.41.0
+  treemap: ^0.4.0
 
   # For romaji <-> kana conversion
   kana_kit: ^2.0.0

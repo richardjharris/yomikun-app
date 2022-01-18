@@ -1,5 +1,6 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:treemap/treemap.dart';
 import 'package:yomikun/core/number_format.dart';
 import 'package:yomikun/models/namedata.dart';
 import 'package:yomikun/models/query_result.dart';
@@ -55,6 +56,11 @@ class DetailScreen extends StatelessWidget {
         const Divider(),
         Container(
           constraints: const BoxConstraints(maxHeight: 400, maxWidth: 400),
+          child: treeMap(context),
+          margin: const EdgeInsets.only(top: 14),
+        ),
+        Container(
+          constraints: const BoxConstraints(maxHeight: 400, maxWidth: 400),
           child: pieChart(context),
           margin: const EdgeInsets.only(top: 14),
         ),
@@ -86,6 +92,41 @@ class DetailScreen extends StatelessWidget {
         PieChartData(
           sections: pieChartSections(context),
         ),
+      ),
+    );
+  }
+
+  Widget treeMap(BuildContext context) {
+    final maleColor = HSVColor.fromColor(Colors.blue.shade300);
+    final femaleColor = HSVColor.fromColor(Colors.pink.shade300);
+
+    final results = query.results.where((r) => r.hitsTotal > 0).toList();
+    if (results.isEmpty) {
+      return const Center(child: Text('No results'));
+    }
+
+    return AspectRatio(
+      aspectRatio: 1.0,
+      child: TreeMapLayout(
+        tile: Binary(),
+        children: [
+          TreeNode.node(
+            padding: const EdgeInsets.all(10),
+            children: query.results.where((r) => r.hitsTotal > 0).map((r) {
+              final color =
+                  HSVColor.lerp(maleColor, femaleColor, r.genderMlScore / 255.0)
+                      ?.toColor();
+
+              final label = query.ky == KakiYomi.kaki ? r.yomi : r.kaki;
+
+              return TreeNode.leaf(
+                value: r.hitsTotal,
+                options: TreeNodeOptions(
+                    child: Center(child: Text(label)), color: color),
+              );
+            }).toList(),
+          ),
+        ],
       ),
     );
   }

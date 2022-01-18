@@ -518,6 +518,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.4.8"
+  treemap:
+    dependency: "direct main"
+    description:
+      name: treemap
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.4.0"
   typed_data:
     dependency: transitive
     description:
