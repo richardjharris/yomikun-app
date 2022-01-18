@@ -28,6 +28,8 @@ Future<List<QueryMode>> getAllowedQueryModes(
 
   KakiYomi ky = guessKY(text);
 
+  // TODO: This should be exact match, but might cause other problems.
+  // Need to think about it.
   final meiMatch = await db.hasPrefix(text, NamePart.mei, ky);
   final seiMatch = await db.hasPrefix(text, NamePart.sei, ky);
 

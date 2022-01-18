@@ -16,6 +16,7 @@ class SearchScreen extends HookConsumerWidget {
     return Scaffold(
       appBar: AppBar(
         title: const SearchBox(),
+        titleSpacing: 5,
         actions: <Widget>[
           Padding(
               padding: const EdgeInsets.only(right: 10.0),
