@@ -51,7 +51,10 @@ class _SearchResultsArea extends HookConsumerWidget {
     return result.when(
       data: (data) => SearchResults(result: data),
       loading: () => const Center(child: CircularProgressIndicator()),
-      error: (error, trace) => Center(child: Text('Error: $error')),
+      error: (error, trace) {
+        print(trace);
+        return Center(child: Text('Error: $error'));
+      },
     );
   }
 }

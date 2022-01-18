@@ -18,6 +18,9 @@ dependencies:
   fl_chart: ^0.41.0
   collection: ^1.15.0
 
+  # For romaji <-> kana conversion
+  kana_kit: ^2.0.0
+
   # For unicode denormalisation
   unorm_dart: ^0.2.0
 

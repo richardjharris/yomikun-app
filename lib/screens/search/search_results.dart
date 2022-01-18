@@ -35,9 +35,10 @@ class _SearchResultsFromProviderState
       } else {
         return const Center(child: CircularProgressIndicator());
       }
-    }, error: (e, _) {
+    }, error: (error, trace) {
       previousQueryResult = null;
-      return Text('Error: $e', style: const TextStyle(color: Colors.red));
+      print(trace);
+      return Text('Error: $error', style: const TextStyle(color: Colors.red));
     });
   }
 }

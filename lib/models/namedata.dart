@@ -11,73 +11,42 @@ extension KakiYomiMethods on KakiYomi {
 }
 
 class NameData {
-  String kaki;
-  String yomi;
-  NamePart part = NamePart.unknown;
+  final String kaki;
+  final String yomi;
+  final NamePart part;
 
   /* number of people with this name */
-  int hitsTotal = 0;
+  final int hitsTotal;
+  final int hitsMale;
+  final int hitsFemale;
 
-  int hitsMale = 0;
-  int hitsFemale = 0;
-  int hitsUnknown = 0;
-  int hitsPseudo = 0;
-  double genderMlScore = 0.0;
+  /* number of fictional/pseudonym hits for this name */
+  final int hitsPseudo;
 
-  bool isTop5k = false;
-  int population = 0;
+  /* gender score between 0 (Male) and 255 (Female) */
+  final int genderMlScore;
 
-  NameData(this.kaki, this.yomi, this.part);
-
-  NameData.sei(this.kaki, this.yomi) : part = NamePart.sei;
-
-  NameData.mei(this.kaki, this.yomi) : part = NamePart.mei;
+  const NameData({
+    required this.kaki,
+    required this.yomi,
+    required this.part,
+    this.hitsTotal = 0,
+    this.hitsMale = 0,
+    this.hitsFemale = 0,
+    this.hitsPseudo = 0,
+    this.genderMlScore = 0,
+  });
 
   ValueKey<String> key() {
     return ValueKey(kaki + "|" + yomi + "|" + part.toString());
   }
 
-  setHits(int male, int female, int unknown) {
-    hitsMale = male;
-    hitsFemale = female;
-    hitsUnknown = unknown;
-    hitsTotal = male + female + unknown;
-  }
-
-  setTotalHits(int hits) {
-    hitsTotal = hits;
-  }
-
-  setGenderScore(double score) {
-    genderMlScore = score;
-  }
-
-  NameData.fromMap(Map<String, dynamic> json)
-      : kaki = json['kaki'],
-        yomi = json['yomi'],
-        part = _partToEnum(json['part']),
-        hitsMale = json['hits_male'],
-        hitsFemale = json['hits_female'],
-        hitsUnknown = json['hits_unknown'],
-        hitsPseudo = json['hits_pseudo'],
-        hitsTotal = json['hits_total'],
-        genderMlScore = json['ml_score'],
-        isTop5k = json.containsKey('is_top5k') ? json['is_top5k'] : false,
-        population = json.containsKey('population') ? json['population'] : 0;
-
-  static NamePart _partToEnum(String part) {
-    switch (part) {
-      case 'mei':
-        return NamePart.mei;
-      case 'sei':
-        return NamePart.sei;
-      default:
-        return NamePart.unknown;
-    }
-  }
+  int get hitsUnknown => hitsTotal - hitsMale - hitsFemale;
 
   @override
   String toString() {
-    return 'NameData{kaki: $kaki, yomi: $yomi, part: $part, hitsTotal: $hitsTotal, hitsMale: $hitsMale, hitsFemale: $hitsFemale, hitsUnknown: $hitsUnknown, hitsPseudo: $hitsPseudo, genderMlScore: $genderMlScore, isTop5k: $isTop5k, population: $population}';
+    return 'NameData{kaki: $kaki, yomi: $yomi, part: $part, '
+        'hitsTotal: $hitsTotal, hitsMale: $hitsMale, hitsFemale: $hitsFemale, '
+        'hitsPseudo: $hitsPseudo, genderMlScore: $genderMlScore}';
   }
 }

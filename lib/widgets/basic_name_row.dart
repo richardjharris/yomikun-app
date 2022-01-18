@@ -48,7 +48,7 @@ class BasicNameRow extends StatelessWidget {
       titleWidgets = [Text(nameData.yomi, locale: japaneseLocale)];
     }
 
-    double genderScore = nameData.genderMlScore;
+    int genderScore = nameData.genderMlScore;
     return ListTile(
       title: Row(children: titleWidgets),
       subtitle: Row(children: [
@@ -56,7 +56,7 @@ class BasicNameRow extends StatelessWidget {
           child: SizedBox(
               width: 60,
               child: LinearProgressIndicator(
-                value: genderScore,
+                value: genderScore / 255,
                 valueColor:
                     const AlwaysStoppedAnimation<Color>(Colors.pinkAccent),
                 backgroundColor: Colors.blueAccent,

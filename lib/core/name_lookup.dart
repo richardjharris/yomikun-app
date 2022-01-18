@@ -79,9 +79,9 @@ Future<QueryResult> performQuery(
 Future<List<NameData>> getPersonResult(NameRepository db, String text) async {
   // TODO: split name up into two parts or something. Use NamePart to distinguish
   // the two data sets.
-  return [
-    NameData("松本", "まつもと", NamePart.sei),
-    NameData("人志", "ひとし", NamePart.mei),
+  return const [
+    NameData(kaki: "松本", yomi: "まつもと", part: NamePart.sei),
+    NameData(kaki: "人志", yomi: "ひとし", part: NamePart.mei),
   ];
 }
 
