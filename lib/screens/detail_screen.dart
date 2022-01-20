@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:treemap/treemap.dart';
@@ -47,6 +49,7 @@ class DetailScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Sort results by hits descending
     var sortedResults = query.results.toList()
       ..sort((a, b) => b.hitsTotal.compareTo(a.hitsTotal));
 
@@ -57,18 +60,17 @@ class DetailScreen extends StatelessWidget {
         Container(
           constraints: const BoxConstraints(maxHeight: 400, maxWidth: 400),
           child: treeMap(context),
-          margin: const EdgeInsets.only(top: 14),
         ),
         Container(
           constraints: const BoxConstraints(maxHeight: 400, maxWidth: 400),
           child: pieChart(context),
-          margin: const EdgeInsets.only(top: 14),
+          margin: const EdgeInsets.all(10),
         ),
         // Make a ListTile for each item in sortedResults.
         for (var row in sortedResults)
           SlidableNameRow(
               data: row,
-              key: row.key(),
+              key: ValueKey(row.key()),
               groupTag: sortedResults,
               showOnly: query.ky!.inverse()),
       ],
@@ -104,25 +106,38 @@ class DetailScreen extends StatelessWidget {
     if (results.isEmpty) {
       return const Center(child: Text('No results'));
     }
+    final total = results.map((e) => e.hitsTotal).sum.toDouble();
 
     return AspectRatio(
-      aspectRatio: 1.0,
+      aspectRatio: 1.8,
       child: TreeMapLayout(
         tile: Binary(),
         children: [
           TreeNode.node(
-            padding: const EdgeInsets.all(10),
+            options: TreeNodeOptions(
+              color: Colors.transparent,
+              border: const Border(), //disable border
+            ),
+            padding: const EdgeInsets.symmetric(horizontal: 10),
             children: query.results.where((r) => r.hitsTotal > 0).map((r) {
               final color =
                   HSVColor.lerp(maleColor, femaleColor, r.genderMlScore / 255.0)
                       ?.toColor();
 
               final label = query.ky == KakiYomi.kaki ? r.yomi : r.kaki;
+              final fontSize = (r.hitsTotal / total) * 64 + 10;
+              Widget textWidget = Text(
+                label,
+                style: TextStyle(fontSize: fontSize),
+                textAlign: TextAlign.center,
+                locale: japaneseLocale,
+                overflow: TextOverflow.fade,
+              );
 
               return TreeNode.leaf(
                 value: r.hitsTotal,
                 options: TreeNodeOptions(
-                    child: Center(child: Text(label)), color: color),
+                    child: Center(child: textWidget), color: color),
               );
             }).toList(),
           ),
@@ -132,8 +147,11 @@ class DetailScreen extends StatelessWidget {
   }
 
   List<PieChartSectionData> pieChartSections(BuildContext context) {
-    // Sort results by hits desc
-    var results = query.results.where((r) => r.hitsTotal > 0).toList();
+    List<NameData> results =
+        query.results.where((r) => r.hitsTotal > 0).toList();
+    // Sort results by name. Sorting by hits desc leads to the small items being
+    // bunched together, and their labels cannot be read.
+    results.sortBy<String>((e) => e.key());
 
     var colors = pieChartColorsLightMode;
     if (Theme.of(context).brightness == Brightness.dark) {
@@ -154,9 +172,9 @@ class DetailScreen extends StatelessWidget {
       threshold = total * 0.01;
     }
 
-    var sections =
-        query.results.where((r) => r.hitsTotal > 0).mapIndexed((i, row) {
+    var sections = results.mapIndexed((i, row) {
       var label = query.ky == KakiYomi.yomi ? row.kaki : row.yomi;
+      var sizeMult = (row.hitsTotal.toDouble() / total).clamp(0.1, 1.0);
 
       return PieChartSectionData(
         color: colors[i % colors.length],

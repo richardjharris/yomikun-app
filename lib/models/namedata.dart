@@ -1,5 +1,3 @@
-import 'package:flutter/material.dart';
-
 enum NamePart { mei, sei, unknown, person }
 
 enum KakiYomi { kaki, yomi }
@@ -37,8 +35,8 @@ class NameData {
     this.genderMlScore = 0,
   });
 
-  ValueKey<String> key() {
-    return ValueKey(kaki + "|" + yomi + "|" + part.toString());
+  String key() {
+    return kaki + "|" + yomi + "|" + part.toString();
   }
 
   int get hitsUnknown => hitsTotal - hitsMale - hitsFemale;

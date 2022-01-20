@@ -17,6 +17,9 @@ dependencies:
   easy_dynamic_theme: ^2.2.0
   collection: ^1.15.0
 
+  # Stream extension methods
+  rxdart: ^0.27.3
+
   # Visualisation
   fl_chart: ^0.41.0
   treemap: ^0.4.0
@@ -29,7 +32,7 @@ dependencies:
 
   # For local persistent state
   hive_flutter: ^1.1.0
-  hive: ^2.0.4
+  hive: ^2.0.5
 
   # For sharing
   share_plus: ^3.0.4

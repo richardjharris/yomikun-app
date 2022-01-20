@@ -21,7 +21,8 @@ class SlidableNameRow extends StatelessWidget {
   Widget build(BuildContext context) {
     return Slidable(
       key: ValueKey(data.key()),
-      child: BasicNameRow(key: data.key(), nameData: data, showOnly: showOnly),
+      child: BasicNameRow(
+          key: ValueKey(data.key()), nameData: data, showOnly: showOnly),
       groupTag: groupTag,
       endActionPane: ActionPane(
         motion: const ScrollMotion(),

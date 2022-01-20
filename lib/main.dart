@@ -14,11 +14,11 @@ import 'package:yomikun/screens/search/search_screen.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 //import 'package:window_manager/window_manager.dart';
 
-const favoritesBox = 'favorite_names';
+const hiveBoxName = 'yomikun_hive';
 
 void main() async {
   await Hive.initFlutter();
-  await Hive.openBox<String>(favoritesBox);
+  await Hive.openBox(hiveBoxName);
   WidgetsFlutterBinding.ensureInitialized();
   //await windowManager.ensureInitialized();
   //windowManager.setSize(const Size(500, 9000));
