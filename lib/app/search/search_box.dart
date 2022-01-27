@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:yomikun/core/name_lookup.dart';
-import 'package:yomikun/models/query_result.dart';
+import 'package:yomikun/models/query.dart';
+import 'package:yomikun/models/query_mode.dart';
 import 'package:yomikun/providers/core_providers.dart';
 
 /// User search text.

@@ -1,13 +1,15 @@
 import 'package:easy_dynamic_theme/easy_dynamic_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:yomikun/screens/search/search_box.dart';
-import 'package:yomikun/screens/search/search_results.dart';
+import 'package:yomikun/app/search/search_box.dart';
+import 'package:yomikun/app/search/search_results.dart';
 
 enum Commands { darkMode, bookmarks, makoto }
 
-class SearchScreen extends HookConsumerWidget {
-  const SearchScreen({Key? key}) : super(key: key);
+/// The main search page: shows the search bar, mode switch, settings icon
+/// and dynamically updates search results in the body.
+class SearchPage extends HookConsumerWidget {
+  const SearchPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

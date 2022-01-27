@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:yomikun/models/query_mode.dart';
 import 'package:yomikun/models/query_result.dart';
 import 'package:yomikun/providers/core_providers.dart';
-import 'package:yomikun/screens/browse_screen.dart';
-import 'package:yomikun/screens/detail_screen.dart';
-import 'package:yomikun/screens/search/search_box.dart';
+import 'package:yomikun/app/browse/browse_page.dart';
+import 'package:yomikun/app/details/details_page.dart';
+import 'package:yomikun/app/search/search_box.dart';
 
 final searchBoxQueryResultProvider = FutureProvider<QueryResult>((ref) async {
   /// Listen to the search box result
@@ -12,7 +13,7 @@ final searchBoxQueryResultProvider = FutureProvider<QueryResult>((ref) async {
   return ref.watch(queryResultProvider(query).future);
 });
 
-/// TODO: This can go away once riverpod 3 is out
+/// TODO: This can go away once riverpod 2.0.0 is out
 class SearchResultsFromProvider extends ConsumerStatefulWidget {
   @override
   _SearchResultsFromProviderState createState() =>
@@ -56,9 +57,9 @@ class SearchResults extends StatelessWidget {
     switch (result.mode) {
       case QueryMode.mei:
       case QueryMode.sei:
-        return DetailScreen(query: result);
+        return DetailsPage(query: result);
       case QueryMode.wildcard:
-        return BrowseScreen(results: result.results.toList());
+        return BrowsePage(results: result.results.toList());
       default:
         return Text("Error: unknown mode '${result.mode}'",
             style: const TextStyle(color: Colors.red));

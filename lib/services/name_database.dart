@@ -6,9 +6,8 @@ import 'package:kana_kit/kana_kit.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
+import 'package:synchronized/synchronized.dart';
 import 'package:yomikun/models/namedata.dart';
-
-import 'name_repository.dart';
 
 const kanaKit = KanaKit();
 
@@ -16,24 +15,30 @@ const kanaKit = KanaKit();
 /// This is used as SQLite does not support native ENUMs.
 const nameParts = [NamePart.unknown, NamePart.sei, NamePart.mei];
 
-class NameDatabase implements NameRepository {
+class NameDatabase {
   Database? _db;
 
-  // TODO locking?
+  /// Mutex to prevent the database being copied by two coroutines at once.
+  static final Lock _dbInitializeLock = Lock();
+
   Future<Database> get database async {
-    if (_db != null) {
-      return Future.value(_db);
-    }
-    _db = await _initialize();
-    return Future.value(_db);
+    // Fast path
+    if (_db != null) return _db!;
+
+    // Slow path: use lock to prevent multiple rebuilds
+    await _dbInitializeLock.synchronized(() async {
+      _db ??= await _initialize();
+    });
+
+    return _db!;
   }
 
   /// Initialise the database, requesting permissions.
-  static Future<Database> _initialize() async {
-    // Copy the database into the documents dir
-    // Construct a file path to copy database to
+  static Future _initialize() async {
     Directory documentsDirectory = await getApplicationDocumentsDirectory();
     String dbPath = join(documentsDirectory.path, "asset_names.db");
+
+    // Copy the database into the documents dir
 
     // Only copy if the database doesn't exist
     if (FileSystemEntity.typeSync(dbPath) == FileSystemEntityType.notFound) {
@@ -51,7 +56,6 @@ class NameDatabase implements NameRepository {
 
   /// Returns bool indicating if a name exists (kaki or yomi) for the given
   /// part of speech.
-  @override
   Future<bool> hasPrefix(String prefix, NamePart part, KakiYomi ky) async {
     var db = await database;
     var column = ky.name;
@@ -70,7 +74,6 @@ class NameDatabase implements NameRepository {
 
   /// Returns all results with kaki/yomi equal to the given string, for the
   /// given part of speech.
-  @override
   Future<Iterable<NameData>> getResults(
       String query, NamePart part, KakiYomi ky) async {
     var db = await database;
@@ -90,7 +93,6 @@ class NameDatabase implements NameRepository {
 
   /// Perform a general database search given the specified query.
   /// Query may contain wildcards */?
-  @override
   Future<Iterable<NameData>> search(String query) async {
     // Convert query to SQL like form
     query = query.replaceAll(RegExp(r'[\*＊]', unicode: true), '%');

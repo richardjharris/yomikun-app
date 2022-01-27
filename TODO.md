@@ -1,24 +1,20 @@
-SearchBox:
- - holds its own state (text, mode)
- - when text changes, queries what modes are possible (cached)
-   - while doing this, it is 'disabled'
- - has a callback to update the current Query.
+Implement 'Flutter Starter Project' stuff
+ - routes
+ - constants
+ - per-feature directories
+ - no need to implement abstract classes for repositories (can just use 'implements')
 
+Settings page?
+ - romaji vs katakana
+ - highlight tenten
+ - pie chart vs. treemap vs. none?
+ - dark/light mode
 
-Home page (no results)
-Automatic mode switch
-Mode cycle on click instead of dropdown
-Remove meikana?
+Bookmarks:
+ - bookmark entire page or individual item (?)
+ - bookmark system uses URLs which map to routes
 
-Clean up pie charts ('other' category?)
-Show gender info on mei page
-Allow filtering by gender
-Browse needs to highlight part of speech
+Treemap:
+ - dakuten, locale
 
-Settings:
-
-- romaji on/off
-- more visible dakuten on/off
-- light mode / dark mode
-
-Trim query.
+Upgrade to riverpod 2.0.0 and remove extra code.

@@ -4,9 +4,10 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:yomikun/models/namedata.dart';
 import 'package:yomikun/widgets/slidable_name_row.dart';
 
-/// Screen for browsing names using wildcards.
-class BrowseScreen extends StatelessWidget {
-  const BrowseScreen({
+/// Shows all name results matching a wildcard pattern or other filter.
+/// No visualisation.
+class BrowsePage extends StatelessWidget {
+  const BrowsePage({
     Key? key,
     required this.results,
   }) : super(key: key);

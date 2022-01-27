@@ -1,18 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:yomikun/models/query_result.dart';
+import 'package:yomikun/models/query.dart';
 import 'package:yomikun/providers/core_providers.dart';
-import 'package:yomikun/screens/search/search_box.dart';
-import 'package:yomikun/screens/search/search_results.dart';
+import 'package:yomikun/app/search/search_box.dart';
+import 'package:yomikun/app/search/search_results.dart';
 
-/// Displays a single search results screen, e.g. from bookmarks.
-/// Includes a back button, and a search button that can be used to initiate
-/// a new search.
-class ResultScreen extends HookConsumerWidget {
+/// Displays a single search result, e.g. from bookmarks or history.
+/// Unlike the SearchPage, which shows the results within a sub-page
+/// (with search box on top) this page shows the title, a *back* button and
+/// a search button that can be used to initiate a new search.
+class FixedResultPage extends HookConsumerWidget {
   final Query query;
 
-  const ResultScreen({required this.query});
+  const FixedResultPage({required this.query});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

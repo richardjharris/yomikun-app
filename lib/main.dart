@@ -5,52 +5,47 @@ import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sqflite/sqflite.dart';
-import 'package:yomikun/models/query_result.dart';
-import 'package:yomikun/screens/bookmarks/bookmarks_screen.dart';
-import 'package:yomikun/screens/results_screen.dart';
-import 'package:yomikun/screens/search/search_box.dart';
-import 'package:yomikun/screens/search/search_results.dart';
-import 'package:yomikun/screens/search/search_screen.dart';
+import 'package:yomikun/app/search/search_screen.dart';
+import 'package:yomikun/models/bookmark.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
-//import 'package:window_manager/window_manager.dart';
+import 'package:yomikun/providers/core_providers.dart';
+import 'package:yomikun/routing/app_router.dart';
+import 'package:yomikun/services/bookmark_database.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:yomikun/services/shared_preferences_service.dart';
 
-const hiveBoxName = 'yomikun_hive';
-
-void main() async {
-  await Hive.initFlutter();
-  await Hive.openBox(hiveBoxName);
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  //await windowManager.ensureInitialized();
-  //windowManager.setSize(const Size(500, 9000));
+
+  await Hive.initFlutter();
+  await Hive.openBox<Bookmark>(BookmarkDatabase.hiveBox);
+
+  final sharedPreferences = await SharedPreferences.getInstance();
+
   if (Platform.isWindows || Platform.isLinux) {
     sqfliteFfiInit();
     databaseFactory = databaseFactoryFfi;
   }
 
-  runApp(ProviderScope(child: EasyDynamicThemeWidget(child: const MyApp())));
+  runApp(ProviderScope(overrides: [
+    sharedPreferencesServiceProvider.overrideWithValue(
+      SharedPreferencesService(sharedPreferences),
+    ),
+  ], child: EasyDynamicThemeWidget(child: const MyApp())));
 }
 
 /// App entry point
 class MyApp extends StatelessWidget {
-  final String title = 'Yomikun';
-
   const MyApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      initialRoute: '/',
-      title: title,
       theme: ThemeData.light(),
       darkTheme: ThemeData.dark(),
       themeMode: EasyDynamicTheme.of(context).themeMode,
-      debugShowCheckedModeBanner: true,
-      routes: {
-        '/': (context) => const SearchScreen(),
-        '/bookmarks': (context) => const BookmarksScreen(),
-        '/makoto': (context) =>
-            const ResultScreen(query: Query('まこと', QueryMode.mei)),
-      },
+      home: const SearchPage(),
+      onGenerateRoute: (settings) => AppRouter.onGenerateRoute(settings),
     );
   }
 }

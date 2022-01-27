@@ -1,20 +1,5 @@
-import 'package:equatable/equatable.dart';
 import 'package:yomikun/models/namedata.dart';
-
-enum QueryMode { mei, sei, person, wildcard }
-
-class Query extends Equatable {
-  final String text;
-  final QueryMode mode;
-
-  const Query(this.text, this.mode);
-
-  @override
-  List<Object> get props => [text, mode];
-
-  @override
-  bool get stringify => true;
-}
+import 'package:yomikun/models/query_mode.dart';
 
 class QueryResult {
   final String text;

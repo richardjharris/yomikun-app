@@ -1,6 +1,7 @@
 import 'package:yomikun/models/namedata.dart';
+import 'package:yomikun/models/query_mode.dart';
 import 'package:yomikun/models/query_result.dart';
-import 'package:yomikun/services/name_repository.dart';
+import 'package:yomikun/services/name_database.dart';
 
 /// Utilities for parsing and querying names.
 
@@ -15,7 +16,7 @@ KakiYomi guessKY(String text) {
 /// This is used e.g. by the search box mode selector to allow the user to
 /// toggle between available query modes.
 Future<List<QueryMode>> getAllowedQueryModes(
-    NameRepository db, String text) async {
+    NameDatabase db, String text) async {
   text = _cleanInputText(text);
 
   if (text.contains(RegExp(r'[\*\?＊？]', unicode: true))) {
@@ -49,7 +50,7 @@ Future<List<QueryMode>> getAllowedQueryModes(
 /// Interpret the provided query string and mode, and return a QueryResult.
 /// Providers results that update when the query text/mode changes.
 Future<QueryResult> performQuery(
-    NameRepository db, String text, QueryMode mode) async {
+    NameDatabase db, String text, QueryMode mode) async {
   print('performQuery: $text, $mode');
   text = _cleanInputText(text);
 
@@ -78,7 +79,7 @@ Future<QueryResult> performQuery(
   );
 }
 
-Future<List<NameData>> getPersonResult(NameRepository db, String text) async {
+Future<List<NameData>> getPersonResult(NameDatabase db, String text) async {
   // TODO: split name up into two parts or something. Use NamePart to distinguish
   // the two data sets.
   return const [
