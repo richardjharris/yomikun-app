@@ -18,6 +18,7 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   await Hive.initFlutter();
+  Hive.registerAdapter(BookmarkAdapter());
   await Hive.openBox<Bookmark>(BookmarkDatabase.hiveBox);
 
   final sharedPreferences = await SharedPreferences.getInstance();

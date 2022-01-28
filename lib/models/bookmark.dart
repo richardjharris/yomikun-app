@@ -1,5 +1,7 @@
 import 'package:hive_flutter/hive_flutter.dart';
 
+part 'bookmark.g.dart';
+
 /// Represents a bookmark to a page or item within the application.
 @HiveType(typeId: 0)
 class Bookmark {

@@ -1,8 +1,5 @@
 Implement 'Flutter Starter Project' stuff
- - routes
- - constants
  - per-feature directories
- - no need to implement abstract classes for repositories (can just use 'implements')
 
 Settings page?
  - romaji vs katakana
@@ -12,9 +9,11 @@ Settings page?
 
 Bookmarks:
  - bookmark entire page or individual item (?)
- - bookmark system uses URLs which map to routes
+ - add/remove
 
 Treemap:
  - dakuten, locale
+ - accept ky + results or similar, to cache sorting and filtering. or use riverpod
+   with overrides?
 
 Upgrade to riverpod 2.0.0 and remove extra code.

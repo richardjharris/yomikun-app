@@ -24,13 +24,16 @@ class BookmarkDatabase {
 
   /// Add a bookmark by URL
   Future<void> addBookmark(String url, String title) {
-    return _box.put(
+    print(_box.values);
+    _box.put(
         url,
         Bookmark(
           url: url,
           title: title,
           dateAdded: DateTime.now(),
         ));
+    print(_box.values);
+    return Future.value(null);
   }
 
   /// Remove a bookmark by URL
@@ -52,6 +55,7 @@ class BookmarkDatabase {
   List<Bookmark> getBookmarks(
       {BookmarkSortMode sortMode = BookmarkSortMode.none}) {
     var bookmarks = _box.values.toList();
+    print(bookmarks);
 
     switch (sortMode) {
       case BookmarkSortMode.none:

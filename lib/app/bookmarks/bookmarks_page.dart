@@ -18,20 +18,29 @@ class BookmarksPage extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final bookmarkListStream = ref.watch(bookmarkListProvider);
+    print(bookmarkListStream);
 
     return Scaffold(
         appBar: AppBar(
           title: const Text('Bookmarks'),
         ),
         body: bookmarkListStream.when(
-            data: (data) => _bookmarkList(data),
+            data: (data) => _bookmarkList(ref, data),
             loading: () => const Center(child: CircularProgressIndicator()),
             error: (e, stack) => Center(
                   child: Text('Error: $e'),
-                )));
+                )),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () async {
+            await ref
+                .read(bookmarkDatabaseProvider)
+                .addBookmark("/makoto", "Makoto");
+          },
+          child: const Icon(Icons.add),
+        ));
   }
 
-  Widget _bookmarkList(List<Bookmark> items) {
+  Widget _bookmarkList(WidgetRef ref, List<Bookmark> items) {
     if (items.isEmpty) {
       return _noBookmarks();
     }
@@ -43,9 +52,17 @@ class BookmarksPage extends HookConsumerWidget {
         return ListTile(
           title: Text(bookmark.title),
           subtitle: Text(bookmark.url),
+          trailing: IconButton(
+            icon: const Icon(Icons.star),
+            onPressed: () => _deleteBookmark(ref, bookmark),
+          ),
         );
       },
     );
+  }
+
+  void _deleteBookmark(WidgetRef ref, Bookmark bookmark) {
+    ref.read(bookmarkDatabaseProvider).removeBookmark(bookmark.url);
   }
 
   Widget _noBookmarks() {
