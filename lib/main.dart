@@ -5,7 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sqflite/sqflite.dart';
-import 'package:yomikun/app/search/search_screen.dart';
+import 'package:yomikun/app/search/search_page.dart';
+import 'package:yomikun/core/provider_logger.dart';
 import 'package:yomikun/models/bookmark.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 import 'package:yomikun/providers/core_providers.dart';
@@ -28,7 +29,9 @@ Future<void> main() async {
     databaseFactory = databaseFactoryFfi;
   }
 
-  runApp(ProviderScope(overrides: [
+  runApp(ProviderScope(observers: [
+    ProviderLogger()
+  ], overrides: [
     sharedPreferencesServiceProvider.overrideWithValue(
       SharedPreferencesService(sharedPreferences),
     ),
@@ -36,17 +39,18 @@ Future<void> main() async {
 }
 
 /// App entry point
-class MyApp extends StatelessWidget {
+class MyApp extends ConsumerWidget {
   const MyApp({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return MaterialApp(
       theme: ThemeData.light(),
       darkTheme: ThemeData.dark(),
       themeMode: EasyDynamicTheme.of(context).themeMode,
       home: const SearchPage(),
-      onGenerateRoute: (settings) => AppRouter.onGenerateRoute(settings),
+      onGenerateRoute: (settings) =>
+          AppRouter.onGenerateRoute(context, ref, settings),
     );
   }
 }

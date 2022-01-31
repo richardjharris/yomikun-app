@@ -1,18 +1,19 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
+import 'package:yomikun/app/details/cached_query_result.dart';
 import 'package:yomikun/core/dakuten.dart';
 import 'package:yomikun/core/locale.dart';
 import 'package:yomikun/core/number_format.dart';
 import 'package:yomikun/models/namedata.dart';
-import 'package:yomikun/models/query_result.dart';
 
 /// Displays a pie chart (actually a donut) showing the distribution of
 /// kanji for a given kana, or kana for a given kanji.
 class NamePieChart extends StatelessWidget {
-  final QueryResult query;
+  final CachedQueryResult results;
+  final KakiYomi ky;
 
-  const NamePieChart({Key? key, required this.query}) : super(key: key);
+  const NamePieChart({required this.results, required this.ky});
 
   static final List<Color> pieChartColorsLightMode = [
     Colors.green,
@@ -60,11 +61,10 @@ class NamePieChart extends StatelessWidget {
   }
 
   List<PieChartSectionData> pieChartSections(BuildContext context) {
-    List<NameData> results =
-        query.results.where((r) => r.hitsTotal > 0).toList();
+    List<NameData> pieResults = results.withAtLeastOneHit().toList();
     // Sort results by name. Sorting by hits desc leads to the small items being
     // bunched together, and their labels cannot be read.
-    results.sortBy<String>((e) => e.key());
+    pieResults.sortBy<String>((e) => e.key());
 
     var colors = pieChartColorsLightMode;
     if (Theme.of(context).brightness == Brightness.dark) {
@@ -73,10 +73,10 @@ class NamePieChart extends StatelessWidget {
 
     // For busy pie charts, hide labels for segments representing <1% of the
     // total.
-    final int total = results.map((e) => e.hitsTotal).sum;
+    final int total = results.totalHits;
     double threshold;
     double buffer = 0;
-    if (results.length < 5) {
+    if (pieResults.length < 5) {
       threshold = 0;
       // Pad out smaller answers so they're easier to see, even if it's not
       // strictly proportional.
@@ -85,8 +85,8 @@ class NamePieChart extends StatelessWidget {
       threshold = total * 0.01;
     }
 
-    var sections = results.mapIndexed((i, row) {
-      var label = query.ky == KakiYomi.yomi ? row.kaki : row.yomi;
+    var sections = pieResults.mapIndexed((i, row) {
+      var label = ky == KakiYomi.yomi ? row.kaki : row.yomi;
       //var sizeMult = (row.hitsTotal.toDouble() / total).clamp(0.1, 1.0);
 
       return PieChartSectionData(

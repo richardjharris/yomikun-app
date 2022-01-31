@@ -32,7 +32,12 @@ class _SearchResultsFromProviderState
       return SearchResults(result: result);
     }, loading: () {
       if (previousQueryResult != null) {
-        return SearchResults(result: previousQueryResult!);
+        return Stack(
+          children: [
+            const LinearProgressIndicator(color: Colors.orange),
+            SearchResults(result: previousQueryResult!),
+          ],
+        );
       } else {
         return const Center(child: CircularProgressIndicator());
       }

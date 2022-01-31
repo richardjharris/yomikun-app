@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:yomikun/models/query.dart';
 import 'package:yomikun/providers/core_providers.dart';
-import 'package:yomikun/app/search/search_box.dart';
 import 'package:yomikun/app/search/search_results.dart';
+import 'package:yomikun/routing/open_search_page.dart';
 
 /// Displays a single search result, e.g. from bookmarks or history.
 /// Unlike the SearchPage, which shows the results within a sub-page
@@ -17,23 +16,16 @@ class FixedResultPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final openedSearch = useState(false);
-
     return Scaffold(
       appBar: AppBar(
-        title: openedSearch.value
-            ? SearchBox(onClose: () {
-                openedSearch.value = false;
-              })
-            : Text(query.text),
+        title: Text(query.text),
         actions: <Widget>[
-          if (!openedSearch.value)
-            IconButton(
-              icon: const Icon(Icons.search),
-              onPressed: () {
-                openedSearch.value = true;
-              },
-            ),
+          IconButton(
+            icon: const Icon(Icons.search),
+            onPressed: () {
+              openSearchPage(context, ref, query);
+            },
+          ),
         ],
       ),
       body: _SearchResultsArea(query),

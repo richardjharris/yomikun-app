@@ -4,7 +4,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:yomikun/app/search/search_box.dart';
 import 'package:yomikun/app/search/search_results.dart';
 
-enum Commands { darkMode, bookmarks, makoto }
+enum Commands { darkMode, bookmarks, makoto, makotoFixed }
 
 /// The main search page: shows the search bar, mode switch, settings icon
 /// and dynamically updates search results in the body.
@@ -37,6 +37,9 @@ class SearchPage extends HookConsumerWidget {
                             child: Text('Bookmarks')),
                         const PopupMenuItem(
                             value: Commands.makoto, child: Text('Makoto')),
+                        const PopupMenuItem(
+                            value: Commands.makotoFixed,
+                            child: Text('Makoto (fixed)')),
                       ],
                   onSelected: (Commands command) {
                     _onCommandTap(context, command);
@@ -57,6 +60,9 @@ class SearchPage extends HookConsumerWidget {
         break;
       case Commands.makoto:
         Navigator.pushNamed(context, '/makoto');
+        break;
+      case Commands.makotoFixed:
+        Navigator.pushNamed(context, '/makoto-fixed');
         break;
     }
   }

@@ -1,28 +1,28 @@
-import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:treemap/treemap.dart';
+import 'package:yomikun/app/details/cached_query_result.dart';
 
 import 'package:yomikun/core/locale.dart';
 import 'package:yomikun/models/namedata.dart';
-import 'package:yomikun/models/query_result.dart';
 
 /// Displays a tree map showing the distribution of kanji for a given kana,
 /// or kana for a given kanji.
 class NameTreeMap extends StatelessWidget {
-  final QueryResult query;
+  final CachedQueryResult results;
+  final KakiYomi ky;
 
-  const NameTreeMap({Key? key, required this.query}) : super(key: key);
+  const NameTreeMap({required this.results, required this.ky});
 
   static final maleColor = HSVColor.fromColor(Colors.blue.shade300);
   static final femaleColor = HSVColor.fromColor(Colors.pink.shade300);
 
   @override
   Widget build(BuildContext context) {
-    final results = query.results.where((r) => r.hitsTotal > 0).toList();
-    if (results.isEmpty) {
+    if (results.allZeroHits) {
       return const Center(child: Text('No results'));
     }
-    final total = results.map((e) => e.hitsTotal).sum.toDouble();
+    final treeResults = results.withAtLeastOneHit();
+    final total = results.totalHits.toDouble();
 
     return AspectRatio(
       aspectRatio: 1.8,
@@ -35,12 +35,12 @@ class NameTreeMap extends StatelessWidget {
               border: const Border(), //disable border
             ),
             padding: const EdgeInsets.symmetric(horizontal: 10),
-            children: query.results.where((r) => r.hitsTotal > 0).map((r) {
+            children: treeResults.map((r) {
               final color =
                   HSVColor.lerp(maleColor, femaleColor, r.genderMlScore / 255.0)
                       ?.toColor();
 
-              final label = query.ky == KakiYomi.kaki ? r.yomi : r.kaki;
+              final label = ky == KakiYomi.kaki ? r.yomi : r.kaki;
               final fontSize = (r.hitsTotal / total) * 64 + 10;
               Widget textWidget = Text(
                 label,
