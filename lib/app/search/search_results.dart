@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:yomikun/providers/search_providers.dart';
 import 'package:yomikun/models/query_mode.dart';
 import 'package:yomikun/models/query_result.dart';
 import 'package:yomikun/providers/core_providers.dart';
 import 'package:yomikun/app/browse/browse_page.dart';
 import 'package:yomikun/app/details/details_page.dart';
-import 'package:yomikun/app/search/search_box.dart';
 
 final searchBoxQueryResultProvider = FutureProvider<QueryResult>((ref) async {
   /// Listen to the search box result
