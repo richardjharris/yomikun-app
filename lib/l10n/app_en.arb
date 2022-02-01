@@ -1,0 +1,10 @@
+{
+    "appTitle": "Yomikun",
+    "@appTitle": {
+        "description": "Application title"
+    },
+    "noResultsFound": "No results found",
+    "@noResultsFound": {
+        "description": "Message shown when user has queried for a name but no results were found."
+    }
+}

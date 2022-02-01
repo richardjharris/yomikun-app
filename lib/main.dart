@@ -14,6 +14,8 @@ import 'package:yomikun/routing/app_router.dart';
 import 'package:yomikun/services/bookmark_database.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:yomikun/services/shared_preferences_service.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -51,6 +53,9 @@ class MyApp extends ConsumerWidget {
       home: const SearchPage(),
       onGenerateRoute: (settings) =>
           AppRouter.onGenerateRoute(context, ref, settings),
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      supportedLocales: AppLocalizations.supportedLocales,
+      onGenerateTitle: (context) => AppLocalizations.of(context)!.appTitle,
     );
   }
 }

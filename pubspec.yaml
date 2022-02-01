@@ -11,6 +11,10 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+  intl: ^0.17.0
+
   sqflite: ^2.0.2
   path_provider: any
   path: ^1.8.0
@@ -70,6 +74,7 @@ dev_dependencies:
   hive_generator: ^1.1.2
 
 flutter:
+  generate: true
   uses-material-design: true
 
   assets:

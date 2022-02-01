@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:yomikun/app/details/cached_query_result.dart';
 import 'package:yomikun/app/details/name_pie_chart.dart';
+import 'package:yomikun/core/localized_buildcontext.dart';
 import 'package:yomikun/models/namedata.dart';
 import 'package:yomikun/models/query_result.dart';
 import 'package:yomikun/app/details/name_treemap.dart';
@@ -17,8 +18,8 @@ class DetailsPage extends StatelessWidget {
     final cache = CachedQueryResult(data: query.results);
 
     if (cache.noResults) {
-      return const Center(
-          child: Text('No results found.', textAlign: TextAlign.center));
+      return Center(
+          child: Text(context.loc.noResultsFound, textAlign: TextAlign.center));
     }
 
     return ListView(
