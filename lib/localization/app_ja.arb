@@ -1,6 +1,8 @@
 {
   "appTitle": "よみくん",
   "noResultsFound": "検索条件に一致する結果が見つかりません",
+  "bookmarks": "しおり",
+  "history": "履歴",
   "settings": "設定",
   "theme": "テーマ",
   "systemTheme": "システム",
@@ -10,5 +12,9 @@
   "japaneseLanguage": "日本語",
   "appLanguage": "アプリ言語",
   "systemLanguage": "システム",
-  "settingsTooltip": "設定を開く"
+  "settingsTooltip": "設定を開く",
+  "nameVisualization": "名前の頻度を表すグラフ",
+  "nameVizTreeMap": "箱グラフ",
+  "nameVizPieChart": "円グラフ",
+  "nameVizNone": "無表示"
 }
