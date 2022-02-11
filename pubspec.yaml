@@ -41,14 +41,10 @@ dependencies:
   share_plus: ^3.0.4
 
   # For state management
-  hooks_riverpod: ^1.0.3
-  flutter_riverpod: ^1.0.3
-  flutter_hooks: ^0.18.2
-  riverpod:
-    git:
-      url: https://github.com/rrousselGit/river_pod.git
-      path: packages/riverpod
-      ref: master
+  riverpod: ^2.0.0-dev.0
+  hooks_riverpod: ^2.0.0-dev.0
+  flutter_riverpod: ^2.0.0-dev.0
+  flutter_hooks: ^0.18.2+1
   equatable: ^2.0.3
 
   # The following adds the Cupertino Icons font to your application.
@@ -56,9 +52,6 @@ dependencies:
   cupertino_icons: ^1.0.2
 
   flutter_slidable: ^1.1.0
-
-dependency_overrides:
-  riverpod: ^1.0.3
 
 dev_dependencies:
   flutter_test:

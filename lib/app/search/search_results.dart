@@ -13,39 +13,20 @@ final searchBoxQueryResultProvider = FutureProvider<QueryResult>((ref) async {
   return ref.watch(queryResultProvider(query).future);
 });
 
-/// TODO: This can go away once riverpod 2.0.0 is out
-class SearchResultsFromProvider extends ConsumerStatefulWidget {
+class SearchResultsFromProvider extends ConsumerWidget {
   @override
-  _SearchResultsFromProviderState createState() =>
-      _SearchResultsFromProviderState();
-}
-
-class _SearchResultsFromProviderState
-    extends ConsumerState<SearchResultsFromProvider> {
-  QueryResult? previousQueryResult;
-
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final searchResults = ref.watch(searchBoxQueryResultProvider);
-    return searchResults.when(data: (result) {
-      previousQueryResult = result;
-      return SearchResults(result: result);
-    }, loading: () {
-      if (previousQueryResult != null) {
-        return Stack(
-          children: [
-            const LinearProgressIndicator(color: Colors.orange),
-            SearchResults(result: previousQueryResult!),
-          ],
-        );
-      } else {
-        return const Center(child: CircularProgressIndicator());
-      }
-    }, error: (error, trace) {
-      previousQueryResult = null;
-      print(trace);
-      return Text('Error: $error', style: const TextStyle(color: Colors.red));
-    });
+    return searchResults.when(
+      data: (result) => Stack(alignment: Alignment.topCenter, children: [
+        if (searchResults.isRefreshing) ...[
+          const LinearProgressIndicator(color: Colors.orange),
+        ],
+        SearchResults(result: result),
+      ]),
+      loading: () => const Center(child: CircularProgressIndicator()),
+      error: (error, _stacktrace) => Text('$error'),
+    );
   }
 }
 

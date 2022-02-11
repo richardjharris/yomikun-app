@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:yomikun/app/details/cached_query_result.dart';
 import 'package:yomikun/app/details/name_pie_chart.dart';
-import 'package:yomikun/core/localized_buildcontext.dart';
+import 'package:yomikun/localization/app_localizations_context.dart';
 import 'package:yomikun/models/namedata.dart';
 import 'package:yomikun/models/query_result.dart';
 import 'package:yomikun/app/details/name_treemap.dart';

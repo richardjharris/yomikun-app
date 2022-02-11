@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:yomikun/app/search/search_box.dart';
 import 'package:yomikun/app/search/search_results.dart';
-import 'package:yomikun/core/localized_buildcontext.dart';
+import 'package:yomikun/localization/app_localizations_context.dart';
 
 enum Commands { settings, bookmarks, makoto, makotoFixed }
 

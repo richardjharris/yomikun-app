@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:yomikun/app/settings/settings_service.dart';
-import 'package:yomikun/core/localized_buildcontext.dart';
+import 'package:yomikun/localization/app_localizations_context.dart';
 import 'settings_controller.dart';
 
 /// Displays the various settings that can be customized by the user.

@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sqflite/sqflite.dart';
-import 'package:yomikun/app/search/search_page.dart';
 import 'package:yomikun/app/settings/settings_controller.dart';
 import 'package:yomikun/app/settings/settings_service.dart';
 import 'package:yomikun/core/provider_logger.dart';
@@ -12,9 +11,8 @@ import 'package:yomikun/models/bookmark.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 import 'package:yomikun/routing/app_router.dart';
 import 'package:yomikun/services/bookmark_database.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:yomikun/core/localized_buildcontext.dart';
+import 'package:yomikun/localization/app_localizations_context.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
