@@ -1,0 +1,23 @@
+{
+  "appTitle": "Yomikun",
+  "@appTitle": {
+    "description": "The title of the application"
+  },
+  "noResultsFound": "No results found",
+  "@noResultsFound": {
+    "description": "Message shown when user has queried for a name but no results were found."
+  },
+  "settings": "Settings",
+  "theme": "Theme",
+  "systemTheme": "System",
+  "lightTheme": "Light",
+  "darkTheme": "Dark",
+  "appLanguage": "Application language",  
+  "englishLanguage": "English",
+  "japaneseLanguage": "Japanese",
+  "systemLanguage": "System",
+  "@systemLanguage": {
+    "description": "Option shown to denote using the system locale (language)"
+  },
+  "settingsTooltip": "Change settings"
+}

@@ -176,13 +176,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.2.1"
-  easy_dynamic_theme:
-    dependency: "direct main"
-    description:
-      name: easy_dynamic_theme
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "2.2.0"
   equatable:
     dependency: "direct main"
     description:

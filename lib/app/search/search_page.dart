@@ -1,10 +1,10 @@
-import 'package:easy_dynamic_theme/easy_dynamic_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:yomikun/app/search/search_box.dart';
 import 'package:yomikun/app/search/search_results.dart';
+import 'package:yomikun/core/localized_buildcontext.dart';
 
-enum Commands { darkMode, bookmarks, makoto, makotoFixed }
+enum Commands { settings, bookmarks, makoto, makotoFixed }
 
 /// The main search page: shows the search bar, mode switch, settings icon
 /// and dynamically updates search results in the body.
@@ -13,8 +13,6 @@ class SearchPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final bool isDarkMode = Theme.of(context).brightness == Brightness.dark;
-
     return Scaffold(
       appBar: AppBar(
         title: const SearchBox(),
@@ -26,10 +24,8 @@ class SearchPage extends HookConsumerWidget {
                   //icon: Icon(Icons.more_vert),
                   itemBuilder: (context) => <PopupMenuEntry<Commands>>[
                         PopupMenuItem(
-                          value: Commands.darkMode,
-                          child: Text(isDarkMode
-                              ? 'Enable light mode'
-                              : 'Enable dark mode'),
+                          value: Commands.settings,
+                          child: Text(context.loc.settings),
                         ),
                         const PopupMenuDivider(),
                         const PopupMenuItem(
@@ -52,23 +48,18 @@ class SearchPage extends HookConsumerWidget {
 
   void _onCommandTap(BuildContext context, Commands command) {
     switch (command) {
-      case Commands.darkMode:
-        _onToggleThemeTap(context);
+      case Commands.settings:
+        Navigator.restorablePushNamed(context, '/settings');
         break;
       case Commands.bookmarks:
-        Navigator.pushNamed(context, '/bookmarks');
+        Navigator.restorablePushNamed(context, '/bookmarks');
         break;
       case Commands.makoto:
-        Navigator.pushNamed(context, '/makoto');
+        Navigator.restorablePushNamed(context, '/makoto');
         break;
       case Commands.makotoFixed:
-        Navigator.pushNamed(context, '/makoto-fixed');
+        Navigator.restorablePushNamed(context, '/makoto-fixed');
         break;
     }
-  }
-
-  void _onToggleThemeTap(BuildContext context) {
-    EasyDynamicTheme.of(context)
-        .changeTheme(dark: Theme.of(context).brightness != Brightness.dark);
   }
 }

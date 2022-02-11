@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:yomikun/app/bookmarks/bookmarks_page.dart';
 import 'package:yomikun/app/fixed_result/fixed_result_page.dart';
 import 'package:yomikun/app/search/search_page.dart';
+import 'package:yomikun/app/settings/settings_view.dart';
 import 'package:yomikun/models/query.dart';
 import 'package:yomikun/routing/open_search_page.dart';
 
@@ -41,6 +42,9 @@ class AppRouter {
         final query = Query.fromMap(mapArgs);
         openSearchPage(context, ref, query);
         return null;
+      case SettingsView.routeName:
+        return MaterialPageRoute(
+            builder: (_) => const SettingsView(), settings: settings);
       default:
         assert(false, "Unknown route: ${settings.name}");
         return null;

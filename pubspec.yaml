@@ -18,12 +18,9 @@ dependencies:
   sqflite: ^2.0.2
   path_provider: any
   path: ^1.8.0
-  easy_dynamic_theme: ^2.2.0
-  collection: ^1.15.0
   synchronized: ^3.0.0
-
-  # Stream extension methods
   rxdart: ^0.27.3
+  collection: ^1.15.0
 
   # Visualisation
   fl_chart: ^0.41.0
