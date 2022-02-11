@@ -1,7 +1,5 @@
-import 'package:yomikun/models/namedata.dart';
-import 'package:yomikun/models/query_mode.dart';
-import 'package:yomikun/models/query_result.dart';
-import 'package:yomikun/services/name_database.dart';
+import 'package:yomikun/search/models.dart';
+import 'package:yomikun/search/services/name_database.dart';
 
 /// Utilities for parsing and querying names.
 
