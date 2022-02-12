@@ -4,6 +4,7 @@ import 'package:yomikun/core/widgets/error_box.dart';
 import 'package:yomikun/core/widgets/loading_box.dart';
 import 'package:yomikun/name_breakdown/name_breakdown_page.dart';
 import 'package:yomikun/name_list/name_list_page.dart';
+import 'package:yomikun/name_person/name_person_page.dart';
 import 'package:yomikun/search/providers/search_providers.dart';
 import 'package:yomikun/core/providers/core_providers.dart';
 import 'package:yomikun/search/models.dart';
@@ -47,6 +48,8 @@ class SearchResults extends StatelessWidget {
         return NameBreakdownPage(query: result);
       case QueryMode.wildcard:
         return NameListPage(results: result.results.toList());
+      case QueryMode.person:
+        return NamePersonPage(query: result);
       default:
         return ErrorBox("Unknown mode '${result.mode}'");
     }

@@ -1,5 +1,6 @@
+import 'package:yomikun/core/split.dart';
 import 'package:yomikun/search/models.dart';
-import 'package:yomikun/search/services/name_database.dart';
+import 'package:yomikun/core/services/name_database.dart';
 
 /// Utilities for parsing and querying names.
 
@@ -27,8 +28,6 @@ Future<List<QueryMode>> getAllowedQueryModes(
 
   KakiYomi ky = guessKY(text);
 
-  // TODO: This should be exact match, but might cause other problems.
-  // Need to think about it.
   final meiMatch = await db.hasPrefix(text, NamePart.mei, ky);
   final seiMatch = await db.hasPrefix(text, NamePart.sei, ky);
 
@@ -40,7 +39,6 @@ Future<List<QueryMode>> getAllowedQueryModes(
   } else {
     // Input does not match mei/sei but might be a full name without any spaces
     // in between. (Need to test this!)
-    /// TODO need to remember last user-selected mode and preserve that if possible
     return [QueryMode.mei, QueryMode.sei, QueryMode.person];
   }
 }
@@ -77,13 +75,23 @@ Future<QueryResult> performQuery(
   );
 }
 
+/// Treat [text] as a person name (optionally split with whitespace) and return
+/// possible interpretations of both the first and last name part together.
+///
+/// [NameData] records will have a [NamePart] of `sei` or `mei` depending on
+/// the part they belong to.
+///
+/// If splitting fails, will return an empty list.
 Future<List<NameData>> getPersonResult(NameDatabase db, String text) async {
-  // TODO: split name up into two parts or something. Use NamePart to distinguish
-  // the two data sets.
-  return const [
-    NameData(kaki: "松本", yomi: "まつもと", part: NamePart.sei),
-    NameData(kaki: "人志", yomi: "ひとし", part: NamePart.mei),
-  ];
+  final splitResult = await splitKanjiName(db, text);
+  if (splitResult == null) {
+    return [];
+  } else {
+    return [
+      ...await db.getResults(splitResult.sei, NamePart.sei, KakiYomi.kaki),
+      ...await db.getResults(splitResult.mei, NamePart.mei, KakiYomi.kaki),
+    ];
+  }
 }
 
 String _cleanInputText(String text) {

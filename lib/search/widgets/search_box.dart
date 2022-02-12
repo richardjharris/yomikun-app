@@ -45,7 +45,6 @@ class QueryModeButton extends HookConsumerWidget {
     final queryMode = ref.watch(queryModeProvider);
 
     // If query mode is mei/sei, indicates if the alternate mode also has results.
-    // TODO preserve previous value if loading.
     final bool queryModeAltAvailable =
         ref.watch(queryModeAltAvailableProvider).asData?.value ?? false;
 

@@ -51,17 +51,7 @@ class BasicNameRow extends StatelessWidget {
     return ListTile(
       title: Row(children: titleWidgets),
       subtitle: Row(children: [
-        Align(
-          child: SizedBox(
-              width: 60,
-              child: LinearProgressIndicator(
-                value: genderScore / 255,
-                valueColor:
-                    const AlwaysStoppedAnimation<Color>(Colors.pinkAccent),
-                backgroundColor: Colors.blueAccent,
-              )),
-          alignment: Alignment.topLeft,
-        ),
+        if (nameData.part == NamePart.mei) GenderBar(genderScore / 255),
         Expanded(
             child: Text(
           "M: ${addThousands(nameData.hitsMale)} F: ${addThousands(nameData.hitsFemale)} U: ${addThousands(nameData.hitsUnknown)}",
@@ -69,6 +59,26 @@ class BasicNameRow extends StatelessWidget {
           style: hitsStyle,
         )),
       ]),
+    );
+  }
+}
+
+class GenderBar extends StatelessWidget {
+  final double femaleRatio;
+
+  const GenderBar(this.femaleRatio);
+
+  @override
+  Widget build(BuildContext context) {
+    return Align(
+      child: SizedBox(
+          width: 60,
+          child: LinearProgressIndicator(
+            value: femaleRatio,
+            valueColor: const AlwaysStoppedAnimation<Color>(Colors.pinkAccent),
+            backgroundColor: Colors.blueAccent,
+          )),
+      alignment: Alignment.topLeft,
     );
   }
 }

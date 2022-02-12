@@ -27,6 +27,11 @@ class CachedQueryResult {
   /// Total hits across all results.
   int get totalHits => withAtLeastOneHit().map((e) => e.hitsTotal).sum;
 
+  /// Most popular entry (by hits) with a given part
+  NameData? getMostPopular(NamePart part) {
+    return sortedByHitsDescending().firstWhereOrNull((e) => e.part == part);
+  }
+
   bool get allZeroHits => totalHits == 0;
   bool get hasAtLeastOneHit => !allZeroHits;
 

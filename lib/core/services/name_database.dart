@@ -55,7 +55,7 @@ class NameDatabase {
   }
 
   /// Returns bool indicating if a name exists (kaki or yomi) for the given
-  /// part of speech.
+  /// part of speech, starting with [prefix].
   Future<bool> hasPrefix(String prefix, NamePart part, KakiYomi ky) async {
     var db = await database;
     var column = ky.name;
@@ -69,6 +69,24 @@ class NameDatabase {
       WHERE $column LIKE ? || '%' AND part = ?
       LIMIT 1
     ''', [prefix, _partId(part)]);
+    return Future.value(result.isNotEmpty);
+  }
+
+  /// Returns bool indicating if a name exists (kaki or yomi) for the given
+  /// part of speech, precisely equal to [match].
+  Future<bool> hasExact(String match, NamePart part, KakiYomi ky) async {
+    var db = await database;
+    var column = ky.name;
+
+    if (ky == KakiYomi.yomi) {
+      match = _kanaToRomaji(match);
+    }
+
+    final result = await db.rawQuery('''
+      SELECT 1 FROM names
+      WHERE $column = ? AND part = ?
+      LIMIT 1
+    ''', [match, _partId(part)]);
     return Future.value(result.isNotEmpty);
   }
 
