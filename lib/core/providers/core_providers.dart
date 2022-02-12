@@ -15,4 +15,5 @@ final queryResultProvider =
   return performQuery(db, query.text, query.mode);
 });
 
-final bookmarkDatabaseProvider = Provider((_) => BookmarkDatabase());
+final bookmarkDatabaseProvider =
+    ChangeNotifierProvider((_) => BookmarkDatabase());

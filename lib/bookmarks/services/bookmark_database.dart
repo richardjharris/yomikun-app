@@ -1,4 +1,5 @@
 import 'package:collection/collection.dart';
+import 'package:flutter/widgets.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:yomikun/bookmarks/models/bookmark.dart';
@@ -7,7 +8,7 @@ enum BookmarkSortMode { none, title, newestFirst, oldestFirst }
 
 /// Locally-persistent bookmark store.
 /// Bookmarks are represented as URLs (~routes) and titles.
-class BookmarkDatabase {
+class BookmarkDatabase extends ChangeNotifier {
   final Box<Bookmark> _box;
 
   static const hiveBox = 'bookmarks';
@@ -23,7 +24,7 @@ class BookmarkDatabase {
   }
 
   /// Add a bookmark by URL
-  Future<void> addBookmark(String url, String title) {
+  Future<void> addBookmark(String url, String title) async {
     _box.put(
         url,
         Bookmark(
@@ -31,12 +32,13 @@ class BookmarkDatabase {
           title: title,
           dateAdded: DateTime.now(),
         ));
-    return Future.value(null);
+    notifyListeners();
   }
 
   /// Remove a bookmark by URL
-  Future<void> removeBookmark(String url) {
-    return _box.delete(url);
+  Future<void> removeBookmark(String url) async {
+    await _box.delete(url);
+    notifyListeners();
   }
 
   /// Toggle the bookmarked status of this URL
