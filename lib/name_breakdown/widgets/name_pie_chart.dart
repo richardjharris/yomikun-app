@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:yomikun/core/utilities/dakuten.dart';
 import 'package:yomikun/core/utilities/number_format.dart';
-import 'package:yomikun/details/cached_query_result.dart';
+import 'package:yomikun/name_breakdown/cached_query_result.dart';
 import 'package:yomikun/search/models.dart';
 
 /// Displays a pie chart (actually a donut) showing the distribution of

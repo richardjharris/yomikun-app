@@ -2,19 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:yomikun/core/widgets/placeholder_message.dart';
 import 'package:yomikun/core/widgets/slidable_name_row.dart';
-import 'package:yomikun/details/cached_query_result.dart';
-import 'package:yomikun/details/widgets/name_pie_chart.dart';
-import 'package:yomikun/details/widgets/name_treemap.dart';
 import 'package:yomikun/localization/app_localizations_context.dart';
+import 'package:yomikun/name_breakdown/cached_query_result.dart';
+import 'package:yomikun/name_breakdown/widgets/name_pie_chart.dart';
+import 'package:yomikun/name_breakdown/widgets/name_treemap.dart';
 import 'package:yomikun/search/models.dart';
 import 'package:yomikun/settings/models/settings_models.dart';
 import 'package:yomikun/settings/settings_controller.dart';
 
-/// Show details for a particular name (kana/kanji) with visualisation.
-class DetailsPage extends ConsumerWidget {
+/// For a given name, show a breakdown of readings (if kanji) or kanji forms
+/// (if kana) sorted by most popular.
+class NameBreakdownPage extends ConsumerWidget {
   final QueryResult query;
 
-  const DetailsPage({Key? key, required this.query}) : super(key: key);
+  const NameBreakdownPage({Key? key, required this.query}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

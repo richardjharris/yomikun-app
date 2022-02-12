@@ -5,8 +5,8 @@ import 'package:yomikun/search/models/namedata.dart';
 
 /// Shows all name results matching a wildcard pattern or other filter.
 /// No visualisation.
-class BrowsePage extends StatelessWidget {
-  const BrowsePage({
+class NameListPage extends StatelessWidget {
+  const NameListPage({
     Key? key,
     required this.results,
   }) : super(key: key);

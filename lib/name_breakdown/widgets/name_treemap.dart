@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:treemap/treemap.dart';
-
-import 'package:yomikun/details/cached_query_result.dart';
+import 'package:yomikun/name_breakdown/cached_query_result.dart';
 import 'package:yomikun/search/models.dart';
 
 /// Displays a tree map showing the distribution of kanji for a given kana,
