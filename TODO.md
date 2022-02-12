@@ -49,3 +49,8 @@ Not sure about QueryMode.person atm.
 
 QueryModeButton highlight if no results - should preserve previous value
 when loading. May already be done in riverpod 2.
+
+We should not switch to querymode.person if there are no person results
+ - should stay on the last query mode.
+
+任天堂 seems to be parsed as a name, but no given name results.

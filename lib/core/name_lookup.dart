@@ -39,7 +39,7 @@ Future<List<QueryMode>> getAllowedQueryModes(
   } else {
     // Input does not match mei/sei but might be a full name without any spaces
     // in between. (Need to test this!)
-    return [QueryMode.mei, QueryMode.sei, QueryMode.person];
+    return [QueryMode.person];
   }
 }
 

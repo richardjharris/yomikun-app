@@ -25,7 +25,6 @@ class NameTreeMap extends ConsumerWidget {
     }
     final treeResults = results.withAtLeastOneHit();
     final total = results.totalHits.toDouble();
-    final highestValue = treeResults.first.hitsTotal;
 
     final formatPref =
         ref.watch(settingsControllerProvider.select((p) => p.nameFormat));
@@ -49,7 +48,7 @@ class NameTreeMap extends ConsumerWidget {
               final label = r.format(splitBy, formatPref);
 
               // Log curve from 10 (min) to 70 (max)
-              var fontSize = pow(r.hitsTotal / highestValue, 0.6) * 80.0 + 5.0;
+              var fontSize = pow(r.hitsTotal / total, 0.6) * 120.0 + 5.0;
 
               if (label.length > 1) {
                 fontSize = fontSize / (label.length * 0.5);

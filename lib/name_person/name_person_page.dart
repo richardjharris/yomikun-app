@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:yomikun/core/widgets/placeholder_message.dart';
 import 'package:yomikun/core/widgets/slidable_name_row.dart';
+import 'package:yomikun/localization/app_localizations_context.dart';
 import 'package:yomikun/name_breakdown/cached_query_result.dart';
 import 'package:yomikun/search/models.dart';
 import 'package:yomikun/settings/settings_controller.dart';
@@ -21,6 +23,12 @@ class NamePersonPage extends HookWidget {
     NameData? mei = _cache.getMostPopular(NamePart.mei);
 
     final selectedNamePart = useState(NamePart.sei);
+
+    // This widget is the last resort if there were no exact sei/mei results,
+    // so we need to handle the 'no matches at all' case.
+    if (_cache.noResults) {
+      return PlaceholderMessage(context.loc.noNameResultsFound, margin: 0);
+    }
 
     return Column(
       children: [
