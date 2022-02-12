@@ -65,6 +65,14 @@ class MyApp extends ConsumerWidget {
       onGenerateRoute: (settings) =>
           AppRouter.onGenerateRoute(context, ref, settings),
       initialRoute: '/',
+      // Show debug banner in custom position
+      builder: (context, child) => Banner(
+        message: 'DEBUG',
+        textDirection: TextDirection.ltr,
+        location: BannerLocation.bottomStart,
+        child: child,
+      ),
+      debugShowCheckedModeBanner: false,
     );
   }
 }
