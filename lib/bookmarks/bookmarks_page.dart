@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:yomikun/bookmarks/services/bookmark_database.dart';
 import 'package:yomikun/core/providers/core_providers.dart';
+import 'package:yomikun/core/widgets/placeholder_message.dart';
+import 'package:yomikun/localization/app_localizations_context.dart';
 
 import 'models/bookmark.dart';
 
@@ -26,7 +28,7 @@ class BookmarksPage extends ConsumerWidget {
           title: const Text('Bookmarks'),
         ),
         body: bookmarkListStream.when(
-            data: (data) => _bookmarkList(ref, data),
+            data: (data) => _bookmarkList(context, ref, data),
             loading: () => const Center(child: CircularProgressIndicator()),
             error: (e, stack) => Center(
                   child: Text('Error: $e'),
@@ -41,9 +43,10 @@ class BookmarksPage extends ConsumerWidget {
         ));
   }
 
-  Widget _bookmarkList(WidgetRef ref, List<Bookmark> items) {
+  Widget _bookmarkList(
+      BuildContext context, WidgetRef ref, List<Bookmark> items) {
     if (items.isEmpty) {
-      return _noBookmarks();
+      return PlaceholderMessage(context.loc.noBookmarksMessage);
     }
 
     return ListView.builder(
@@ -64,15 +67,5 @@ class BookmarksPage extends ConsumerWidget {
 
   void _deleteBookmark(WidgetRef ref, Bookmark bookmark) {
     ref.read(bookmarkDatabaseProvider).removeBookmark(bookmark.url);
-  }
-
-  Widget _noBookmarks() {
-    return Container(
-      margin: const EdgeInsets.all(15),
-      alignment: Alignment.center,
-      child: const Text(
-          'You have no bookmarks. To bookmark a name, slide it to the left and select "Bookmark"',
-          textAlign: TextAlign.center),
-    );
   }
 }

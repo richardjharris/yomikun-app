@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:yomikun/core/widgets/placeholder_message.dart';
 import 'package:yomikun/core/widgets/slidable_name_row.dart';
 import 'package:yomikun/details/cached_query_result.dart';
 import 'package:yomikun/details/widgets/name_pie_chart.dart';
@@ -21,8 +22,7 @@ class DetailsPage extends ConsumerWidget {
     final cache = CachedQueryResult(data: query.results);
 
     if (cache.noResults) {
-      return Center(
-          child: Text(context.loc.noResultsFound, textAlign: TextAlign.center));
+      return PlaceholderMessage(context.loc.noNameResultsFound, margin: 0);
     }
 
     return ListView(

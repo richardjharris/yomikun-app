@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:yomikun/core/widgets/placeholder_message.dart';
+import 'package:yomikun/localization/app_localizations_context.dart';
 
 final historyListProvider = StreamProvider((ref) => Stream.value([]));
 
@@ -15,20 +17,29 @@ class HistoryPage extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Bookmarks'),
+        title: Text(context.loc.bookmarks),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.delete),
+            tooltip: context.loc.clearHistory,
+            onPressed: () {
+              //ref.read(historyListProvider).value.clear();
+            },
+          ),
+        ],
       ),
       body: historyListStream.when(
-          data: (data) => _historyList(ref, data),
+          data: (data) => _historyList(context, ref, data),
           loading: () => const Center(child: CircularProgressIndicator()),
           error: (e, stack) => Center(
-                child: Text('Error: $e'),
+                child: Text('{$context.loc.error}: $e'),
               )),
     );
   }
 
-  Widget _historyList(WidgetRef ref, List<void> items) {
+  Widget _historyList(BuildContext context, WidgetRef ref, List<void> items) {
     if (items.isEmpty) {
-      return _noHistory();
+      return PlaceholderMessage(context.loc.noHistoryMessage);
     }
 
     return ListView.builder(
@@ -38,14 +49,6 @@ class HistoryPage extends ConsumerWidget {
           title: Text('$index'),
         );
       },
-    );
-  }
-
-  Widget _noHistory() {
-    return Container(
-      margin: const EdgeInsets.all(15),
-      alignment: Alignment.center,
-      child: const Text('No history to display', textAlign: TextAlign.center),
     );
   }
 }

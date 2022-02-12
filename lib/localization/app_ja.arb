@@ -1,6 +1,7 @@
 {
   "appTitle": "よみくん",
-  "noResultsFound": "検索条件に一致する結果が見つかりません",
+  "noNameResultsFound": "検索条件に一致する結果が見つかりません",
+  "error": "エラー",
   "bookmarks": "しおり",
   "history": "履歴",
   "settings": "設定",
@@ -16,5 +17,8 @@
   "nameVisualization": "名前の頻度を表すグラフ",
   "nameVizTreeMap": "箱グラフ",
   "nameVizPieChart": "円グラフ",
-  "nameVizNone": "無表示"
+  "nameVizNone": "無表示",
+  "clearHistory": "履歴を削除する",
+  "noBookmarksMessage": "しおりがありません。しおりを作るには、名前の行を左にスライドして「しおり」を押します。",
+  "noHistoryMessage": "閲覧履歴がここに表示されます。"
 }

@@ -18,10 +18,10 @@ class SearchResultsFromProvider extends ConsumerWidget {
     final searchResults = ref.watch(searchBoxQueryResultProvider);
     return searchResults.when(
       data: (result) => Stack(alignment: Alignment.topCenter, children: [
+        SearchResults(result: result),
         if (searchResults.isRefreshing) ...[
           const LinearProgressIndicator(color: Colors.orange),
         ],
-        SearchResults(result: result),
       ]),
       loading: () => const Center(child: CircularProgressIndicator()),
       error: (error, _stacktrace) => Text('$error'),

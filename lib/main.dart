@@ -64,6 +64,7 @@ class MyApp extends ConsumerWidget {
       themeMode: themeMode,
       onGenerateRoute: (settings) =>
           AppRouter.onGenerateRoute(context, ref, settings),
+      initialRoute: '/',
     );
   }
 }
