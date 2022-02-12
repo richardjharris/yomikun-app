@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:yomikun/explore/explore_page.dart';
 import 'package:yomikun/history/history_page.dart';
 import 'package:yomikun/router/open_search_page.dart';
 import 'package:yomikun/search/models.dart';
@@ -46,6 +47,8 @@ class AppRouter {
         return const BookmarksPage();
       case HistoryPage.routeName:
         return const HistoryPage();
+      case ExplorePage.routeName:
+        return const ExplorePage();
       case AppRoutes.makotoFixedPage:
         return const FixedResultPage(query: makotoQuery);
       case SettingsPage.routeName:
