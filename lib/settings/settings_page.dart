@@ -47,6 +47,17 @@ class SettingsPage extends ConsumerWidget {
                 AppLanguagePreference.ja: context.loc.japaneseLanguage,
               },
             ),
+            DropdownSettingsTile<NameFormatPreference>(
+              title: 'Name display format',
+              value: settings.nameFormat,
+              onChanged: settings.updateNameFormat,
+              items: const {
+                NameFormatPreference.hiragana: 'Hiragana',
+                NameFormatPreference.hiraganaBigAccent:
+                    'Hiragana (larger accents)',
+                NameFormatPreference.romaji: 'Romaji',
+              },
+            ),
             DropdownSettingsTile<NameVisualizationPreference>(
               title: context.loc.nameVisualization,
               value: settings.nameVisualization,

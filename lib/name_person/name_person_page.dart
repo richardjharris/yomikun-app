@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:yomikun/core/widgets/slidable_name_row.dart';
 import 'package:yomikun/name_breakdown/cached_query_result.dart';
 import 'package:yomikun/search/models.dart';
+import 'package:yomikun/settings/settings_controller.dart';
 
 /// Page to show results of a Person name lookup i.e. two parts
 class NamePersonPage extends HookWidget {
@@ -104,20 +105,24 @@ class NameGuessBox extends StatelessWidget {
   }
 }
 
-class _NamePartBox extends StatelessWidget {
+class _NamePartBox extends ConsumerWidget {
   final NameData name;
   final String? label;
 
   const _NamePartBox(this.name, {this.label});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final formatPref =
+        ref.watch(settingsControllerProvider.select((p) => p.nameFormat));
+
     return Column(
       children: [
         if (label != null)
           Text(label!, style: const TextStyle(fontWeight: FontWeight.bold)),
         Text(name.kaki, style: Theme.of(context).textTheme.headline3),
-        Text(name.yomi, style: Theme.of(context).textTheme.headline6),
+        Text(name.formatYomi(formatPref),
+            style: Theme.of(context).textTheme.headline6),
       ],
     );
   }

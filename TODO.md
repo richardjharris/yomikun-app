@@ -1,20 +1,27 @@
-Implement 'Flutter Starter Project' stuff
- - per-feature directories
-
-Settings page?
- - romaji vs katakana
- - highlight tenten
- - pie chart vs. treemap vs. none?
- - dark/light mode
-
 Bookmarks:
  - bookmark entire page or individual item (?)
  - add/remove
 
-Treemap:
- - dakuten, locale
- - accept ky + results or similar, to cache sorting and filtering. or use riverpod
-   with overrides?
+History:
+ - record history using debounce in results page
+ - clear history
+ - group by time range a la Pleco
+
+NameBreakdown:
+ - gender split
+ - fictional count
+
+Explore:
+ - most popular names
+ - most popular kanji
+ - unisex names
+ - kanji allowed in names
+ - kanji associated with either gender
+
+
+## Name listing
+
+Show some kind of proportional bar to show usage.
 
 ## Person view
 
@@ -22,7 +29,7 @@ Switch automatically.
 
 Show small '?' if there are many suitable readings.
 
-Make sure it uses the same localisation, romaji, dakuten etc.
+Handle kana/romaji.
 
 ## Redoing the search logic
 

@@ -67,4 +67,23 @@ class SettingsService {
     final SharedPreferences prefs = await _prefs;
     await prefs.setString('nameVisualization', nameVisualization.name);
   }
+
+  Future<NameFormatPreference> nameFormat() async {
+    final SharedPreferences prefs = await _prefs;
+    final String nameFormat = prefs.getString('nameFormat') ?? '';
+    switch (nameFormat) {
+      case 'romaji':
+        return NameFormatPreference.romaji;
+      case 'hiraganaBigAccent':
+        return NameFormatPreference.hiraganaBigAccent;
+      case 'hiragana':
+      default:
+        return NameFormatPreference.hiragana;
+    }
+  }
+
+  Future<void> updateNameFormat(NameFormatPreference nameFormat) async {
+    final SharedPreferences prefs = await _prefs;
+    await prefs.setString('nameFormat', nameFormat.name);
+  }
 }

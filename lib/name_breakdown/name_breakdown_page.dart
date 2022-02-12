@@ -21,6 +21,7 @@ class NameBreakdownPage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final viz = ref.watch(settingsControllerProvider).nameVisualization;
     final cache = CachedQueryResult(data: query.results);
+    final inverseKy = query.ky!.inverse();
 
     if (cache.noResults) {
       return PlaceholderMessage(context.loc.noNameResultsFound, margin: 0);
@@ -32,14 +33,15 @@ class NameBreakdownPage extends ConsumerWidget {
             viz == NameVisualizationPreference.treeMap) ...[
           Container(
             constraints: const BoxConstraints(maxHeight: 400, maxWidth: 400),
-            child: NameTreeMap(results: cache, ky: query.ky!),
+            child: NameTreeMap(results: cache, splitBy: inverseKy),
+            margin: const EdgeInsets.symmetric(vertical: 10),
           ),
         ],
         if (cache.hasAtLeastOneHit &&
             viz == NameVisualizationPreference.pieChart) ...[
           Container(
             constraints: const BoxConstraints(maxHeight: 400, maxWidth: 400),
-            child: NamePieChart(results: cache, ky: query.ky!),
+            child: NamePieChart(results: cache, splitBy: inverseKy),
             margin: const EdgeInsets.all(10),
           ),
         ],
@@ -49,7 +51,7 @@ class NameBreakdownPage extends ConsumerWidget {
               data: row,
               key: ValueKey(row.key()),
               groupTag: cache,
-              showOnly: query.ky!.inverse()),
+              showOnly: inverseKy),
       ],
     );
   }

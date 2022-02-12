@@ -1,3 +1,8 @@
+import 'package:kana_kit/kana_kit.dart';
+import 'package:yomikun/core/providers/core_providers.dart';
+import 'package:yomikun/core/utilities/dakuten.dart';
+import 'package:yomikun/settings/models/settings_models.dart';
+
 enum NamePart { mei, sei, unknown, person }
 
 enum KakiYomi { kaki, yomi }
@@ -37,6 +42,25 @@ class NameData {
 
   String key() {
     return kaki + "|" + yomi + "|" + part.toString();
+  }
+
+  String format(KakiYomi ky, NameFormatPreference pref) {
+    return ky == KakiYomi.kaki ? kaki : formatYomi(pref);
+  }
+
+  String formatYomi(NameFormatPreference pref) {
+    return _format(yomi, pref);
+  }
+
+  String _format(String name, NameFormatPreference pref) {
+    switch (pref) {
+      case NameFormatPreference.romaji:
+        return kanaKit.toRomaji(name);
+      case NameFormatPreference.hiragana:
+        return name;
+      case NameFormatPreference.hiraganaBigAccent:
+        return expandDakuten(name);
+    }
   }
 
   int get hitsUnknown => hitsTotal - hitsMale - hitsFemale;

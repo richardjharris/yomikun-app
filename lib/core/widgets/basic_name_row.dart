@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:yomikun/core/utilities/number_format.dart';
 import 'package:yomikun/search/models.dart';
+import 'package:yomikun/settings/settings_controller.dart';
 
 /// Shows name data with no interactivity.
-class BasicNameRow extends StatelessWidget {
+class BasicNameRow extends ConsumerWidget {
   const BasicNameRow({
     required Key key,
     required this.nameData,
@@ -14,7 +16,10 @@ class BasicNameRow extends StatelessWidget {
   final KakiYomi? showOnly;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final formatPref =
+        ref.watch(settingsControllerProvider.select((p) => p.nameFormat));
+
     // Styles depend on current theme (light/dark)
     var theme = Theme.of(context).primaryTextTheme;
     var isDark = Theme.of(context).brightness == Brightness.dark;
@@ -44,7 +49,9 @@ class BasicNameRow extends StatelessWidget {
     } else if (showOnly == KakiYomi.kaki) {
       titleWidgets = [Text(nameData.kaki, locale: const Locale('ja'))];
     } else {
-      titleWidgets = [Text(nameData.yomi, locale: const Locale('ja'))];
+      titleWidgets = [
+        Text(nameData.formatYomi(formatPref), locale: const Locale('ja'))
+      ];
     }
 
     int genderScore = nameData.genderMlScore;

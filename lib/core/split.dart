@@ -35,7 +35,7 @@ Future<SplitResult?> splitKanjiName(NameDatabase db, String name,
   if (parts.length > 1) {
     if (parts.length != 2) {
       // Ignore the middle parts
-      parts = [parts[0], parts[-1]];
+      parts = [parts[0], parts[parts.length - 1]];
     }
     return SplitResult(sei: parts[0], mei: parts[1]);
   }

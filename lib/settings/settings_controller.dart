@@ -18,6 +18,7 @@ class SettingsController with ChangeNotifier {
   late ThemeMode _themeMode;
   late AppLanguagePreference _appLanguage;
   late NameVisualizationPreference _nameVisualization;
+  late NameFormatPreference _nameFormat;
 
   /// Returns the user's preferred [ThemeMode].
   ThemeMode get themeMode => _themeMode;
@@ -28,10 +29,14 @@ class SettingsController with ChangeNotifier {
   /// Returns the user's preferred visualisation for name frequency.
   NameVisualizationPreference get nameVisualization => _nameVisualization;
 
+  /// Returns the user's preferred format for names (kana, romaji)
+  NameFormatPreference get nameFormat => _nameFormat;
+
   Future<void> loadSettings() async {
     _themeMode = await _settingsService.themeMode();
     _appLanguage = await _settingsService.appLanguage();
     _nameVisualization = await _settingsService.nameVisualization();
+    _nameFormat = await _settingsService.nameFormat();
 
     notifyListeners();
   }
@@ -62,6 +67,15 @@ class SettingsController with ChangeNotifier {
     _nameVisualization = nameVisualization;
     notifyListeners();
     await _settingsService.updateNameVisualization(nameVisualization);
+  }
+
+  Future<void> updateNameFormat(NameFormatPreference? nameFormat) async {
+    if (nameFormat == null) return;
+    if (nameFormat == _nameFormat) return;
+
+    _nameFormat = nameFormat;
+    notifyListeners();
+    await _settingsService.updateNameFormat(nameFormat);
   }
 
   Locale? appLocale() {

@@ -1,18 +1,20 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
-import 'package:yomikun/core/utilities/dakuten.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:yomikun/core/utilities/number_format.dart';
 import 'package:yomikun/name_breakdown/cached_query_result.dart';
 import 'package:yomikun/search/models.dart';
+import 'package:yomikun/settings/models/settings_models.dart';
+import 'package:yomikun/settings/settings_controller.dart';
 
 /// Displays a pie chart (actually a donut) showing the distribution of
 /// kanji for a given kana, or kana for a given kanji.
-class NamePieChart extends StatelessWidget {
+class NamePieChart extends ConsumerWidget {
   final CachedQueryResult results;
-  final KakiYomi ky;
+  final KakiYomi splitBy;
 
-  const NamePieChart({required this.results, required this.ky});
+  const NamePieChart({required this.results, required this.splitBy});
 
   static final List<Color> pieChartColorsLightMode = [
     Colors.green,
@@ -45,12 +47,15 @@ class NamePieChart extends StatelessWidget {
   }).toList();
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final formatPref =
+        ref.watch(settingsControllerProvider.select((p) => p.nameFormat));
+
     return AspectRatio(
       aspectRatio: 1.0,
       child: PieChart(
         PieChartData(
-          sections: pieChartSections(context),
+          sections: pieChartSections(context, formatPref),
           //pieTouchData: PieTouchData(touchCallback: (pieTouchResponse) {
           //  print(pieTouchResponse);
           //}),
@@ -59,7 +64,8 @@ class NamePieChart extends StatelessWidget {
     );
   }
 
-  List<PieChartSectionData> pieChartSections(BuildContext context) {
+  List<PieChartSectionData> pieChartSections(
+      BuildContext context, NameFormatPreference formatPref) {
     List<NameData> pieResults = results.withAtLeastOneHit().toList();
     // Sort results by name. Sorting by hits desc leads to the small items being
     // bunched together, and their labels cannot be read.
@@ -85,7 +91,7 @@ class NamePieChart extends StatelessWidget {
     }
 
     var sections = pieResults.mapIndexed((i, row) {
-      var label = ky == KakiYomi.yomi ? row.kaki : row.yomi;
+      var label = row.format(splitBy, formatPref);
       //var sizeMult = (row.hitsTotal.toDouble() / total).clamp(0.1, 1.0);
 
       return PieChartSectionData(
@@ -94,7 +100,7 @@ class NamePieChart extends StatelessWidget {
         title: '',
         radius: 100,
         badgeWidget: row.hitsTotal >= threshold
-            ? Text("${expandDakuten(label)} (${addThousands(row.hitsTotal)})",
+            ? Text("$label (${addThousands(row.hitsTotal)})",
                 locale: const Locale('ja'))
             : null,
       );
