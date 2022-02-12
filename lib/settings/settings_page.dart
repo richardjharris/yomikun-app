@@ -19,51 +19,49 @@ class SettingsPage extends ConsumerWidget {
     final settings = ref.watch(settingsControllerProvider);
 
     return Scaffold(
-        appBar: AppBar(
-          title: Text(context.loc.settings),
-        ),
-        body: Padding(
-          padding: const EdgeInsets.all(20),
-          child: Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                DropdownSettingsTile<ThemeMode>(
-                  title: context.loc.theme,
-                  value: settings.themeMode,
-                  onChanged: settings.updateThemeMode,
-                  items: {
-                    ThemeMode.system: context.loc.systemTheme,
-                    ThemeMode.light: context.loc.lightTheme,
-                    ThemeMode.dark: context.loc.darkTheme,
-                  },
-                ),
-                DropdownSettingsTile<AppLanguagePreference>(
-                  title: context.loc.appLanguage,
-                  value: settings.appLanguage,
-                  onChanged: settings.updateAppLanguage,
-                  items: {
-                    AppLanguagePreference.system: context.loc.systemLanguage,
-                    AppLanguagePreference.en: context.loc.englishLanguage,
-                    AppLanguagePreference.ja: context.loc.japaneseLanguage,
-                  },
-                ),
-                DropdownSettingsTile<NameVisualizationPreference>(
-                  title: context.loc.nameVisualization,
-                  value: settings.nameVisualization,
-                  onChanged: settings.updateNameVisualization,
-                  items: {
-                    NameVisualizationPreference.treeMap:
-                        context.loc.nameVizTreeMap,
-                    NameVisualizationPreference.pieChart:
-                        context.loc.nameVizPieChart,
-                    NameVisualizationPreference.none: context.loc.nameVizNone,
-                  },
-                ),
-              ],
+      appBar: AppBar(
+        title: Text(context.loc.settings),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(20),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            DropdownSettingsTile<ThemeMode>(
+              title: context.loc.theme,
+              value: settings.themeMode,
+              onChanged: settings.updateThemeMode,
+              items: {
+                ThemeMode.system: context.loc.systemTheme,
+                ThemeMode.light: context.loc.lightTheme,
+                ThemeMode.dark: context.loc.darkTheme,
+              },
             ),
-          ),
-        ));
+            DropdownSettingsTile<AppLanguagePreference>(
+              title: context.loc.appLanguage,
+              value: settings.appLanguage,
+              onChanged: settings.updateAppLanguage,
+              items: {
+                AppLanguagePreference.system: context.loc.systemLanguage,
+                AppLanguagePreference.en: context.loc.englishLanguage,
+                AppLanguagePreference.ja: context.loc.japaneseLanguage,
+              },
+            ),
+            DropdownSettingsTile<NameVisualizationPreference>(
+              title: context.loc.nameVisualization,
+              value: settings.nameVisualization,
+              onChanged: settings.updateNameVisualization,
+              items: {
+                NameVisualizationPreference.treeMap: context.loc.nameVizTreeMap,
+                NameVisualizationPreference.pieChart:
+                    context.loc.nameVizPieChart,
+                NameVisualizationPreference.none: context.loc.nameVizNone,
+              },
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }
 
