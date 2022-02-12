@@ -6,7 +6,7 @@ class ErrorBox extends StatelessWidget {
   final Object error;
   final StackTrace? stackTrace;
 
-  const ErrorBox(this.error, this.stackTrace);
+  const ErrorBox(this.error, [this.stackTrace]);
 
   @override
   Widget build(BuildContext context) {

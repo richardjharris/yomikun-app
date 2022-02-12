@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:yomikun/browse/browse_page.dart';
 import 'package:yomikun/core/widgets/error_box.dart';
+import 'package:yomikun/core/widgets/loading_box.dart';
 import 'package:yomikun/details/details_page.dart';
 import 'package:yomikun/search/providers/search_providers.dart';
 import 'package:yomikun/core/providers/core_providers.dart';
@@ -24,8 +25,8 @@ class SearchResultsFromProvider extends ConsumerWidget {
           const LinearProgressIndicator(color: Colors.orange),
         ],
       ]),
-      loading: () => const Center(child: CircularProgressIndicator()),
-      error: (error, _stacktrace) => Text('$error'),
+      loading: () => const LoadingBox(),
+      error: (error, stack) => ErrorBox(error, stack),
     );
   }
 }

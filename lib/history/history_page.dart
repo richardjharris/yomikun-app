@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:yomikun/core/widgets/error_box.dart';
+import 'package:yomikun/core/widgets/loading_box.dart';
 import 'package:yomikun/core/widgets/placeholder_message.dart';
 import 'package:yomikun/localization/app_localizations_context.dart';
 
@@ -29,11 +31,10 @@ class HistoryPage extends ConsumerWidget {
         ],
       ),
       body: historyListStream.when(
-          data: (data) => _historyList(context, ref, data),
-          loading: () => const Center(child: CircularProgressIndicator()),
-          error: (e, stack) => Center(
-                child: Text('{$context.loc.error}: $e'),
-              )),
+        data: (data) => _historyList(context, ref, data),
+        loading: () => const LoadingBox(),
+        error: (e, stack) => ErrorBox(e, stack),
+      ),
     );
   }
 
