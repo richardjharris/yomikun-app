@@ -102,12 +102,15 @@ class NameGuessBox extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       margin: const EdgeInsets.all(10),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          Flexible(child: _NamePartBox(sei, label: 'Surname')),
-          Flexible(child: _NamePartBox(mei, label: 'Given name')),
-        ],
+      child: Padding(
+        padding: const EdgeInsets.all(10),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            Flexible(child: _NamePartBox(sei, label: context.loc.surname)),
+            Flexible(child: _NamePartBox(mei, label: context.loc.givenName)),
+          ],
+        ),
       ),
     );
   }

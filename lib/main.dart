@@ -67,7 +67,7 @@ class MyApp extends ConsumerWidget {
       initialRoute: '/',
       // Show debug banner in custom position
       builder: (context, child) => Banner(
-        message: 'DEBUG',
+        message: context.loc.debugBanner,
         textDirection: TextDirection.ltr,
         location: BannerLocation.bottomStart,
         child: child,

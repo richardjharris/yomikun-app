@@ -3,6 +3,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:yomikun/core/widgets/error_box.dart';
 import 'package:yomikun/core/widgets/loading_box.dart';
 import 'package:yomikun/core/widgets/placeholder_message.dart';
+import 'package:yomikun/localization/app_localizations_context.dart';
 import 'package:yomikun/name_breakdown/name_breakdown_page.dart';
 import 'package:yomikun/name_list/name_list_page.dart';
 import 'package:yomikun/name_person/name_person_page.dart';
@@ -44,7 +45,7 @@ class SearchResults extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (result.text.isEmpty) {
-      return const PlaceholderMessage('Enter a name in kanji or kana');
+      return PlaceholderMessage(context.loc.enterNameInKanjiOrKana);
     }
 
     switch (result.mode) {

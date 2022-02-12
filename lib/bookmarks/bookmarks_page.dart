@@ -13,6 +13,7 @@ final bookmarkSortModeProvider = Provider((_) => BookmarkSortMode.newestFirst);
 final bookmarkListProvider = StreamProvider((ref) {
   final sortMode = ref.watch(bookmarkSortModeProvider);
   final bookmarkDatabase = ref.watch(bookmarkDatabaseProvider);
+  // TODO no need for stream as databaseProvider refreshes on change.
   return bookmarkDatabase.watchBookmarkList(sortMode: sortMode);
 });
 
@@ -25,7 +26,6 @@ class BookmarksPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final bookmarkListStream = ref.watch(bookmarkListProvider);
-    print(bookmarkListStream);
 
     return Scaffold(
       appBar: AppBar(
@@ -45,20 +45,29 @@ class BookmarksPage extends ConsumerWidget {
       return PlaceholderMessage(context.loc.noBookmarksMessage);
     }
 
-    return ListView.builder(
-      itemCount: items.length,
-      itemBuilder: (BuildContext context, int index) {
-        final Bookmark bookmark = items[index];
-        return ListTile(
-          title: Text(bookmark.title),
-          subtitle: Text(bookmark.url),
-          trailing: IconButton(
-            icon: const Icon(Icons.star),
-            onPressed: () => _deleteBookmark(ref, bookmark),
-          ),
-        );
-      },
+    return Container(
+      margin: const EdgeInsets.symmetric(vertical: 10),
+      child: ListView.separated(
+        separatorBuilder: (_context, _index) => const Divider(),
+        itemCount: items.length,
+        itemBuilder: (BuildContext context, int index) {
+          final Bookmark bookmark = items[index];
+          return ListTile(
+            title: Text(bookmark.title),
+            trailing: IconButton(
+              icon: const Icon(Icons.star),
+              onPressed: () => _deleteBookmark(ref, bookmark),
+            ),
+            onTap: () => _openBookmark(context, bookmark),
+          );
+        },
+      ),
     );
+  }
+
+  void _openBookmark(BuildContext context, Bookmark bookmark) {
+    print(bookmark.url);
+    Navigator.of(context).restorablePushNamed(bookmark.url);
   }
 
   void _deleteBookmark(WidgetRef ref, Bookmark bookmark) {

@@ -37,7 +37,13 @@ class AppRouter {
   // Convenience method that can return either a Widget, Route or null.
   static dynamic _generateRoute(
       BuildContext context, WidgetRef ref, RouteSettings settings) {
-    final args = settings.arguments;
+    var args = (settings.arguments ?? {}) as Map<dynamic, dynamic>;
+
+    // We allow route paths to have query string parameters, which are converted
+    // into a Map of arguments.
+    final settingsUri = Uri.parse(settings.name!);
+    args.addAll(settingsUri.queryParameters);
+
     switch (settings.name) {
       case SearchPage.routeName:
         return const SearchPage();
@@ -55,12 +61,10 @@ class AppRouter {
         openSearchPage(context, ref, makotoQuery);
         return null;
       case FixedResultPage.routeName:
-        final mapArgs = args as Map<String, dynamic>;
-        final query = Query.fromMap(mapArgs);
+        final query = Query.fromMap(args);
         return FixedResultPage(query: query);
       case AppRoutes.search:
-        final mapArgs = args as Map<String, dynamic>;
-        final query = Query.fromMap(mapArgs);
+        final query = Query.fromMap(args);
         openSearchPage(context, ref, query);
         return null;
       default:

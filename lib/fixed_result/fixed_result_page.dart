@@ -24,11 +24,14 @@ class FixedResultPage extends HookConsumerWidget {
       appBar: AppBar(
         title: Text(query.text),
         actions: <Widget>[
-          IconButton(
-            icon: const Icon(Icons.search),
-            onPressed: () {
-              openSearchPage(context, ref, query);
-            },
+          Padding(
+            padding: const EdgeInsets.only(right: 10.0),
+            child: IconButton(
+              icon: const Icon(Icons.search),
+              onPressed: () {
+                openSearchPage(context, ref, query);
+              },
+            ),
           ),
         ],
       ),

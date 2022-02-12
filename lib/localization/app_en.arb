@@ -3,10 +3,13 @@
   "@appTitle": {
     "description": "The title of the application"
   },
+  "debugBanner": "DEBUG",
   "noNameResultsFound": "No results found",
   "@noNameResultsFound": {
     "description": "Message shown when user has queried for a name but no results were found."
   },
+  "enterNameInKanjiOrKana": "Enter a name in kanji or kana",
+  "changeQueryModeTooltip": "Change query mode",
   "error": "Error",
   "bookmarks": "Bookmarks",
   "history": "History",
@@ -16,7 +19,7 @@
   "systemTheme": "System",
   "lightTheme": "Light",
   "darkTheme": "Dark",
-  "appLanguage": "Application language",  
+  "appLanguage": "Application language",
   "englishLanguage": "English",
   "japaneseLanguage": "Japanese",
   "systemLanguage": "System",
@@ -28,6 +31,10 @@
   "nameVizTreeMap": "Boxes",
   "nameVizPieChart": "Pie chart",
   "nameVizNone": "None",
+  "nameDisplayFormat": "Name display format",
+  "nameDisplayRomaji": "Romaji",
+  "nameDisplayHiragana": "Hiragana",
+  "nameDisplayHiraganaBigAccent": "Hiragana (larger accents)",
   "clearHistory": "Clear history",
   "noBookmarksMessage": "You have no bookmarks. To bookmark a name, slide it to the left and select \"Bookmark\"",
   "noHistoryMessage": "No history to display.",

@@ -48,14 +48,14 @@ class SettingsPage extends ConsumerWidget {
               },
             ),
             DropdownSettingsTile<NameFormatPreference>(
-              title: 'Name display format',
+              title: context.loc.nameDisplayFormat,
               value: settings.nameFormat,
               onChanged: settings.updateNameFormat,
-              items: const {
-                NameFormatPreference.hiragana: 'Hiragana',
+              items: {
+                NameFormatPreference.hiragana: context.loc.nameDisplayHiragana,
                 NameFormatPreference.hiraganaBigAccent:
-                    'Hiragana (larger accents)',
-                NameFormatPreference.romaji: 'Romaji',
+                    context.loc.nameDisplayHiraganaBigAccent,
+                NameFormatPreference.romaji: context.loc.nameDisplayRomaji,
               },
             ),
             DropdownSettingsTile<NameVisualizationPreference>(

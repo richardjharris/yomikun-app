@@ -64,7 +64,6 @@ class BookmarkDatabase extends ChangeNotifier {
   List<Bookmark> getBookmarks(
       {BookmarkSortMode sortMode = BookmarkSortMode.none}) {
     var bookmarks = _box.values.toList();
-    print(bookmarks);
 
     switch (sortMode) {
       case BookmarkSortMode.none:

@@ -18,6 +18,10 @@ Explore:
  - kanji allowed in names
  - kanji associated with either gender
 
+## Bookmarks
+
+Use slideable, for consistency with the rest of the code,
+and also prevents accidental un-bookmarking.
 
 ## Name listing
 

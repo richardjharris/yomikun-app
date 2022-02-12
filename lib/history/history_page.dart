@@ -19,14 +19,17 @@ class HistoryPage extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(context.loc.bookmarks),
+        title: Text(context.loc.history),
         actions: [
-          IconButton(
-            icon: const Icon(Icons.delete),
-            tooltip: context.loc.clearHistory,
-            onPressed: () {
-              //ref.read(historyListProvider).value.clear();
-            },
+          Padding(
+            padding: const EdgeInsets.only(right: 10.0),
+            child: IconButton(
+              icon: const Icon(Icons.delete),
+              tooltip: context.loc.clearHistory,
+              onPressed: () {
+                //ref.read(historyListProvider).value.clear();
+              },
+            ),
           ),
         ],
       ),

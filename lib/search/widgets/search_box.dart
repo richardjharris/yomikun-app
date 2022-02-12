@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:yomikun/localization/app_localizations_context.dart';
 import 'package:yomikun/search/providers/search_providers.dart';
 import 'package:yomikun/search/models.dart';
 
@@ -55,7 +56,7 @@ class QueryModeButton extends HookConsumerWidget {
               : null),
       onPressed: () => advanceMode(ref),
       iconSize: 30,
-      tooltip: 'Change query mode',
+      tooltip: context.loc.changeQueryModeTooltip,
     );
   }
 

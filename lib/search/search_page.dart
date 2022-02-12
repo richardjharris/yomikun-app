@@ -4,7 +4,7 @@ import 'package:yomikun/localization/app_localizations_context.dart';
 import 'package:yomikun/search/widgets/search_box.dart';
 import 'package:yomikun/search/widgets/search_results.dart';
 
-enum Commands { settings, bookmarks, makoto, makotoFixed, history }
+enum Commands { settings, bookmarks, makoto, makotoFixed, history, explore }
 
 /// The main search page: shows the search bar, mode switch, settings icon
 /// and dynamically updates search results in the body.
@@ -36,6 +36,9 @@ class SearchPage extends HookConsumerWidget {
                         PopupMenuItem(
                             value: Commands.history,
                             child: Text(context.loc.history)),
+                        PopupMenuItem(
+                            value: Commands.explore,
+                            child: Text(context.loc.explore)),
                         const PopupMenuItem(
                             value: Commands.makoto, child: Text('Makoto')),
                         const PopupMenuItem(
@@ -61,6 +64,9 @@ class SearchPage extends HookConsumerWidget {
         break;
       case Commands.history:
         Navigator.restorablePushNamed(context, '/history');
+        break;
+      case Commands.explore:
+        Navigator.restorablePushNamed(context, '/explore');
         break;
       case Commands.makoto:
         Navigator.restorablePushNamed(context, '/makoto');

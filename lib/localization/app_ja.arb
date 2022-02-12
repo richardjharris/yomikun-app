@@ -1,6 +1,9 @@
 {
   "appTitle": "よみくん",
+  "debugBanner": "デバッグ",
   "noNameResultsFound": "検索条件に一致する結果が見つかりません。",
+  "enterNameInKanjiOrKana": "漢字もしくは仮名で名前を入力してください",
+  "changeQueryModeTooltip": "検索モードを変える",
   "error": "エラー",
   "bookmarks": "しおり",
   "history": "履歴",
@@ -19,10 +22,14 @@
   "nameVizTreeMap": "箱グラフ",
   "nameVizPieChart": "円グラフ",
   "nameVizNone": "無表示",
+  "nameDisplayFormat": "名前の読みの表示",
+  "nameDisplayRomaji": "ローマ字",
+  "nameDisplayHiragana": "ひらがな",
+  "nameDisplayHiraganaBigAccent": "ひらがな (半・濁点を強調)",
   "clearHistory": "履歴を削除する",
   "noBookmarksMessage": "しおりがありません。しおりを作るには、名前の行を左にスライドして「しおり」を押します。",
   "noHistoryMessage": "閲覧履歴がここに表示されます。",
-  "allPossibleReadings": "全ての読み：",
+  "allPossibleReadings": "全ての読み",
   "surname": "姓",
   "givenName": "名"
 }
