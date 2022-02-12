@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:yomikun/core/widgets/slidable_name_row.dart';
+import 'package:yomikun/localization/app_localizations_context.dart';
 import 'package:yomikun/search/models/namedata.dart';
 
 /// Shows all name results matching a wildcard pattern or other filter.
@@ -16,9 +17,8 @@ class NameListPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (results.isEmpty) {
-      return const ListTile(
-        title: Text('No results found'),
-        subtitle: Text("No results were found for the selected search term."),
+      return ListTile(
+        title: Text(context.loc.noNameResultsFound),
       );
     }
 

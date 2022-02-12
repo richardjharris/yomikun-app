@@ -35,7 +35,7 @@ class NamePersonPage extends HookWidget {
         if (mei != null && sei != null) ...[
           NameGuessBox(sei, mei),
           const Divider(),
-          const Text('All possible readings:'),
+          Text(context.loc.allPossibleReadings),
         ],
         const SizedBox(height: 12),
         NamePartSwitchButtons(
@@ -74,13 +74,13 @@ class NamePartSwitchButtons extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final isSelected = [value == NamePart.sei, value == NamePart.mei];
     return ToggleButtons(
-      children: const [
+      children: [
         Padding(
-            padding: EdgeInsets.symmetric(horizontal: 8),
-            child: Text('Surname')),
+            padding: const EdgeInsets.symmetric(horizontal: 8),
+            child: Text(context.loc.surname)),
         Padding(
-            padding: EdgeInsets.symmetric(horizontal: 8),
-            child: Text('Given name')),
+            padding: const EdgeInsets.symmetric(horizontal: 8),
+            child: Text(context.loc.givenName)),
       ],
       onPressed: (int index) {
         onChanged(index == 0 ? NamePart.sei : NamePart.mei);

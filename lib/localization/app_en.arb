@@ -30,5 +30,8 @@
   "nameVizNone": "None",
   "clearHistory": "Clear history",
   "noBookmarksMessage": "You have no bookmarks. To bookmark a name, slide it to the left and select \"Bookmark\"",
-  "noHistoryMessage": "No history to display."
+  "noHistoryMessage": "No history to display.",
+  "allPossibleReadings": "All possible readings:",
+  "surname": "Surname",
+  "givenName": "Given name"
 }

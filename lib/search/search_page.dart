@@ -30,11 +30,12 @@ class SearchPage extends HookConsumerWidget {
                           child: Text(context.loc.settings),
                         ),
                         const PopupMenuDivider(),
-                        const PopupMenuItem(
+                        PopupMenuItem(
                             value: Commands.bookmarks,
-                            child: Text('Bookmarks')),
-                        const PopupMenuItem(
-                            value: Commands.history, child: Text('History')),
+                            child: Text(context.loc.bookmarks)),
+                        PopupMenuItem(
+                            value: Commands.history,
+                            child: Text(context.loc.history)),
                         const PopupMenuItem(
                             value: Commands.makoto, child: Text('Makoto')),
                         const PopupMenuItem(

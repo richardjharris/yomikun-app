@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:treemap/treemap.dart';
+import 'package:yomikun/localization/app_localizations_context.dart';
 import 'package:yomikun/name_breakdown/cached_query_result.dart';
 import 'package:yomikun/search/models.dart';
 import 'package:yomikun/settings/settings_controller.dart';
@@ -21,7 +22,7 @@ class NameTreeMap extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     if (results.allZeroHits) {
-      return const Center(child: Text('No results'));
+      return Center(child: Text(context.loc.noNameResultsFound));
     }
     final treeResults = results.withAtLeastOneHit();
     final total = results.totalHits.toDouble();
