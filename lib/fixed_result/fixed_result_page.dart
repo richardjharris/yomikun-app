@@ -16,6 +16,8 @@ class FixedResultPage extends HookConsumerWidget {
 
   const FixedResultPage({required this.query});
 
+  static const routeName = '/result';
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(

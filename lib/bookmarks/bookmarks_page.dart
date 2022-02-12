@@ -28,22 +28,15 @@ class BookmarksPage extends ConsumerWidget {
     print(bookmarkListStream);
 
     return Scaffold(
-        appBar: AppBar(
-          title: Text(context.loc.bookmarks),
-        ),
-        body: bookmarkListStream.when(
-          data: (data) => _bookmarkList(context, ref, data),
-          loading: () => const LoadingBox(),
-          error: (e, stack) => ErrorBox(e, stack),
-        ),
-        floatingActionButton: FloatingActionButton(
-          onPressed: () async {
-            await ref
-                .read(bookmarkDatabaseProvider)
-                .addBookmark("/makoto", "Makoto");
-          },
-          child: const Icon(Icons.add),
-        ));
+      appBar: AppBar(
+        title: Text(context.loc.bookmarks),
+      ),
+      body: bookmarkListStream.when(
+        data: (data) => _bookmarkList(context, ref, data),
+        loading: () => const LoadingBox(),
+        error: (e, stack) => ErrorBox(e, stack),
+      ),
+    );
   }
 
   Widget _bookmarkList(

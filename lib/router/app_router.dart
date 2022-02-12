@@ -13,7 +13,7 @@ import 'package:yomikun/settings/settings_page.dart';
 class AppRoutes {
   static const makotoPage = '/makoto';
   static const makotoFixedPage = '/makoto-fixed';
-  static const resultPage = '/result-page';
+  static const search = '/search';
 }
 
 class AppRouter {
@@ -54,7 +54,11 @@ class AppRouter {
       case AppRoutes.makotoPage:
         openSearchPage(context, ref, makotoQuery);
         return null;
-      case AppRoutes.resultPage:
+      case FixedResultPage.routeName:
+        final mapArgs = args as Map<String, dynamic>;
+        final query = Query.fromMap(mapArgs);
+        return FixedResultPage(query: query);
+      case AppRoutes.search:
         final mapArgs = args as Map<String, dynamic>;
         final query = Query.fromMap(mapArgs);
         openSearchPage(context, ref, query);

@@ -1,4 +1,3 @@
-import 'package:kana_kit/kana_kit.dart';
 import 'package:yomikun/core/providers/core_providers.dart';
 import 'package:yomikun/core/utilities/dakuten.dart';
 import 'package:yomikun/settings/models/settings_models.dart';
@@ -70,5 +69,13 @@ class NameData {
     return 'NameData{kaki: $kaki, yomi: $yomi, part: $part, '
         'hitsTotal: $hitsTotal, hitsMale: $hitsMale, hitsFemale: $hitsFemale, '
         'hitsPseudo: $hitsPseudo, genderMlScore: $genderMlScore}';
+  }
+
+  Map<String, dynamic> toRouteArgs() {
+    return {
+      'kaki': kaki,
+      'yomi': yomi,
+      'part': part.toString(),
+    };
   }
 }

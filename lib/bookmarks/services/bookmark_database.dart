@@ -24,7 +24,6 @@ class BookmarkDatabase {
 
   /// Add a bookmark by URL
   Future<void> addBookmark(String url, String title) {
-    print(_box.values);
     _box.put(
         url,
         Bookmark(
@@ -32,13 +31,21 @@ class BookmarkDatabase {
           title: title,
           dateAdded: DateTime.now(),
         ));
-    print(_box.values);
     return Future.value(null);
   }
 
   /// Remove a bookmark by URL
   Future<void> removeBookmark(String url) {
     return _box.delete(url);
+  }
+
+  /// Toggle the bookmarked status of this URL
+  Future<void> toggleBookmark(String url, String titleIfAdded) {
+    if (isBookmarked(url)) {
+      return removeBookmark(url);
+    } else {
+      return addBookmark(url, titleIfAdded);
+    }
   }
 
   /// Return the bookmark for the given URL, if it exists.
