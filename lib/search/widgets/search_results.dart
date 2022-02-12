@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:yomikun/browse/browse_page.dart';
+import 'package:yomikun/core/widgets/error_box.dart';
 import 'package:yomikun/details/details_page.dart';
 import 'package:yomikun/search/providers/search_providers.dart';
 import 'package:yomikun/core/providers/core_providers.dart';
@@ -46,8 +47,7 @@ class SearchResults extends StatelessWidget {
       case QueryMode.wildcard:
         return BrowsePage(results: result.results.toList());
       default:
-        return Text("Error: unknown mode '${result.mode}'",
-            style: const TextStyle(color: Colors.red));
+        return ErrorBox("Unknown mode '${result.mode}'");
     }
   }
 }

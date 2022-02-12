@@ -11,8 +11,6 @@ import 'package:yomikun/fixed_result/fixed_result_page.dart';
 import 'package:yomikun/settings/settings_page.dart';
 
 class AppRoutes {
-  static const homePage = '/';
-  static const bookmarksPage = '/bookmarks';
   static const makotoPage = '/makoto';
   static const makotoFixedPage = '/makoto-fixed';
   static const resultPage = '/result-page';
@@ -41,9 +39,9 @@ class AppRouter {
       BuildContext context, WidgetRef ref, RouteSettings settings) {
     final args = settings.arguments;
     switch (settings.name) {
-      case AppRoutes.homePage:
+      case SearchPage.routeName:
         return const SearchPage();
-      case AppRoutes.bookmarksPage:
+      case BookmarksPage.routeName:
         return const BookmarksPage();
       case HistoryPage.routeName:
         return const HistoryPage();

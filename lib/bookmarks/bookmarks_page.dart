@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:yomikun/bookmarks/services/bookmark_database.dart';
 import 'package:yomikun/core/providers/core_providers.dart';
+import 'package:yomikun/core/widgets/error_box.dart';
 import 'package:yomikun/core/widgets/placeholder_message.dart';
 import 'package:yomikun/localization/app_localizations_context.dart';
 
@@ -18,6 +19,8 @@ final bookmarkListProvider = StreamProvider((ref) {
 class BookmarksPage extends ConsumerWidget {
   const BookmarksPage({Key? key}) : super(key: key);
 
+  static const routeName = '/bookmarks';
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final bookmarkListStream = ref.watch(bookmarkListProvider);
@@ -25,14 +28,13 @@ class BookmarksPage extends ConsumerWidget {
 
     return Scaffold(
         appBar: AppBar(
-          title: const Text('Bookmarks'),
+          title: Text(context.loc.bookmarks),
         ),
         body: bookmarkListStream.when(
-            data: (data) => _bookmarkList(context, ref, data),
-            loading: () => const Center(child: CircularProgressIndicator()),
-            error: (e, stack) => Center(
-                  child: Text('Error: $e'),
-                )),
+          data: (data) => _bookmarkList(context, ref, data),
+          loading: () => const Center(child: CircularProgressIndicator()),
+          error: (e, stack) => ErrorBox(e, stack),
+        ),
         floatingActionButton: FloatingActionButton(
           onPressed: () async {
             await ref

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:yomikun/core/providers/core_providers.dart';
+import 'package:yomikun/core/widgets/error_box.dart';
 import 'package:yomikun/router/open_search_page.dart';
 import 'package:yomikun/search/models.dart';
 import 'package:yomikun/search/widgets/search_results.dart';
@@ -44,10 +45,7 @@ class _SearchResultsArea extends HookConsumerWidget {
     return result.when(
       data: (data) => SearchResults(result: data),
       loading: () => const Center(child: CircularProgressIndicator()),
-      error: (error, trace) {
-        print(trace);
-        return Center(child: Text('Error: $error'));
-      },
+      error: (error, trace) => ErrorBox(error, trace),
     );
   }
 }

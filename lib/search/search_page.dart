@@ -11,6 +11,8 @@ enum Commands { settings, bookmarks, makoto, makotoFixed, history }
 class SearchPage extends HookConsumerWidget {
   const SearchPage({Key? key}) : super(key: key);
 
+  static const routeName = '/';
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
