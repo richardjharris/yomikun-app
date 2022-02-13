@@ -15,7 +15,7 @@ class NavigationDrawer extends StatelessWidget {
         children: [
           DrawerHeader(
             child: Text(context.loc.appTitle,
-                style: TextStyle(color: Colors.white, fontSize: 25)),
+                style: const TextStyle(color: Colors.white, fontSize: 25)),
             decoration: BoxDecoration(
               color: Theme.of(context).primaryColor,
               image: DecorationImage(
