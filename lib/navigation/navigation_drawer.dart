@@ -29,8 +29,7 @@ class NavigationDrawer extends StatelessWidget {
             leading: const Icon(Icons.search),
             title: Text(context.loc.search),
             onTap: () {
-              //Navigator.restorablePopAndPushNamed(context, '/');
-              Navigator.pop(context);
+              Navigator.popUntil(context, (route) => route.isFirst);
             },
           ),
           ListTile(
@@ -61,11 +60,19 @@ class NavigationDrawer extends StatelessWidget {
               Navigator.restorablePopAndPushNamed(context, '/settings');
             },
           ),
+          ListTile(
+            leading: const Icon(Icons.info),
+            title: Text(context.loc.about),
+            onTap: () {
+              Navigator.restorablePopAndPushNamed(context, '/about');
+            },
+          ),
           const Divider(),
           ListTile(
             title: const Text('Makoto'),
             onTap: () {
-              Navigator.restorablePopAndPushNamed(context, '/makoto');
+              Navigator.popUntil(context, (route) => route.isFirst);
+              Navigator.restorablePushNamed(context, '/makoto');
             },
           ),
           ListTile(

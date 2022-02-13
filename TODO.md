@@ -18,9 +18,15 @@ Explore:
  - kanji allowed in names
  - kanji associated with either gender
 
+## Navigation
+
+ - makoto route doesn't quite work right, ends up with Search button being a no-op
+   investigate why
+ - animations should be slide from right, or fade. But CupertinoPageRoute causes
+   the Drawer to slide right in some cases, and look weird.
+
 ## CC Credit
 
-https://commons.wikimedia.org/wiki/File:Miyajima_Island_(44617818220).jpg
 
 ## Bookmarks
 

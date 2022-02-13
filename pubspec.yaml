@@ -40,6 +40,7 @@ dependencies:
 
   # For sharing
   share_plus: ^3.0.4
+  url_launcher: ^6.0.18
 
   # For state management
   riverpod: ^2.0.0-dev.0

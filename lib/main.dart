@@ -7,7 +7,7 @@ import 'package:sqflite/sqflite.dart';
 import 'package:yomikun/bookmarks/models/bookmark.dart';
 import 'package:yomikun/core/utilities/provider_logger.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
-import 'package:yomikun/router/app_router.dart';
+import 'package:yomikun/navigation/app_router.dart';
 import 'package:yomikun/bookmarks/services/bookmark_database.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:yomikun/localization/app_localizations_context.dart';

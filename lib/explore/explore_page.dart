@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:yomikun/navigation/navigation_drawer.dart';
 import 'package:yomikun/core/widgets/placeholder_message.dart';
 import 'package:yomikun/localization/app_localizations_context.dart';
 
@@ -12,6 +13,7 @@ class ExplorePage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
+      drawer: NavigationDrawer(),
       appBar: AppBar(
         title: Text(context.loc.explore),
       ),

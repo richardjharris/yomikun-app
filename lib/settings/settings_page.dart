@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:yomikun/navigation/navigation_drawer.dart';
 
 import 'package:yomikun/localization/app_localizations_context.dart';
 import 'package:yomikun/settings/models/settings_models.dart';
@@ -19,6 +20,7 @@ class SettingsPage extends ConsumerWidget {
     final settings = ref.watch(settingsControllerProvider);
 
     return Scaffold(
+      drawer: NavigationDrawer(),
       appBar: AppBar(
         title: Text(context.loc.settings),
       ),

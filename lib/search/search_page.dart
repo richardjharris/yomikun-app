@@ -5,7 +5,7 @@ import 'package:yomikun/core/widgets/error_box.dart';
 import 'package:yomikun/core/widgets/loading_box.dart';
 import 'package:yomikun/search/models.dart';
 import 'package:yomikun/search/providers/search_providers.dart';
-import 'package:yomikun/search/widgets/navigation_drawer.dart';
+import 'package:yomikun/navigation/navigation_drawer.dart';
 import 'package:yomikun/search/widgets/search_box.dart';
 import 'package:yomikun/search/widgets/search_results.dart';
 

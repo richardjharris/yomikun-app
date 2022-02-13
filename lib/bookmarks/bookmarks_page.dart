@@ -4,6 +4,7 @@ import 'package:yomikun/bookmarks/services/bookmark_database.dart';
 import 'package:yomikun/core/providers/core_providers.dart';
 import 'package:yomikun/core/widgets/error_box.dart';
 import 'package:yomikun/core/widgets/loading_box.dart';
+import 'package:yomikun/navigation/navigation_drawer.dart';
 import 'package:yomikun/core/widgets/placeholder_message.dart';
 import 'package:yomikun/localization/app_localizations_context.dart';
 
@@ -28,6 +29,7 @@ class BookmarksPage extends ConsumerWidget {
     final bookmarkListStream = ref.watch(bookmarkListProvider);
 
     return Scaffold(
+      drawer: NavigationDrawer(),
       appBar: AppBar(
         title: Text(context.loc.bookmarks),
       ),

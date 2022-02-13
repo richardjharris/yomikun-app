@@ -35,7 +35,7 @@ class NameListPage extends StatelessWidget {
           final index = i ~/ 2; // divide by two, round down
           final data = results[index];
           return SlidableNameRow(
-              data: data, key: data.key(), groupTag: results);
+              data: data, key: ValueKey(data.key()), groupTag: results);
         },
       ),
     ));

@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:yomikun/about/about_page.dart';
 import 'package:yomikun/explore/explore_page.dart';
 import 'package:yomikun/history/history_page.dart';
-import 'package:yomikun/router/open_search_page.dart';
+import 'package:yomikun/navigation/open_search_page.dart';
 import 'package:yomikun/search/models.dart';
 import 'package:yomikun/search/search_page.dart';
 import 'package:yomikun/bookmarks/bookmarks_page.dart';
@@ -47,26 +48,38 @@ class AppRouter {
     switch (settings.name) {
       case SearchPage.routeName:
         return const SearchPage();
+
       case BookmarksPage.routeName:
         return const BookmarksPage();
+
       case HistoryPage.routeName:
         return const HistoryPage();
+
       case ExplorePage.routeName:
         return const ExplorePage();
+
       case AppRoutes.makotoFixedPage:
         return const FixedResultPage(query: makotoQuery);
+
       case SettingsPage.routeName:
         return const SettingsPage();
+
+      case AboutPage.routeName:
+        return const AboutPage();
+
       case AppRoutes.makotoPage:
         openSearchPage(context, ref, makotoQuery);
         return null;
+
       case FixedResultPage.routeName:
         final query = Query.fromMap(args);
         return FixedResultPage(query: query);
+
       case AppRoutes.search:
         final query = Query.fromMap(args);
         openSearchPage(context, ref, query);
         return null;
+
       default:
         assert(false, "Unknown route: ${settings.name}");
         return null;

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:yomikun/core/widgets/error_box.dart';
 import 'package:yomikun/core/widgets/loading_box.dart';
+import 'package:yomikun/navigation/navigation_drawer.dart';
 import 'package:yomikun/core/widgets/placeholder_message.dart';
 import 'package:yomikun/localization/app_localizations_context.dart';
 
@@ -18,6 +19,7 @@ class HistoryPage extends ConsumerWidget {
     final historyListStream = ref.watch(historyListProvider);
 
     return Scaffold(
+      drawer: NavigationDrawer(),
       appBar: AppBar(
         title: Text(context.loc.history),
         actions: [
