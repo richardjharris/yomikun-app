@@ -61,7 +61,7 @@ class NavigationDrawer extends StatelessWidget {
             },
           ),
           ListTile(
-            leading: const Icon(Icons.info),
+            leading: const Icon(Icons.info_outline),
             title: Text(context.loc.about),
             onTap: () {
               Navigator.restorablePopAndPushNamed(context, '/about');
