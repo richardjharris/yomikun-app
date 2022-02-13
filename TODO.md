@@ -18,6 +18,10 @@ Explore:
  - kanji allowed in names
  - kanji associated with either gender
 
+## CC Credit
+
+https://commons.wikimedia.org/wiki/File:Miyajima_Island_(44617818220).jpg
+
 ## Bookmarks
 
 Use slideable, for consistency with the rest of the code,

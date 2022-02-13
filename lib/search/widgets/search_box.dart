@@ -34,8 +34,10 @@ class SearchBox extends ConsumerWidget {
           ),
         ),
       )),
-      const SizedBox(width: 10),
-      QueryModeButton(),
+      Padding(
+        padding: const EdgeInsets.fromLTRB(8, 0, 5, 0),
+        child: QueryModeButton(),
+      ),
     ]);
   }
 }
