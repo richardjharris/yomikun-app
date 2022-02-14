@@ -37,7 +37,7 @@ class BasicNameRow extends ConsumerWidget {
       fontWeight: isDark ? FontWeight.w400 : FontWeight.w500,
     );
     final pseudoHitsStyle = hitsStyle.copyWith(
-      color: isDark ? Colors.yellow : Color.fromARGB(255, 14, 97, 18),
+      color: isDark ? Colors.yellow : const Color.fromARGB(255, 14, 97, 18),
     );
 
     List<Widget> titleWidgets = [];
@@ -65,7 +65,8 @@ class BasicNameRow extends ConsumerWidget {
       subtitle: Row(children: [
         if (nameData.part == NamePart.mei) GenderBar(genderScore / 255),
         const Spacer(),
-        if (nameData.hitsPseudo > 0) ...[
+        if (nameData.hitsPseudo > 0 &&
+            nameData.hitsPseudo / nameData.hitsTotal > 0.1) ...[
           Text(
             'Fict: ${addThousands(nameData.hitsPseudo)}',
             style: pseudoHitsStyle,

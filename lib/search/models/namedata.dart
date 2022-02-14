@@ -48,18 +48,7 @@ class NameData {
   }
 
   String formatYomi(NameFormatPreference pref) {
-    return _format(yomi, pref);
-  }
-
-  String _format(String name, NameFormatPreference pref) {
-    switch (pref) {
-      case NameFormatPreference.romaji:
-        return kanaKit.toRomaji(name);
-      case NameFormatPreference.hiragana:
-        return name;
-      case NameFormatPreference.hiraganaBigAccent:
-        return expandDakuten(name);
-    }
+    return formatYomiString(yomi, pref);
   }
 
   int get hitsUnknown => hitsTotal - hitsMale - hitsFemale;
@@ -77,5 +66,16 @@ class NameData {
       'yomi': yomi,
       'part': part.toString(),
     };
+  }
+}
+
+String formatYomiString(String name, NameFormatPreference pref) {
+  switch (pref) {
+    case NameFormatPreference.romaji:
+      return kanaKit.toRomaji(name);
+    case NameFormatPreference.hiragana:
+      return name;
+    case NameFormatPreference.hiraganaBigAccent:
+      return expandDakuten(name);
   }
 }

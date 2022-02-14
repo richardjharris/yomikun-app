@@ -144,6 +144,48 @@ class NameDatabase {
       return null;
     }
   }
+
+  /// Returns most popular names (ordered by hits).
+  Future<List<NameData>> getMostPopular(NamePart part, {int limit = 10}) async {
+    var db = await database;
+
+    final result = await db.rawQuery('''
+      SELECT * FROM names
+      WHERE part = ?
+      ORDER BY hits_total DESC
+      LIMIT ?
+    ''', [_partId(part), limit]);
+
+    return result.map(_toNameData).toList();
+  }
+
+  /// Returns most popular kanji or kana forms of names, with aggregated counts.
+  ///
+  /// Results are a list (most popular first) of kanji|kana -> total hits.
+  Future<List<MapEntry<String, int>>> getMostPopularKY(
+      NamePart part, KakiYomi ky,
+      {int limit = 10}) async {
+    var db = await database;
+
+    final field = ky.name;
+
+    var result = await db.rawQuery('''
+      SELECT $field, SUM(hits_total) AS hits
+      FROM names
+      WHERE part = ?
+      GROUP BY $field
+      ORDER BY hits DESC
+      LIMIT ?
+    ''', [_partId(part), limit]);
+
+    return result.map((row) {
+      String kakiOrYomi = row[field] as String;
+      if (ky == KakiYomi.yomi) {
+        kakiOrYomi = _romajiToKana(kakiOrYomi);
+      }
+      return MapEntry(kakiOrYomi, row['hits'] as int);
+    }).toList();
+  }
 }
 
 /// Convert a database part ID to a NamePart.
@@ -161,11 +203,16 @@ String _kanaToRomaji(String kana) {
   return kanaKit.toRomaji(kana);
 }
 
+/// Convert a romaji string to kana.
+String _romajiToKana(String romaji) {
+  return kanaKit.toHiragana(romaji);
+}
+
 /// Convert a database row to a NameData object.
 NameData _toNameData(Map<String, Object?> row) {
   NamePart part = _partName(row['part'] as int);
   String kaki = row['kaki'] as String;
-  String yomi = kanaKit.toHiragana(row['yomi'] as String);
+  String yomi = _romajiToKana(row['yomi'] as String);
 
   return NameData(
     kaki: kaki,

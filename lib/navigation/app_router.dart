@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:yomikun/about/about_page.dart';
 import 'package:yomikun/explore/explore_page.dart';
+import 'package:yomikun/explore/screens/most_common_names_page.dart';
 import 'package:yomikun/history/history_page.dart';
 import 'package:yomikun/navigation/open_search_page.dart';
 import 'package:yomikun/search/models.dart';
@@ -79,6 +80,12 @@ class AppRouter {
         final query = Query.fromMap(args);
         openSearchPage(context, ref, query);
         return null;
+
+      case MostCommonNamesPage.routeNameFamily:
+        return const MostCommonNamesPage(part: NamePart.sei);
+
+      case MostCommonNamesPage.routeNameGiven:
+        return const MostCommonNamesPage(part: NamePart.mei);
 
       default:
         assert(false, "Unknown route: ${settings.name}");

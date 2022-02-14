@@ -1,45 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:yomikun/navigation/navigation_drawer.dart';
-import 'package:yomikun/core/widgets/placeholder_message.dart';
 import 'package:yomikun/localization/app_localizations_context.dart';
-
-class ExplorePageEntry {
-  final String title;
-  final String? subtitle;
-  final String route;
-  final Widget? icon;
-
-  const ExplorePageEntry({
-    required this.title,
-    this.subtitle,
-    required this.route,
-    this.icon,
-  });
-}
-
-class _TextIcon extends StatelessWidget {
-  final String text;
-
-  const _TextIcon(this.text);
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      width: 24,
-      height: 24,
-      child: Text(
-        text,
-        textAlign: TextAlign.center,
-        style: TextStyle(
-          fontSize: 18,
-          fontWeight: FontWeight.w600,
-          color: IconTheme.of(context).color,
-        ),
-      ),
-    );
-  }
-}
 
 /// Displays a list of articles or name listings that might be interesting to
 /// the user, such as the most common names or kanji.
@@ -56,6 +17,8 @@ class ExplorePage extends StatelessWidget {
     ),
     ExplorePageEntry(
       title: 'Most common given names',
+      subtitle:
+          'Note: The dataset is quite male-biased, so male names currently dominate the ranking.',
       route: '/explore/most-common-given-names',
       icon: Icon(Icons.person),
     ),
@@ -105,6 +68,45 @@ class ExplorePage extends StatelessWidget {
               ),
             );
           }).toList(),
+        ),
+      ),
+    );
+  }
+}
+
+class ExplorePageEntry {
+  final String title;
+  final String? subtitle;
+  final String route;
+  final Widget? icon;
+
+  const ExplorePageEntry({
+    required this.title,
+    this.subtitle,
+    required this.route,
+    this.icon,
+  });
+}
+
+/// Renders a small text message in the same dimensions and colour as an [Icon]
+/// widget.
+class _TextIcon extends StatelessWidget {
+  final String text;
+
+  const _TextIcon(this.text);
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: 24,
+      height: 24,
+      child: Text(
+        text,
+        textAlign: TextAlign.center,
+        style: TextStyle(
+          fontSize: 18,
+          fontWeight: FontWeight.w600,
+          color: IconTheme.of(context).color,
         ),
       ),
     );
