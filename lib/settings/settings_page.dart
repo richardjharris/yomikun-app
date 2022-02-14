@@ -20,7 +20,6 @@ class SettingsPage extends ConsumerWidget {
     final settings = ref.watch(settingsControllerProvider);
 
     return Scaffold(
-      drawer: NavigationDrawer(),
       appBar: AppBar(
         title: Text(context.loc.settings),
       ),
