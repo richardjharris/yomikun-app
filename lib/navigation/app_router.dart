@@ -45,7 +45,7 @@ class AppRouter {
     final settingsUri = Uri.parse(settings.name!);
     args.addAll(settingsUri.queryParameters);
 
-    switch (settings.name) {
+    switch (settingsUri.path) {
       case SearchPage.routeName:
         return const SearchPage();
 

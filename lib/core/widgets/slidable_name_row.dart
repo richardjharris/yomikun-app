@@ -30,12 +30,14 @@ class SlidableNameRow extends ConsumerWidget {
     final isBookmarked =
         ref.watch(bookmarkDatabaseProvider).isBookmarked(nameUrl);
 
+    // TODO only one slideable open at a time.
     return Slidable(
       key: ValueKey(data.key()),
       child: BasicNameRow(
           key: ValueKey(data.key()), nameData: data, showOnly: showOnly),
       groupTag: groupTag,
       endActionPane: ActionPane(
+        extentRatio: 0.4,
         motion: const ScrollMotion(),
         children: [
           SlidableAction(
@@ -47,7 +49,7 @@ class SlidableNameRow extends ConsumerWidget {
                     '${data.kaki} (${data.yomi})',
                   );
             },
-            icon: isBookmarked ? Icons.favorite : Icons.favorite_border,
+            icon: isBookmarked ? Icons.star : Icons.star_border,
             label: 'Bookmark',
           ),
           SlidableAction(
