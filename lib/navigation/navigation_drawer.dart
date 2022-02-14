@@ -33,7 +33,7 @@ class NavigationDrawer extends StatelessWidget {
             },
           ),
           ListTile(
-            leading: const Icon(Icons.star),
+            leading: const Icon(Icons.star_border),
             title: Text(context.loc.bookmarks),
             onTap: () {
               Navigator.restorablePopAndPushNamed(context, '/bookmarks');
@@ -48,7 +48,7 @@ class NavigationDrawer extends StatelessWidget {
             },
           ),
           ListTile(
-            leading: const Icon(Icons.settings_backup_restore),
+            leading: const Icon(Icons.language_outlined),
             title: Text(context.loc.explore),
             onTap: () {
               Navigator.restorablePopAndPushNamed(context, '/explore');

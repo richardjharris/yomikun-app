@@ -4,7 +4,6 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:yomikun/localization/app_localizations_context.dart';
-import 'package:yomikun/navigation/navigation_drawer.dart';
 
 class _Constants {
   static final String email = String.fromCharCodes(
