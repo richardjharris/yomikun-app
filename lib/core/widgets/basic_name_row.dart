@@ -21,20 +21,23 @@ class BasicNameRow extends ConsumerWidget {
         ref.watch(settingsControllerProvider.select((p) => p.nameFormat));
 
     // Styles depend on current theme (light/dark)
-    var theme = Theme.of(context).primaryTextTheme;
-    var isDark = Theme.of(context).brightness == Brightness.dark;
-    var kakiStyle = theme.headline1!.copyWith(
+    final theme = Theme.of(context).primaryTextTheme;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final kakiStyle = theme.headline1!.copyWith(
         fontSize: 20.0,
         fontWeight: FontWeight.w500,
         color: isDark ? Colors.white : Colors.black);
-    var yomiStyle = theme.headline2!.copyWith(
+    final yomiStyle = theme.headline2!.copyWith(
         fontSize: 18.0,
         color: isDark ? Colors.white70 : Colors.black87,
         fontWeight: isDark ? FontWeight.w400 : FontWeight.w500);
-    var hitsStyle = theme.bodyText1!.copyWith(
+    final hitsStyle = theme.bodyText1!.copyWith(
       fontSize: 14.0,
       color: isDark ? Colors.white54 : Colors.black45,
       fontWeight: isDark ? FontWeight.w400 : FontWeight.w500,
+    );
+    final pseudoHitsStyle = hitsStyle.copyWith(
+      color: isDark ? Colors.yellow : Color.fromARGB(255, 14, 97, 18),
     );
 
     List<Widget> titleWidgets = [];
@@ -54,17 +57,27 @@ class BasicNameRow extends ConsumerWidget {
       ];
     }
 
+    // TODO M/F/U
+    // TODO rename genderMlScore
     int genderScore = nameData.genderMlScore;
     return ListTile(
       title: Row(children: titleWidgets),
       subtitle: Row(children: [
         if (nameData.part == NamePart.mei) GenderBar(genderScore / 255),
-        Expanded(
-            child: Text(
+        const Spacer(),
+        if (nameData.hitsPseudo > 0) ...[
+          Text(
+            'Fict: ${addThousands(nameData.hitsPseudo)}',
+            style: pseudoHitsStyle,
+            textAlign: TextAlign.right,
+          ),
+          const SizedBox(width: 8),
+        ],
+        Text(
           "M: ${addThousands(nameData.hitsMale)} F: ${addThousands(nameData.hitsFemale)} U: ${addThousands(nameData.hitsUnknown)}",
           textAlign: TextAlign.right,
           style: hitsStyle,
-        )),
+        ),
       ]),
     );
   }
