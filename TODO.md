@@ -20,10 +20,56 @@ Explore:
 
 ## Navigation
 
+Either fix the NavigationDrawer to work correctly or consider an IndexedStack approach
+(but that doesn't do history or transitions). Or consider flutter_nav or GoRouter (which
+everyone seems to use).
+
+productive_cats: uses Drawer with a selected element, which sets ListTile.selected
+defines
+  void Function() navigateRoute(BuildContext context, String route) {
+    return () {
+      Navigator.pop(context); // close drawer
+      context.push(route);
+    };
+  }
+  -> onTap: navigateRoute(context, '/cats'),
+
+Note that you can do  Navigator.popUntil(context, ModalRoute.withName("/screen2"));
+and   Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => Screen2(),
+                settings: RouteSettings(name: '/screen2')),
+          );
+
  - makoto route doesn't quite work right, ends up with Search button being a no-op
    investigate why
  - animations should be slide from right, or fade. But CupertinoPageRoute causes
    the Drawer to slide right in some cases, and look weird.
+
+ - pushing on the same route creates an animation, we shouldn't do that.
+   - seems like it's pushing multiple of the same route.
+   - it is!
+ - down animation is wrong.
+
+ - maybe use AboutListTile
+
+ - Could consider using a Stack to simplify navigation
+   https://stackoverflow.com/questions/67490813/flutter-drawer-show-existing-page-if-exists-not-a-new-instance
+
+### Other approaches
+
+Pleco: hamburger on main page. Drawe size is ~50% of screen. 
+  Instant access to dark/light mode and simplified/traditional chars
+  Hamburger on all pages
+  Subpages use back button.
+  Viewing history items: has back button. Uses scroll transition.
+  Viewing any kind of search result pushes a 'back button' view.
+
+Aedict: hamburger on main page. Drawer is quite big, but header remains in view
+  and changes hamburger to back button. Sort of broken though.
+  Navigation is confusing as each query pops on a new route with the same hamburger menu,
+    when you'd expect the route to be replaced.
 
 ## CC Credit
 

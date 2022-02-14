@@ -43,7 +43,6 @@ class AboutPage extends StatelessWidget {
         context, credits2, 'CC BY-SA 2.0', _Constants.creativeCommonsLink);
 
     return Scaffold(
-      drawer: NavigationDrawer(),
       appBar: AppBar(
         title: Text(context.loc.about),
       ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:yomikun/core/widgets/button_switch_bar.dart';
 import 'package:yomikun/core/widgets/placeholder_message.dart';
 import 'package:yomikun/core/widgets/slidable_name_row.dart';
 import 'package:yomikun/localization/app_localizations_context.dart';
@@ -72,21 +73,13 @@ class NamePartSwitchButtons extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final isSelected = [value == NamePart.sei, value == NamePart.mei];
-    return ToggleButtons(
-      children: [
-        Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8),
-            child: Text(context.loc.surname)),
-        Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8),
-            child: Text(context.loc.givenName)),
+    return ButtonSwitchBar(
+      value: value,
+      onChanged: onChanged,
+      items: [
+        MapEntry(NamePart.sei, context.loc.surname),
+        MapEntry(NamePart.mei, context.loc.givenName),
       ],
-      onPressed: (int index) {
-        onChanged(index == 0 ? NamePart.sei : NamePart.mei);
-      },
-      isSelected: isSelected,
-      borderRadius: const BorderRadius.all(Radius.circular(10)),
     );
   }
 }

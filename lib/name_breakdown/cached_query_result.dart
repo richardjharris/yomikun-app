@@ -1,3 +1,4 @@
+import 'package:yomikun/name_breakdown/name_breakdown_page.dart';
 import 'package:yomikun/search/models.dart';
 import 'package:collection/collection.dart';
 
@@ -6,16 +7,25 @@ import 'package:collection/collection.dart';
 class CachedQueryResult {
   List<NameData> originalData;
   bool _sorted = false;
+  GenderFilter _genderFilter = GenderFilter.all;
 
   CachedQueryResult({required List<NameData> data}) : originalData = data;
 
+  void setGenderFilter(GenderFilter genderFilter) {
+    _genderFilter = genderFilter;
+  }
+
+  Iterable<NameData> items() {
+    return originalData.where(_applyGenderFilter);
+  }
+
   /// Return results sorted by hitsTotal descending.
-  List<NameData> sortedByHitsDescending() {
+  Iterable<NameData> sortedByHitsDescending() {
     if (!_sorted) {
       originalData.sort((a, b) => b.hitsTotal.compareTo(a.hitsTotal));
     }
     _sorted = true;
-    return originalData;
+    return items();
   }
 
   /// Return results where hitsTotal > 0
@@ -30,6 +40,18 @@ class CachedQueryResult {
   /// Most popular entry (by hits) with a given part
   NameData? getMostPopular(NamePart part) {
     return sortedByHitsDescending().firstWhereOrNull((e) => e.part == part);
+  }
+
+  /// Remove entries not matching the filter, in-place.
+  bool _applyGenderFilter(NameData item) {
+    switch (_genderFilter) {
+      case GenderFilter.all:
+        return true;
+      case GenderFilter.male:
+        return item.genderMlScore <= 200;
+      case GenderFilter.female:
+        return item.genderMlScore >= 50;
+    }
   }
 
   bool get allZeroHits => totalHits == 0;
