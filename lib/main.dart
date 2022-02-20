@@ -7,10 +7,14 @@ import 'package:sqflite/sqflite.dart';
 import 'package:yomikun/bookmarks/models/bookmark.dart';
 import 'package:yomikun/core/utilities/provider_logger.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
+import 'package:yomikun/history/search_history/models/search_history_item.dart';
+import 'package:yomikun/history/search_history/services/search_history_service.dart';
 import 'package:yomikun/navigation/app_router.dart';
 import 'package:yomikun/bookmarks/services/bookmark_database.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:yomikun/localization/app_localizations_context.dart';
+import 'package:yomikun/search/models/query.dart';
+import 'package:yomikun/search/models/query_mode.dart';
 import 'package:yomikun/settings/settings_controller.dart';
 import 'package:yomikun/settings/settings_service.dart';
 
@@ -18,8 +22,14 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   await Hive.initFlutter();
+  // TODO I hate this
   Hive.registerAdapter(BookmarkAdapter());
+  Hive.registerAdapter(SearchHistoryItemAdapter());
+  Hive.registerAdapter(QueryAdapter());
+  Hive.registerAdapter(QueryModeAdapter());
+  // TODO load these on demand
   await Hive.openBox<Bookmark>(BookmarkDatabase.hiveBox);
+  await Hive.openBox<SearchHistoryItem>(SearchHistoryService.hiveBox);
 
   final settingsController = SettingsController(SettingsService());
   await settingsController.loadSettings();

@@ -1,8 +1,14 @@
 import 'package:equatable/equatable.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:yomikun/search/models.dart';
 
+part 'query.g.dart';
+
+@HiveType(typeId: 2)
 class Query extends Equatable {
+  @HiveField(0)
   final String text;
+  @HiveField(1)
   final QueryMode mode;
 
   const Query(this.text, this.mode);

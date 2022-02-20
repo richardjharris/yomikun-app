@@ -52,7 +52,7 @@ class QueryModeButton extends HookConsumerWidget {
         ref.watch(queryModeAltAvailableProvider).asData?.value ?? false;
 
     return IconButton(
-      icon: Text(_queryModeToIcon(queryMode),
+      icon: Text(queryModeToIcon(queryMode),
           style: queryModeAltAvailable
               ? const TextStyle(color: Colors.yellow)
               : null),
@@ -71,17 +71,30 @@ class QueryModeButton extends HookConsumerWidget {
     int newIndex = (index + 1) % allowedModes.length;
     ref.read(queryModeProvider.notifier).state = allowedModes[newIndex];
   }
+}
 
-  String _queryModeToIcon(QueryMode mode) {
-    switch (mode) {
-      case QueryMode.mei:
-        return '名';
-      case QueryMode.sei:
-        return '姓';
-      case QueryMode.wildcard:
-        return '✴';
-      case QueryMode.person:
-        return '人';
-    }
+String queryModeToIcon(QueryMode mode) {
+  switch (mode) {
+    case QueryMode.mei:
+      return '名';
+    case QueryMode.sei:
+      return '姓';
+    case QueryMode.wildcard:
+      return '✴';
+    case QueryMode.person:
+      return '人';
+  }
+}
+
+Color queryModeToColor(QueryMode mode) {
+  switch (mode) {
+    case QueryMode.mei:
+      return const Color.fromARGB(255, 255, 177, 251);
+    case QueryMode.sei:
+      return const Color.fromARGB(255, 255, 217, 160);
+    case QueryMode.wildcard:
+      return const Color.fromARGB(255, 255, 249, 199);
+    case QueryMode.person:
+      return const Color.fromARGB(255, 202, 255, 204);
   }
 }

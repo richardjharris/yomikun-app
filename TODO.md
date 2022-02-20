@@ -1,5 +1,5 @@
 Bookmarks:
- - bookmark entire page or individual item (?)
+ - bookmark individual items -> jump to item
  - add/remove
 
 History:
@@ -7,18 +7,18 @@ History:
  - clear history
  - group by time range a la Pleco
 
-NameBreakdown:
- - gender split
- - fictional count
+## Hive
 
-Explore:
- - most popular names
- - most popular kanji
- - unisex names
- - kanji allowed in names
- - kanji associated with either gender
+Consider using JSON for storage - it is just nicer, and freezed can provide
+fromJson.
+
+## Kanji for names - gender
+
+Has to be baked into the database via the backend process.
 
 ## Navigation
+
+Clicking 'search' doesn't seem to work all the time from drawer.
 
 Either fix the NavigationDrawer to work correctly or consider an IndexedStack approach
 (but that doesn't do history or transitions). Or consider flutter_nav or GoRouter (which
