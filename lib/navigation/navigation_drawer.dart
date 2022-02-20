@@ -29,6 +29,7 @@ class NavigationDrawer extends StatelessWidget {
             leading: const Icon(Icons.search),
             title: Text(context.loc.search),
             onTap: () {
+              Navigator.pop(context);
               Navigator.popUntil(context, (route) => route.isFirst);
             },
           ),
@@ -36,7 +37,8 @@ class NavigationDrawer extends StatelessWidget {
             leading: const Icon(Icons.star_border),
             title: Text(context.loc.bookmarks),
             onTap: () {
-              Navigator.restorablePopAndPushNamed(context, '/bookmarks');
+              Navigator.pop(context);
+              Navigator.restorablePushNamed(context, '/bookmarks');
             },
           ),
           ListTile(
@@ -44,34 +46,38 @@ class NavigationDrawer extends StatelessWidget {
             title: Text(context.loc.history),
             onTap: () {
               Navigator.pop(context);
-              Navigator.restorablePushReplacementNamed(context, '/history');
+              Navigator.restorablePushNamed(context, '/history');
             },
           ),
           ListTile(
             leading: const Icon(Icons.language_outlined),
             title: Text(context.loc.explore),
             onTap: () {
-              Navigator.restorablePopAndPushNamed(context, '/explore');
+              Navigator.pop(context);
+              Navigator.restorablePushNamed(context, '/explore');
             },
           ),
           ListTile(
             leading: const Icon(Icons.settings),
             title: Text(context.loc.settings),
             onTap: () {
-              Navigator.restorablePopAndPushNamed(context, '/settings');
+              Navigator.pop(context);
+              Navigator.pushNamed(context, '/settings');
             },
           ),
           ListTile(
             leading: const Icon(Icons.info_outline),
             title: Text(context.loc.about),
             onTap: () {
-              Navigator.restorablePopAndPushNamed(context, '/about');
+              Navigator.pop(context);
+              Navigator.pushNamed(context, '/about');
             },
           ),
           const Divider(),
           ListTile(
             title: const Text('Makoto'),
             onTap: () {
+              Navigator.pop(context);
               Navigator.popUntil(context, (route) => route.isFirst);
               Navigator.restorablePushNamed(context, '/makoto');
             },
@@ -79,7 +85,8 @@ class NavigationDrawer extends StatelessWidget {
           ListTile(
             title: const Text('Makoto (fixed)'),
             onTap: () {
-              Navigator.restorablePopAndPushNamed(context, '/makoto-fixed');
+              Navigator.pop(context);
+              Navigator.restorablePushNamed(context, '/makoto-fixed');
             },
           ),
         ],
