@@ -1,6 +1,8 @@
 Bookmarks:
  - bookmark individual items -> jump to item
  - add/remove
+ - gender filter?
+ - use undo rather than slideable
 
 History:
  - group by time range a la Pleco
@@ -59,11 +61,6 @@ and   Navigator.push(
  - Could consider using a Stack to simplify navigation
    https://stackoverflow.com/questions/67490813/flutter-drawer-show-existing-page-if-exists-not-a-new-instance
 
-## Bookmarks
-
-Use slideable, for consistency with the rest of the code,
-and also prevents accidental un-bookmarking.
-
 ## Name listing
 
 Show some kind of proportional bar to show usage.
@@ -73,6 +70,10 @@ Show some kind of proportional bar to show usage.
 Show small '?' if there are many suitable readings.
 
 Handle kana/romaji (?)
+
+Handle exact person hits, which may use a separate API
+(if we ignore descriptions how big is just the person data? Can we represent
+it as a combination of two IDs?)
 
 ## Redoing the search logic
 

@@ -23,21 +23,22 @@ class NameListPage extends StatelessWidget {
     }
 
     return SlidableAutoCloseBehavior(
-        child: Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 4.0, vertical: 1.5),
-      child: ListView.builder(
-        padding: const EdgeInsets.symmetric(vertical: 3.0),
-        itemCount: (results.length * 2) - 1,
-        // Returns a divider between entries (to visually separate them)
-        itemBuilder: (context, i) {
-          if (i.isOdd) return const Divider();
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 4.0, vertical: 1.5),
+        child: ListView.builder(
+          padding: const EdgeInsets.symmetric(vertical: 3.0),
+          itemCount: (results.length * 2) - 1,
+          // Returns a divider between entries (to visually separate them)
+          itemBuilder: (context, i) {
+            if (i.isOdd) return const Divider();
 
-          final index = i ~/ 2; // divide by two, round down
-          final data = results[index];
-          return SlidableNameRow(
-              data: data, key: ValueKey(data.key()), groupTag: results);
-        },
+            final index = i ~/ 2; // divide by two, round down
+            final data = results[index];
+            return SlidableNameRow(
+                data: data, key: ValueKey(data.key()), groupTag: results);
+          },
+        ),
       ),
-    ));
+    );
   }
 }
