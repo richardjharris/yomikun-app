@@ -43,9 +43,9 @@ dependencies:
   url_launcher: ^6.0.18
 
   # For state management
-  riverpod: ^2.0.0-dev.0
-  hooks_riverpod: ^2.0.0-dev.0
-  flutter_riverpod: ^2.0.0-dev.0
+  riverpod: ^2.0.0-dev.3
+  hooks_riverpod: ^2.0.0-dev.3
+  flutter_riverpod: ^2.0.0-dev.3
   flutter_hooks: ^0.18.2+1
   equatable: ^2.0.3
 

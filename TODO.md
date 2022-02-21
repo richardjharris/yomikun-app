@@ -3,9 +3,15 @@ Bookmarks:
  - add/remove
 
 History:
- - record history using debounce in results page
- - clear history
  - group by time range a la Pleco
+ - maybe visited page history
+ - remove duplicates
+ - kanji maybe not centered in button, needs baseline
+
+Riverpod:
+ - use provider.selectAsync in some places
+
+Localisation: incomplete.
 
 ## Hive
 
@@ -15,6 +21,8 @@ fromJson.
 ## Kanji for names - gender
 
 Has to be baked into the database via the backend process.
+
+ - generate the data
 
 ## Navigation
 
@@ -57,23 +65,6 @@ and   Navigator.push(
  - Could consider using a Stack to simplify navigation
    https://stackoverflow.com/questions/67490813/flutter-drawer-show-existing-page-if-exists-not-a-new-instance
 
-### Other approaches
-
-Pleco: hamburger on main page. Drawe size is ~50% of screen. 
-  Instant access to dark/light mode and simplified/traditional chars
-  Hamburger on all pages
-  Subpages use back button.
-  Viewing history items: has back button. Uses scroll transition.
-  Viewing any kind of search result pushes a 'back button' view.
-
-Aedict: hamburger on main page. Drawer is quite big, but header remains in view
-  and changes hamburger to back button. Sort of broken though.
-  Navigation is confusing as each query pops on a new route with the same hamburger menu,
-    when you'd expect the route to be replaced.
-
-## CC Credit
-
-
 ## Bookmarks
 
 Use slideable, for consistency with the rest of the code,
@@ -85,11 +76,9 @@ Show some kind of proportional bar to show usage.
 
 ## Person view
 
-Switch automatically.
-
 Show small '?' if there are many suitable readings.
 
-Handle kana/romaji.
+Handle kana/romaji (?)
 
 ## Redoing the search logic
 

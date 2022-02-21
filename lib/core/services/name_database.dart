@@ -11,7 +11,11 @@ import 'package:yomikun/search/models.dart';
 
 /// NamePart values in the same order as stored in SQLite as INT offsets.
 /// This is used as SQLite does not support native ENUMs.
-const nameParts = [NamePart.unknown, NamePart.sei, NamePart.mei];
+const namePartsInDatabaseOrder = [
+  NamePart.unknown, // 0
+  NamePart.sei, // 1
+  NamePart.mei, // 2
+];
 
 class NameDatabase {
   Database? _db;
@@ -35,11 +39,11 @@ class NameDatabase {
   static Future _initialize() async {
     Directory documentsDirectory = await getApplicationDocumentsDirectory();
     String dbPath = join(documentsDirectory.path, "asset_names.db");
-
     // Copy the database into the documents dir
 
     // Only copy if the database doesn't exist
-    if (FileSystemEntity.typeSync(dbPath) == FileSystemEntityType.notFound) {
+    if (true ||
+        FileSystemEntity.typeSync(dbPath) == FileSystemEntityType.notFound) {
       // Load database from asset and copy
       ByteData data = await rootBundle.load(join('assets', 'names.db'));
       List<int> bytes =
@@ -47,9 +51,16 @@ class NameDatabase {
 
       // Save copied asset to documents
       await File(dbPath).writeAsBytes(bytes);
+    } else {
+      // TODO check getVersion(db) against current version
     }
 
-    return openDatabase(dbPath);
+    return await openDatabase(dbPath);
+  }
+
+  /// Returns database version
+  static Future<int> getVersion(Database db) async {
+    return Sqflite.firstIntValue(await db.rawQuery('PRAGMA user_version'))!;
   }
 
   /// Returns bool indicating if a name exists (kaki or yomi) for the given
@@ -186,16 +197,43 @@ class NameDatabase {
       return MapEntry(kakiOrYomi, row['hits'] as int);
     }).toList();
   }
+
+  /// Returns kanji stat information as a list of kanji -> count.
+  Future<List<KanjiStats>> getKanjiStats() async {
+    var db = await database;
+
+    final result = await db.rawQuery('''
+      SELECT kanji, hits_total, female_ratio
+      FROM kanji_stats
+      ORDER BY female_ratio
+    ''');
+
+    return result.map((row) {
+      return KanjiStats(
+        row['kanji'] as String,
+        row['hits_total'] as int,
+        (row['female_ratio'] as int) / 255.0,
+      );
+    }).toList();
+  }
+}
+
+class KanjiStats {
+  final String kanji;
+  final int hitsTotal;
+  final double femaleRatio;
+
+  KanjiStats(this.kanji, this.hitsTotal, this.femaleRatio);
 }
 
 /// Convert a database part ID to a NamePart.
 NamePart _partName(int id) {
-  return nameParts[id];
+  return namePartsInDatabaseOrder[id];
 }
 
 /// Convert a NamePart to a database part ID.
 int _partId(NamePart part) {
-  return nameParts.indexOf(part);
+  return namePartsInDatabaseOrder.indexOf(part);
 }
 
 /// Convert a kana string to romaji.

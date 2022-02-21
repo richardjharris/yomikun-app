@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:treemap/treemap.dart';
+import 'package:yomikun/core/utilities/gender_color.dart';
 import 'package:yomikun/localization/app_localizations_context.dart';
 import 'package:yomikun/name_breakdown/cached_query_result.dart';
 import 'package:yomikun/search/models.dart';
@@ -15,9 +16,6 @@ class NameTreeMap extends ConsumerWidget {
   final KakiYomi splitBy;
 
   const NameTreeMap({required this.results, required this.splitBy});
-
-  static final maleColor = HSVColor.fromColor(Colors.blue.shade300);
-  static final femaleColor = HSVColor.fromColor(Colors.pink.shade300);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -42,9 +40,7 @@ class NameTreeMap extends ConsumerWidget {
             ),
             padding: const EdgeInsets.symmetric(horizontal: 10),
             children: treeResults.map((r) {
-              final color =
-                  HSVColor.lerp(maleColor, femaleColor, r.genderMlScore / 255.0)
-                      ?.toColor();
+              final color = genderColor(r.genderMlScore / 255.0);
 
               final label = r.format(splitBy, formatPref);
 

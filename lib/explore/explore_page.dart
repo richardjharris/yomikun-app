@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:yomikun/explore/screens/kanji_and_gender_page.dart';
+import 'package:yomikun/explore/screens/most_common_names_page.dart';
 import 'package:yomikun/navigation/navigation_drawer.dart';
 import 'package:yomikun/localization/app_localizations_context.dart';
 
@@ -12,14 +14,14 @@ class ExplorePage extends StatelessWidget {
   final List<ExplorePageEntry> pages = const [
     ExplorePageEntry(
       title: 'Most common family names',
-      route: '/explore/most-common-family-names',
+      route: MostCommonNamesPage.routeNameFamily,
       icon: Icon(Icons.groups),
     ),
     ExplorePageEntry(
       title: 'Most common given names',
       subtitle:
           'Note: The dataset is quite male-biased, so male names currently dominate the ranking.',
-      route: '/explore/most-common-given-names',
+      route: MostCommonNamesPage.routeNameGiven,
       icon: Icon(Icons.person),
     ),
     ExplorePageEntry(
@@ -36,7 +38,7 @@ class ExplorePage extends StatelessWidget {
     ExplorePageEntry(
       title: 'Kanji and gender',
       subtitle: 'Graph of the most common kanji used by women or men.',
-      route: '/explore/kanji-and-gender',
+      route: KanjiAndGenderPage.routeName,
       icon: Icon(Icons.apps),
     ),
   ];
