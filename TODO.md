@@ -18,12 +18,6 @@ Localisation: incomplete.
 Consider using JSON for storage - it is just nicer, and freezed can provide
 fromJson.
 
-## Kanji for names - gender
-
-Has to be baked into the database via the backend process.
-
- - generate the data
-
 ## Navigation
 
 Clicking 'search' doesn't seem to work all the time from drawer.
