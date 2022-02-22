@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.yomikun">
+    package="io.github.richardjharris.yomikun">
    <application
         android:label="Yomikun"
         android:icon="@mipmap/launcher_icon">

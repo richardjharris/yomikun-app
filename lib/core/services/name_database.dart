@@ -42,8 +42,7 @@ class NameDatabase {
     // Copy the database into the documents dir
 
     // Only copy if the database doesn't exist
-    if (true ||
-        FileSystemEntity.typeSync(dbPath) == FileSystemEntityType.notFound) {
+    if (FileSystemEntity.typeSync(dbPath) == FileSystemEntityType.notFound) {
       // Load database from asset and copy
       ByteData data = await rootBundle.load(join('assets', 'names.db'));
       List<int> bytes =
@@ -52,7 +51,8 @@ class NameDatabase {
       // Save copied asset to documents
       await File(dbPath).writeAsBytes(bytes);
     } else {
-      // TODO check getVersion(db) against current version
+      // TODO check getVersion(db) against current version.
+      // Need to write the version to a file.
     }
 
     return await openDatabase(dbPath);

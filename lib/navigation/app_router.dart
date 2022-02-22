@@ -6,6 +6,7 @@ import 'package:yomikun/explore/screens/kanji_and_gender_page.dart';
 import 'package:yomikun/explore/screens/most_common_names_page.dart';
 import 'package:yomikun/history/history_page.dart';
 import 'package:yomikun/navigation/open_search_page.dart';
+import 'package:yomikun/ocr/ocr_page.dart';
 import 'package:yomikun/search/models.dart';
 import 'package:yomikun/search/search_page.dart';
 import 'package:yomikun/bookmarks/bookmarks_page.dart';
@@ -59,6 +60,9 @@ class AppRouter {
 
       case ExplorePage.routeName:
         return const ExplorePage();
+
+      case OcrPage.routeName:
+        return OcrPage();
 
       case AppRoutes.makotoFixedPage:
         return const FixedResultPage(query: makotoQuery);

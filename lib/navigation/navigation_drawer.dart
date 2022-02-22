@@ -58,6 +58,14 @@ class NavigationDrawer extends StatelessWidget {
             },
           ),
           ListTile(
+            leading: const Icon(Icons.camera_alt_outlined),
+            title: Text("Camera OCR"),
+            onTap: () {
+              Navigator.pop(context);
+              Navigator.restorablePushNamed(context, '/ocr');
+            },
+          ),
+          ListTile(
             leading: const Icon(Icons.settings),
             title: Text(context.loc.settings),
             onTap: () {

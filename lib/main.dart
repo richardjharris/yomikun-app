@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -13,10 +14,13 @@ import 'package:yomikun/navigation/app_router.dart';
 import 'package:yomikun/bookmarks/services/bookmark_database.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:yomikun/localization/app_localizations_context.dart';
+import 'package:yomikun/ocr/ocr_page.dart';
 import 'package:yomikun/search/models/query.dart';
 import 'package:yomikun/search/models/query_mode.dart';
 import 'package:yomikun/settings/settings_controller.dart';
 import 'package:yomikun/settings/settings_service.dart';
+
+List<CameraDescription> cameras = [];
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -34,6 +38,8 @@ Future<void> main() async {
   final settingsController = SettingsController(SettingsService());
   await settingsController.loadSettings();
 
+  cameras = await availableCameras();
+
   if (Platform.isWindows || Platform.isLinux) {
     sqfliteFfiInit();
     databaseFactory = databaseFactoryFfi;
@@ -45,7 +51,7 @@ Future<void> main() async {
         ProviderLogger(),
       ],
       overrides: [
-        settingsControllerProvider.overrideWithValue(settingsController)
+        settingsControllerProvider.overrideWithValue(settingsController),
       ],
       child: const MyApp(),
     ),
