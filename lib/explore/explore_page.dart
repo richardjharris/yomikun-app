@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:yomikun/explore/screens/kanji_and_gender_page.dart';
+import 'package:yomikun/explore/screens/most_common_kanji_page.dart';
 import 'package:yomikun/explore/screens/most_common_names_page.dart';
 import 'package:yomikun/navigation/navigation_drawer.dart';
 import 'package:yomikun/localization/app_localizations_context.dart';
@@ -26,7 +27,7 @@ class ExplorePage extends StatelessWidget {
     ),
     ExplorePageEntry(
       title: 'Most common kanji',
-      route: '/explore/most-common-kanji',
+      route: MostCommonKanjiPage.routeName,
       icon: _TextIcon('漢'),
     ),
     ExplorePageEntry(

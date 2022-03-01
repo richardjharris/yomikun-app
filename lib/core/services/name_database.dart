@@ -7,6 +7,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:synchronized/synchronized.dart';
 import 'package:yomikun/core/providers/core_providers.dart';
+import 'package:yomikun/name_breakdown/name_breakdown_page.dart';
 import 'package:yomikun/search/models.dart';
 
 /// NamePart values in the same order as stored in SQLite as INT offsets.
@@ -78,7 +79,7 @@ class NameDatabase {
       WHERE $column LIKE ? || '%' AND part = ?
       LIMIT 1
     ''', [prefix, _partId(part)]);
-    return Future.value(result.isNotEmpty);
+    return Future.value(result.isNotEmpty);results
   }
 
   /// Returns bool indicating if a name exists (kaki or yomi) for the given
@@ -200,7 +201,7 @@ class NameDatabase {
 
   /// Returns kanji stat information as a list of kanji -> count.
   Future<List<KanjiStats>> getKanjiStats() async {
-    var db = await database;
+    final db = await database;
 
     final result = await db.rawQuery('''
       SELECT kanji, hits_total, female_ratio
@@ -210,20 +211,56 @@ class NameDatabase {
 
     return result.map((row) {
       return KanjiStats(
+        NamePart.mei,
         row['kanji'] as String,
         row['hits_total'] as int,
         (row['female_ratio'] as int) / 255.0,
       );
     }).toList();
   }
+
+  String _genderFilterSql(GenderFilter gender) {
+    switch (gender) {
+      case GenderFilter.all:
+        return '1=1';
+      case GenderFilter.female:
+        return 'gender = "F"';
+      case GenderFilter.male:
+        return 'gender = "M"';
+    }
+  }
+
+  /// Returns a list of the most common kanji used in names.
+  Future<List<KanjiStats>> getMostCommonKanji(NamePart part,
+      [GenderFilter gender = GenderFilter.all]) async {
+    final db = await database;
+
+    final genderFilterSql = _genderFilterSql(gender);
+
+    final result = await db.rawQuery('''
+      SELECT kanji, hits_total
+      FROM kanji_stats
+      WHERE part = ? AND $genderFilterSql
+    ''');
+
+    return result.map((row) {
+      return KanjiStats(
+        part,
+        row['kanji'] as String,
+        row['hits_total'] as int,
+        0.0, // not applicable to result
+      );
+    }).toList();
+  }
 }
 
 class KanjiStats {
+  final NamePart part;
   final String kanji;
   final int hitsTotal;
   final double femaleRatio;
 
-  KanjiStats(this.kanji, this.hitsTotal, this.femaleRatio);
+  KanjiStats(this.part, this.kanji, this.hitsTotal, this.femaleRatio);
 }
 
 /// Convert a database part ID to a NamePart.
