@@ -102,10 +102,10 @@ class KyPart extends Equatable {
   List<Object> get props => [ky, part];
 }
 
-final mostPopularNamesKyProvider = FutureProvider.family((ref, KyPart kypart) {
-  final db = ref.watch(databaseProvider);
-  return db.getMostPopularKY(kypart.part, kypart.ky, limit: 100);
-});
+final mostPopularNamesKyProvider = FutureProvider.family((ref, KyPart kypart) =>
+    ref
+        .read(databaseProvider)
+        .getMostPopularKY(kypart.part, kypart.ky, limit: 100));
 
 class _TopNames extends ConsumerWidget {
   const _TopNames(this.part, this.ky, {Key? key}) : super(key: key);

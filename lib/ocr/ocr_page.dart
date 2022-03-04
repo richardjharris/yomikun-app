@@ -1,14 +1,10 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:camera/camera.dart';
 import 'package:google_ml_kit/google_ml_kit.dart';
+import 'package:yomikun/main.dart';
 import 'package:yomikun/ocr/utilities/text_detector_painter.dart';
 import 'package:yomikun/ocr/widgets/camera_view.dart';
-
-final availableCamerasProvider =
-    Provider<List<CameraDescription>>((_) => throw UnimplementedError());
 
 /// Page that shows a camera (or select photo from gallery) and performs OCR
 /// using Google ML Kit. This OCR result can then be sent to the name lookup.
@@ -33,10 +29,34 @@ class OcrPageState extends State<OcrPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: CameraView(
-        title: 'OCR',
-        customPaint: customPaint,
-        onImage: processImage,
+      body: cameras.isEmpty
+          ? noCameraBox(context)
+          : CameraView(
+              title: 'OCR',
+              customPaint: customPaint,
+              onImage: processImage,
+            ),
+    );
+  }
+
+  /// Widget displayed when no cameras have been detected.
+  Widget noCameraBox(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(20),
+      child: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const Text('No camera detected.'),
+            const SizedBox(height: 20),
+            ElevatedButton(
+              child: const Text('Go back'),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+            ),
+          ],
+        ),
       ),
     );
   }

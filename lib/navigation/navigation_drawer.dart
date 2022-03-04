@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:yomikun/gen/assets.gen.dart';
 import 'package:yomikun/localization/app_localizations_context.dart';
+import 'package:yomikun/main.dart';
 
 /// Slide-out drawer for navigation (bookmarks, history, settings etc.)
 class NavigationDrawer extends StatelessWidget {
@@ -57,14 +58,15 @@ class NavigationDrawer extends StatelessWidget {
               Navigator.restorablePushNamed(context, '/explore');
             },
           ),
-          ListTile(
-            leading: const Icon(Icons.camera_alt_outlined),
-            title: Text("Camera OCR"),
-            onTap: () {
-              Navigator.pop(context);
-              Navigator.restorablePushNamed(context, '/ocr');
-            },
-          ),
+          if (cameras.isNotEmpty)
+            ListTile(
+              leading: const Icon(Icons.camera_alt_outlined),
+              title: const Text("Camera OCR"),
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.restorablePushNamed(context, '/ocr');
+              },
+            ),
           ListTile(
             leading: const Icon(Icons.settings),
             title: Text(context.loc.settings),

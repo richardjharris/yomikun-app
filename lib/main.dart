@@ -14,7 +14,6 @@ import 'package:yomikun/navigation/app_router.dart';
 import 'package:yomikun/bookmarks/services/bookmark_database.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:yomikun/localization/app_localizations_context.dart';
-import 'package:yomikun/ocr/ocr_page.dart';
 import 'package:yomikun/search/models/query.dart';
 import 'package:yomikun/search/models/query_mode.dart';
 import 'package:yomikun/settings/settings_controller.dart';
@@ -38,7 +37,9 @@ Future<void> main() async {
   final settingsController = SettingsController(SettingsService());
   await settingsController.loadSettings();
 
-  cameras = await availableCameras();
+  if (Platform.isAndroid || Platform.isIOS) {
+    cameras = await availableCameras();
+  }
 
   if (Platform.isWindows || Platform.isLinux) {
     sqfliteFfiInit();

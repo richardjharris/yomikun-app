@@ -9,7 +9,7 @@ import 'package:yomikun/core/widgets/loading_box.dart';
 
 final kanjiStatsProvider = FutureProvider((ref) {
   final db = ref.read(databaseProvider);
-  return db.getKanjiStats();
+  return db.getKanjiByFemaleRatio();
 });
 
 /// Page showing kanji most commonly associated with male or female names.

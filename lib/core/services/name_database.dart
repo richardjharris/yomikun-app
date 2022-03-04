@@ -1,6 +1,8 @@
 import 'dart:async';
+import 'dart:convert';
 import 'dart:io';
 
+import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
@@ -79,7 +81,7 @@ class NameDatabase {
       WHERE $column LIKE ? || '%' AND part = ?
       LIMIT 1
     ''', [prefix, _partId(part)]);
-    return Future.value(result.isNotEmpty);results
+    return Future.value(result.isNotEmpty);
   }
 
   /// Returns bool indicating if a name exists (kaki or yomi) for the given
@@ -199,13 +201,14 @@ class NameDatabase {
     }).toList();
   }
 
-  /// Returns kanji stat information as a list of kanji -> count.
-  Future<List<KanjiStats>> getKanjiStats() async {
+  /// Returns kanji stat information, ordered by female ratio ascending.
+  Future<List<KanjiStats>> getKanjiByFemaleRatio() async {
     final db = await database;
 
     final result = await db.rawQuery('''
       SELECT kanji, hits_total, female_ratio
       FROM kanji_stats
+      WHERE gender = 'A'
       ORDER BY female_ratio
     ''');
 
@@ -213,40 +216,45 @@ class NameDatabase {
       return KanjiStats(
         NamePart.mei,
         row['kanji'] as String,
+        GenderFilter.all,
         row['hits_total'] as int,
         (row['female_ratio'] as int) / 255.0,
       );
     }).toList();
   }
 
-  String _genderFilterSql(GenderFilter gender) {
+  String _genderCode(GenderFilter gender) {
     switch (gender) {
       case GenderFilter.all:
-        return '1=1';
+        return 'A';
       case GenderFilter.female:
-        return 'gender = "F"';
+        return 'F';
       case GenderFilter.male:
-        return 'gender = "M"';
+        return 'M';
     }
   }
 
   /// Returns a list of the most common kanji used in names.
+  // TODO(rjh) return a List<Map> or similar.
   Future<List<KanjiStats>> getMostCommonKanji(NamePart part,
-      [GenderFilter gender = GenderFilter.all]) async {
+      [GenderFilter gender = GenderFilter.all, int limit = 500]) async {
     final db = await database;
-
-    final genderFilterSql = _genderFilterSql(gender);
 
     final result = await db.rawQuery('''
       SELECT kanji, hits_total
       FROM kanji_stats
-      WHERE part = ? AND $genderFilterSql
-    ''');
+      WHERE part = ?
+        AND gender = ?
+        AND hits_total > 0
+      ORDER BY hits_total DESC
+      LIMIT $limit
+    ''', [_partId(part), _genderCode(gender)]);
 
     return result.map((row) {
       return KanjiStats(
         part,
         row['kanji'] as String,
+        gender,
         row['hits_total'] as int,
         0.0, // not applicable to result
       );
@@ -257,10 +265,12 @@ class NameDatabase {
 class KanjiStats {
   final NamePart part;
   final String kanji;
+  final GenderFilter gender;
   final int hitsTotal;
   final double femaleRatio;
 
-  KanjiStats(this.part, this.kanji, this.hitsTotal, this.femaleRatio);
+  KanjiStats(
+      this.part, this.kanji, this.gender, this.hitsTotal, this.femaleRatio);
 }
 
 /// Convert a database part ID to a NamePart.
