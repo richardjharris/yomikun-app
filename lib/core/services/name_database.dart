@@ -241,6 +241,11 @@ class NameDatabase {
       [GenderFilter gender = GenderFilter.all, int limit = 500]) async {
     final db = await database;
 
+    // Gender filter does not make sense for surnames
+    if (part != NamePart.mei) {
+      gender = GenderFilter.all;
+    }
+
     final result = await db.rawQuery('''
       SELECT kanji, hits_total
       FROM kanji_stats
