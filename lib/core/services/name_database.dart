@@ -176,6 +176,7 @@ class NameDatabase {
   /// Returns most popular kanji or kana forms of names, with aggregated counts.
   ///
   /// Results are a list (most popular first) of kanji|kana -> total hits.
+  // TODO(rjh) % 'share' might be useful
   Future<List<MapEntry<String, int>>> getMostPopularKY(
       NamePart part, KakiYomi ky,
       {int limit = 10}) async {
@@ -259,6 +260,22 @@ class NameDatabase {
         0.0, // not applicable to result
       );
     }).toList();
+  }
+
+  /// Returns a list of the unisex first names.
+  Future<List<NameData>> getUnisexFirstNames() async {
+    final db = await database;
+
+    final result = await db.rawQuery('''
+      SELECT * FROM names
+      WHERE part = ?
+        AND hits_total > 25
+        AND ml_score >= 20 AND ml_score <= 230
+      ORDER BY hits_total DESC
+      LIMIT 500
+    ''', [_partId(NamePart.mei)]);
+
+    return result.map(_toNameData).toList();
   }
 }
 

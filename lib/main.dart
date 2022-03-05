@@ -6,6 +6,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:yomikun/bookmarks/models/bookmark.dart';
+import 'package:yomikun/core/providers/core_providers.dart';
 import 'package:yomikun/core/utilities/provider_logger.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 import 'package:yomikun/history/search_history/models/search_history_item.dart';
@@ -18,8 +19,6 @@ import 'package:yomikun/search/models/query.dart';
 import 'package:yomikun/search/models/query_mode.dart';
 import 'package:yomikun/settings/settings_controller.dart';
 import 'package:yomikun/settings/settings_service.dart';
-
-List<CameraDescription> cameras = [];
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();

@@ -5,6 +5,7 @@ import 'package:yomikun/explore/explore_page.dart';
 import 'package:yomikun/explore/screens/kanji_and_gender_page.dart';
 import 'package:yomikun/explore/screens/most_common_kanji_page.dart';
 import 'package:yomikun/explore/screens/most_common_names_page.dart';
+import 'package:yomikun/explore/screens/unisex_names_page.dart';
 import 'package:yomikun/history/history_page.dart';
 import 'package:yomikun/navigation/open_search_page.dart';
 import 'package:yomikun/ocr/ocr_page.dart';
@@ -95,6 +96,9 @@ class AppRouter {
 
       case MostCommonKanjiPage.routeName:
         return const MostCommonKanjiPage();
+
+      case UnisexNamesPage.routeName:
+        return const UnisexNamesPage();
 
       case KanjiAndGenderPage.routeName:
         return const KanjiAndGenderPage();

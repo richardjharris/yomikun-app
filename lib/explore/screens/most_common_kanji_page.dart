@@ -11,6 +11,7 @@ import 'package:yomikun/name_breakdown/name_breakdown_page.dart';
 import 'package:yomikun/search/models.dart';
 
 /// Shows most common kanji in names
+// TODO(rjh) Surname is broken if gender filter is enabled from forename.
 class MostCommonKanjiPage extends HookConsumerWidget {
   const MostCommonKanjiPage({Key? key}) : super(key: key);
 

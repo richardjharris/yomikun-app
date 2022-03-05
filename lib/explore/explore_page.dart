@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:yomikun/explore/screens/kanji_and_gender_page.dart';
 import 'package:yomikun/explore/screens/most_common_kanji_page.dart';
 import 'package:yomikun/explore/screens/most_common_names_page.dart';
+import 'package:yomikun/explore/screens/unisex_names_page.dart';
 import 'package:yomikun/navigation/navigation_drawer.dart';
 import 'package:yomikun/localization/app_localizations_context.dart';
 
@@ -33,7 +34,7 @@ class ExplorePage extends StatelessWidget {
     ExplorePageEntry(
       title: 'Unisex names',
       subtitle: 'Names that are commonly used by all genders',
-      route: '/explore/unisex-names',
+      route: UnisexNamesPage.routeName,
       icon: Icon(Icons.adjust),
     ),
     ExplorePageEntry(

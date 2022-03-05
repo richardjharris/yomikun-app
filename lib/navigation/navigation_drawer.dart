@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:yomikun/core/providers/core_providers.dart';
 import 'package:yomikun/gen/assets.gen.dart';
 import 'package:yomikun/localization/app_localizations_context.dart';
-import 'package:yomikun/main.dart';
 
 /// Slide-out drawer for navigation (bookmarks, history, settings etc.)
 class NavigationDrawer extends StatelessWidget {

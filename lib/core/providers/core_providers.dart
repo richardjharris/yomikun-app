@@ -1,9 +1,13 @@
+import 'package:camera/camera.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:kana_kit/kana_kit.dart';
 import 'package:yomikun/core/name_lookup.dart';
 import 'package:yomikun/search/models.dart';
 import 'package:yomikun/bookmarks/services/bookmark_database.dart';
 import 'package:yomikun/core/services/name_database.dart';
+
+// List of cameras detected at startup.
+List<CameraDescription> cameras = [];
 
 const kanaKit = KanaKit();
 

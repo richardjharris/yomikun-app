@@ -43,9 +43,9 @@ class BasicNameRow extends ConsumerWidget {
     List<Widget> titleWidgets = [];
     if (showOnly == null) {
       titleWidgets = [
-        Text(nameData.kaki, style: kakiStyle),
+        Text(nameData.kaki, style: kakiStyle, locale: const Locale('ja')),
         Container(
-            child: Text(nameData.yomi,
+            child: Text(nameData.formatYomi(formatPref),
                 style: yomiStyle, locale: const Locale('ja')),
             margin: const EdgeInsets.only(left: 10.0)),
       ];
