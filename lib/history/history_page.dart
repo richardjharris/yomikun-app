@@ -19,6 +19,21 @@ class HistoryPage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final historyListStream = ref.watch(searchHistoryListProvider);
 
+    AlertDialog confirmDeleteDialog = AlertDialog(
+      title: Text("Delete all history?"),
+      content: Text("This cannot be undone."),
+      actions: [
+        TextButton(
+            child: Text("Cancel"), onPressed: () => Navigator.pop(context)),
+        TextButton(
+            child: Text("Delete"),
+            onPressed: () {
+              ref.read(searchHistoryServiceProvider).clearHistory();
+              Navigator.pop(context);
+            }),
+      ],
+    );
+
     return Scaffold(
       drawer: NavigationDrawer(),
       appBar: AppBar(
@@ -30,7 +45,8 @@ class HistoryPage extends ConsumerWidget {
               icon: const Icon(Icons.delete),
               tooltip: context.loc.clearHistory,
               onPressed: () {
-                ref.read(searchHistoryServiceProvider).clearHistory();
+                showDialog(
+                    context: context, builder: (_) => confirmDeleteDialog);
               },
             ),
           ),
