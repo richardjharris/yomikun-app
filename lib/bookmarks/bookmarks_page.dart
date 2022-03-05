@@ -4,8 +4,6 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:yomikun/bookmarks/services/bookmark_database.dart';
 import 'package:yomikun/core/providers/core_providers.dart';
-import 'package:yomikun/core/widgets/error_box.dart';
-import 'package:yomikun/core/widgets/loading_box.dart';
 import 'package:yomikun/navigation/navigation_drawer.dart';
 import 'package:yomikun/core/widgets/placeholder_message.dart';
 import 'package:yomikun/localization/app_localizations_context.dart';
@@ -13,11 +11,10 @@ import 'package:yomikun/localization/app_localizations_context.dart';
 import 'models/bookmark.dart';
 
 final bookmarkSortModeProvider = Provider((_) => BookmarkSortMode.newestFirst);
-final bookmarkListProvider = StreamProvider((ref) {
+final bookmarkListProvider = Provider((ref) {
   final sortMode = ref.watch(bookmarkSortModeProvider);
   final bookmarkDatabase = ref.watch(bookmarkDatabaseProvider);
-  // TODO no need for stream as databaseProvider refreshes on change.
-  return bookmarkDatabase.watchBookmarkList(sortMode: sortMode);
+  return bookmarkDatabase.getBookmarks(sortMode: sortMode);
 });
 
 /// Shows the list of bookmarks and allows them to be visited or deleted
@@ -28,7 +25,7 @@ class BookmarksPage extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final bookmarkListStream = ref.watch(bookmarkListProvider);
+    final bookmarkListData = ref.watch(bookmarkListProvider);
     final lastDeletedBookmark = useState<Bookmark?>(null);
 
     return Scaffold(
@@ -36,15 +33,11 @@ class BookmarksPage extends HookConsumerWidget {
       appBar: AppBar(
         title: Text(context.loc.bookmarks),
       ),
-      body: bookmarkListStream.when(
-        data: (data) => _bookmarkList(
-          context,
-          ref,
-          data,
-          lastDeletedBookmark,
-        ),
-        loading: () => const LoadingBox(),
-        error: (e, stack) => ErrorBox(e, stack),
+      body: _bookmarkList(
+        context,
+        ref,
+        bookmarkListData,
+        lastDeletedBookmark,
       ),
     );
   }

@@ -30,7 +30,6 @@ class SlidableNameRow extends ConsumerWidget {
     final isBookmarked =
         ref.watch(bookmarkDatabaseProvider).isBookmarked(nameUrl);
 
-    // TODO only one slideable open at a time.
     return Slidable(
       key: ValueKey(data.key()),
       child: BasicNameRow(

@@ -57,8 +57,6 @@ class BasicNameRow extends ConsumerWidget {
       ];
     }
 
-    // TODO M/F/U
-    // TODO rename genderMlScore
     int genderScore = nameData.genderMlScore;
     return ListTile(
       title: Row(children: titleWidgets),

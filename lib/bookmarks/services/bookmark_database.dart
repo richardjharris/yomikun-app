@@ -1,7 +1,6 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/widgets.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:rxdart/rxdart.dart';
 import 'package:yomikun/bookmarks/models/bookmark.dart';
 
 enum BookmarkSortMode { none, title, newestFirst, oldestFirst }
@@ -14,14 +13,6 @@ class BookmarkDatabase extends ChangeNotifier {
   static const hiveBox = 'bookmarks';
 
   BookmarkDatabase() : _box = Hive.box(hiveBox);
-
-  /// Return a stream that emits the list of all bookmarks.
-  Stream<List<Bookmark>> watchBookmarkList(
-      {BookmarkSortMode sortMode = BookmarkSortMode.none}) {
-    return _box.watch().map((_) {
-      return getBookmarks(sortMode: sortMode);
-    }).startWith(getBookmarks(sortMode: sortMode));
-  }
 
   /// Add a bookmark by URL
   Future<void> addBookmark(String url, String title) async {

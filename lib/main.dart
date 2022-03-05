@@ -24,12 +24,10 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   await Hive.initFlutter();
-  // TODO I hate this
   Hive.registerAdapter(BookmarkAdapter());
   Hive.registerAdapter(SearchHistoryItemAdapter());
   Hive.registerAdapter(QueryAdapter());
   Hive.registerAdapter(QueryModeAdapter());
-  // TODO load these on demand
   await Hive.openBox<Bookmark>(BookmarkDatabase.hiveBox);
   await Hive.openBox<SearchHistoryItem>(SearchHistoryService.hiveBox);
 

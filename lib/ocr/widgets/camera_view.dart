@@ -9,12 +9,8 @@ import 'package:yomikun/core/providers/core_providers.dart';
 
 enum ScreenMode { liveFeed, gallery }
 
-// TODO does not work if the app is restored - camera feed is stuck.
-// Apparently controller is disposed of, and change button doesn't work either.
-// TODO pinch zoom
-// TODO some kind of retention of OCR results so they don't keep changing/disappearing.
-// maybe we can show all relevant readings.
-// TODO make it actually do stuff with name readings.
+/// Displays a preview of the camera image, with a button to change which camera
+/// is used. Calls [onImage] with the new camera image.
 class CameraView extends StatefulWidget {
   const CameraView(
       {Key? key,

@@ -21,7 +21,6 @@ class KanjiAndGenderPage extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final kanjiStats = ref.watch(kanjiStatsProvider);
-    // TODO maybe make global so persisted
     final minHits = useState<int>(500);
 
     return Scaffold(

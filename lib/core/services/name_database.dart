@@ -1,8 +1,6 @@
 import 'dart:async';
-import 'dart:convert';
 import 'dart:io';
 
-import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
@@ -176,7 +174,6 @@ class NameDatabase {
   /// Returns most popular kanji or kana forms of names, with aggregated counts.
   ///
   /// Results are a list (most popular first) of kanji|kana -> total hits.
-  // TODO(rjh) % 'share' might be useful
   Future<List<MapEntry<String, int>>> getMostPopularKY(
       NamePart part, KakiYomi ky,
       {int limit = 10}) async {
@@ -236,7 +233,6 @@ class NameDatabase {
   }
 
   /// Returns a list of the most common kanji used in names.
-  // TODO(rjh) return a List<Map> or similar.
   Future<List<KanjiStats>> getMostCommonKanji(NamePart part,
       [GenderFilter gender = GenderFilter.all, int limit = 500]) async {
     final db = await database;

@@ -17,8 +17,6 @@ enum GenderFilter { male, female, all }
 
 /// For a given name, show a breakdown of readings (if kanji) or kanji forms
 /// (if kana) sorted by most popular.
-// TODO coupled too strongly to the SearchResults? bookmarkBuilder or similar?
-// TODO update 'no bookmarks' text.
 class NameBreakdownPage extends HookConsumerWidget {
   final QueryResult query;
 
@@ -27,7 +25,6 @@ class NameBreakdownPage extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final viz = ref.watch(settingsControllerProvider).nameVisualization;
-    // TODO this is not cached across builds.
     final cache = CachedQueryResult(data: query.results);
     final inverseKy = query.ky!.inverse();
 
