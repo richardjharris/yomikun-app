@@ -11,7 +11,6 @@ import 'package:yomikun/name_breakdown/name_breakdown_page.dart';
 import 'package:yomikun/search/models.dart';
 
 /// Shows most common kanji in names
-// TODO(rjh) Surname is broken if gender filter is enabled from forename.
 class MostCommonKanjiPage extends HookConsumerWidget {
   const MostCommonKanjiPage({Key? key}) : super(key: key);
 
@@ -86,14 +85,14 @@ class MostCommonKanjiList extends ConsumerWidget {
   final NamePart namePart;
   final GenderFilter genderFilter;
 
-  const MostCommonKanjiList(
-      {Key? key, required this.namePart, this.genderFilter = GenderFilter.all})
-      : super(key: key);
+  const MostCommonKanjiList({Key? key, required this.namePart, genderFilter})
+      : genderFilter =
+            namePart == NamePart.mei ? genderFilter : GenderFilter.all,
+        super(key: key);
 
   final kanjiTextStyle = const TextStyle(fontSize: 32);
   final countTextStyle = const TextStyle(fontSize: 20);
 
-  // TODO(rjh) hitsTotal needs to be split by gender?
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final filter = MostCommonKanjiFilter(namePart, genderFilter);
