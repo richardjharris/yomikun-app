@@ -6,6 +6,7 @@ import 'package:yomikun/core/services/name_database.dart';
 import 'package:yomikun/core/utilities/gender_color.dart';
 import 'package:yomikun/core/widgets/error_box.dart';
 import 'package:yomikun/core/widgets/loading_box.dart';
+import 'package:yomikun/localization/app_localizations_context.dart';
 
 final kanjiStatsProvider = FutureProvider((ref) {
   final db = ref.read(databaseProvider);
@@ -25,22 +26,20 @@ class KanjiAndGenderPage extends HookConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Kanji and gender'),
+        title: Text(context.loc.exKanjiAndGender),
       ),
       body: Container(
         padding: const EdgeInsets.all(10),
         child: Column(
           children: [
-            const Card(
+            Card(
               child: Padding(
-                padding: EdgeInsets.all(10),
-                child: Text(
-                  'This is a map of kanji most associated with men (blue) or women (pink) based on aggregate name data.',
-                ),
+                padding: const EdgeInsets.all(10),
+                child: Text(context.loc.exKanjiAndGenderDescription),
               ),
             ),
             const SizedBox(height: 10),
-            Text('Minimum hits: ${minHits.value}'),
+            Text(context.loc.exKanjiAndGenderMinHits + ' ${minHits.value}'),
             Slider(
               value: minHits.value.toDouble(),
               max: 1000,

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:yomikun/core/utilities/number_format.dart';
+import 'package:yomikun/localization/app_localizations_context.dart';
 import 'package:yomikun/search/models.dart';
 import 'package:yomikun/settings/settings_controller.dart';
 
@@ -66,14 +67,16 @@ class BasicNameRow extends ConsumerWidget {
         if (nameData.hitsPseudo > 0 &&
             nameData.hitsPseudo / nameData.hitsTotal > 0.1) ...[
           Text(
-            'Fict: ${addThousands(nameData.hitsPseudo)}',
+            '${context.loc.nameRowFict} ${addThousands(nameData.hitsPseudo)}',
             style: pseudoHitsStyle,
             textAlign: TextAlign.right,
           ),
           const SizedBox(width: 8),
         ],
         Text(
-          "M: ${addThousands(nameData.hitsMale)} F: ${addThousands(nameData.hitsFemale)} U: ${addThousands(nameData.hitsUnknown)}",
+          "${context.loc.nameRowM} ${addThousands(nameData.hitsMale)}"
+          " ${context.loc.nameRowF} ${addThousands(nameData.hitsFemale)}"
+          " ${context.loc.nameRowU} ${addThousands(nameData.hitsUnknown)}",
           textAlign: TextAlign.right,
           style: hitsStyle,
         ),

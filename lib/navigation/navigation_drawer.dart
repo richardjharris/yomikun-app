@@ -1,7 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:yomikun/about/about_page.dart';
+import 'package:yomikun/bookmarks/bookmarks_page.dart';
 import 'package:yomikun/core/providers/core_providers.dart';
+import 'package:yomikun/explore/explore_page.dart';
 import 'package:yomikun/gen/assets.gen.dart';
+import 'package:yomikun/history/history_page.dart';
 import 'package:yomikun/localization/app_localizations_context.dart';
+import 'package:yomikun/ocr/ocr_page.dart';
+import 'package:yomikun/settings/settings_page.dart';
 
 /// Slide-out drawer for navigation (bookmarks, history, settings etc.)
 class NavigationDrawer extends StatelessWidget {
@@ -39,7 +45,7 @@ class NavigationDrawer extends StatelessWidget {
             title: Text(context.loc.bookmarks),
             onTap: () {
               Navigator.pop(context);
-              Navigator.restorablePushNamed(context, '/bookmarks');
+              Navigator.restorablePushNamed(context, BookmarksPage.routeName);
             },
           ),
           ListTile(
@@ -47,7 +53,7 @@ class NavigationDrawer extends StatelessWidget {
             title: Text(context.loc.history),
             onTap: () {
               Navigator.pop(context);
-              Navigator.restorablePushNamed(context, '/history');
+              Navigator.restorablePushNamed(context, HistoryPage.routeName);
             },
           ),
           ListTile(
@@ -55,16 +61,16 @@ class NavigationDrawer extends StatelessWidget {
             title: Text(context.loc.explore),
             onTap: () {
               Navigator.pop(context);
-              Navigator.restorablePushNamed(context, '/explore');
+              Navigator.restorablePushNamed(context, ExplorePage.routeName);
             },
           ),
           if (cameras.isNotEmpty)
             ListTile(
               leading: const Icon(Icons.camera_alt_outlined),
-              title: const Text("Camera OCR"),
+              title: Text(context.loc.ocrPageTitle),
               onTap: () {
                 Navigator.pop(context);
-                Navigator.restorablePushNamed(context, '/ocr');
+                Navigator.restorablePushNamed(context, OcrPage.routeName);
               },
             ),
           ListTile(
@@ -72,7 +78,7 @@ class NavigationDrawer extends StatelessWidget {
             title: Text(context.loc.settings),
             onTap: () {
               Navigator.pop(context);
-              Navigator.pushNamed(context, '/settings');
+              Navigator.pushNamed(context, SettingsPage.routeName);
             },
           ),
           ListTile(
@@ -80,7 +86,7 @@ class NavigationDrawer extends StatelessWidget {
             title: Text(context.loc.about),
             onTap: () {
               Navigator.pop(context);
-              Navigator.pushNamed(context, '/about');
+              Navigator.pushNamed(context, AboutPage.routeName);
             },
           ),
           const Divider(),

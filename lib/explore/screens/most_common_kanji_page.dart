@@ -7,6 +7,7 @@ import 'package:yomikun/core/utilities/number_format.dart';
 import 'package:yomikun/core/widgets/button_switch_bar.dart';
 import 'package:yomikun/core/widgets/error_box.dart';
 import 'package:yomikun/core/widgets/loading_box.dart';
+import 'package:yomikun/localization/app_localizations_context.dart';
 import 'package:yomikun/name_breakdown/name_breakdown_page.dart';
 import 'package:yomikun/search/models.dart';
 
@@ -23,7 +24,7 @@ class MostCommonKanjiPage extends HookConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Most common name kanji'),
+        title: Text(context.loc.exMostCommonKanji),
       ),
       body: Container(
         padding: const EdgeInsets.all(10),
@@ -34,9 +35,9 @@ class MostCommonKanjiPage extends HookConsumerWidget {
               onChanged: (NamePart value) {
                 namePart.value = value;
               },
-              items: const [
-                MapEntry(NamePart.mei, 'Given name'),
-                MapEntry(NamePart.sei, 'Surname'),
+              items: [
+                MapEntry(NamePart.mei, context.loc.givenName),
+                MapEntry(NamePart.sei, context.loc.surname),
               ],
             ),
             if (namePart.value == NamePart.mei) ...[
@@ -46,10 +47,10 @@ class MostCommonKanjiPage extends HookConsumerWidget {
                 onChanged: (GenderFilter value) {
                   genderFilter.value = value;
                 },
-                items: const [
-                  MapEntry(GenderFilter.female, 'Female'),
-                  MapEntry(GenderFilter.male, 'Male'),
-                  MapEntry(GenderFilter.all, 'All'),
+                items: [
+                  MapEntry(GenderFilter.female, context.loc.femaleGender),
+                  MapEntry(GenderFilter.male, context.loc.maleGender),
+                  MapEntry(GenderFilter.all, context.loc.allGenders),
                 ],
               ),
             ],

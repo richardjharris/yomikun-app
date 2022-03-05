@@ -10,12 +10,23 @@
   },
   "enterNameInKanjiOrKana": "Enter a name in kanji or kana",
   "changeQueryModeTooltip": "Change query mode",
+  "nameRowM": "M:",
+  "@nameRowM": {
+    "description": "Short (1 letter/char) label before male hit count in name data rows"
+  },
+  "nameRowF": "F:",
+  "nameRowU": "U:",
+  "nameRowFict": "Fict:",
   "error": "Error",
   "search": "Search",
   "bookmarks": "Bookmarks",
   "history": "History",
   "explore": "Explore",
   "settings": "Settings",
+  "ocrPageTitle": "Camera OCR",
+  "@ocrPageTitle": {
+    "description": "Name for OCR page in navigation drawer"
+  },
   "about": "About this app",
   "theme": "Theme",
   "systemTheme": "System",
@@ -42,5 +53,35 @@
   "noHistoryMessage": "No history to display.",
   "allPossibleReadings": "All possible readings:",
   "surname": "Surname",
-  "givenName": "Given name"
+  "givenName": "Given name",
+  "femaleGender": "Female",
+  "maleGender": "Male",
+  "allGenders": "All",
+  "ocrNoCameraDetected": "No camera detected.",
+  "ocrFromGallery": "From camera gallery",
+  "ocrTakePicture": "Take a picture",
+  "goBack": "Go back",
+  "exMostCommonFamilyNames": "Most common family names",
+  "exMostCommonGivenNames": "Most common given names",
+  "exMostCommonGivenNamesNote": "Note: The dataset is male-biased, so male names currently dominate the ranking.",
+  "exMostCommonKanji": "Most common kanji",
+  "exUnisexNames": "Unisex names",
+  "exUnisexNamesNote": "Names that are commonly used by all genders",
+  "exKanjiAndGender": "Kanji and gender",
+  "exKanjiAndGenderNote": "Visualisation of the most common kanji used by women or men.",
+  "exKanjiAndGenderDescription": "This is a map of kanji most associated with men (blue) or women (pink) based on aggregate name data.",
+  "exKanjiAndGenderMinHits": "Minimum hits:",
+  "orderBy": "Order by:",
+  "@orderBy": {
+    "description": "Label shown before a dropdown of ordering options"
+  },
+  "orderByNameLocaleSpecific": "Name",
+  "@orderByNameLocaleSpecific": {
+    "description": "Label for ordering by name (alphabetical for non-Japanese locales; gojuon for Japanese locales)"
+  },
+  "orderByPopularity": "Popularity",
+  "orderByNeutrality": "Neutrality",
+  "@orderByNeutrality": {
+    "description": "Label for ordering most gender-neutral names first, i.e. those with similar male and female hit counts"
+  }
 }

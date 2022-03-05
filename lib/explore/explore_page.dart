@@ -13,40 +13,39 @@ class ExplorePage extends StatelessWidget {
 
   static const String routeName = '/explore';
 
-  final List<ExplorePageEntry> pages = const [
-    ExplorePageEntry(
-      title: 'Most common family names',
-      route: MostCommonNamesPage.routeNameFamily,
-      icon: Icon(Icons.groups),
-    ),
-    ExplorePageEntry(
-      title: 'Most common given names',
-      subtitle:
-          'Note: The dataset is quite male-biased, so male names currently dominate the ranking.',
-      route: MostCommonNamesPage.routeNameGiven,
-      icon: Icon(Icons.person),
-    ),
-    ExplorePageEntry(
-      title: 'Most common kanji',
-      route: MostCommonKanjiPage.routeName,
-      icon: _TextIcon('漢'),
-    ),
-    ExplorePageEntry(
-      title: 'Unisex names',
-      subtitle: 'Names that are commonly used by all genders',
-      route: UnisexNamesPage.routeName,
-      icon: Icon(Icons.adjust),
-    ),
-    ExplorePageEntry(
-      title: 'Kanji and gender',
-      subtitle: 'Graph of the most common kanji used by women or men.',
-      route: KanjiAndGenderPage.routeName,
-      icon: Icon(Icons.apps),
-    ),
-  ];
-
   @override
   Widget build(BuildContext context) {
+    final List<ExplorePageEntry> pages = [
+      ExplorePageEntry(
+        title: context.loc.exMostCommonFamilyNames,
+        route: MostCommonNamesPage.routeNameFamily,
+        icon: const Icon(Icons.groups),
+      ),
+      ExplorePageEntry(
+        title: context.loc.exMostCommonGivenNames,
+        subtitle: context.loc.exMostCommonGivenNamesNote,
+        route: MostCommonNamesPage.routeNameGiven,
+        icon: const Icon(Icons.person),
+      ),
+      ExplorePageEntry(
+        title: context.loc.exMostCommonKanji,
+        route: MostCommonKanjiPage.routeName,
+        icon: const _TextIcon('漢'),
+      ),
+      ExplorePageEntry(
+        title: context.loc.exUnisexNames,
+        subtitle: context.loc.exUnisexNamesNote,
+        route: UnisexNamesPage.routeName,
+        icon: const Icon(Icons.adjust),
+      ),
+      ExplorePageEntry(
+        title: context.loc.exKanjiAndGender,
+        subtitle: context.loc.exKanjiAndGenderNote,
+        route: KanjiAndGenderPage.routeName,
+        icon: const Icon(Icons.apps),
+      ),
+    ];
+
     return Scaffold(
       drawer: NavigationDrawer(),
       appBar: AppBar(

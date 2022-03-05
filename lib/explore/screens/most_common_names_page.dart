@@ -7,6 +7,7 @@ import 'package:yomikun/core/utilities/number_format.dart';
 import 'package:yomikun/core/widgets/button_switch_bar.dart';
 import 'package:yomikun/core/widgets/error_box.dart';
 import 'package:yomikun/core/widgets/loading_box.dart';
+import 'package:yomikun/localization/app_localizations_context.dart';
 import 'package:yomikun/name_list/name_list_page.dart';
 import 'package:yomikun/search/models.dart';
 import 'package:yomikun/settings/settings_controller.dart';
@@ -44,9 +45,11 @@ class MostCommonNamesPage extends HookConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Most common ' +
-            (part == NamePart.mei ? 'given' : 'family') +
-            ' names'),
+        title: Text(
+          part == NamePart.mei
+              ? context.loc.exMostCommonGivenNames
+              : context.loc.exMostCommonFamilyNames,
+        ),
       ),
       body: Container(
         padding: const EdgeInsets.all(10),

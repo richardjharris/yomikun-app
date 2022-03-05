@@ -5,6 +5,7 @@ import 'package:yomikun/core/providers/core_providers.dart';
 import 'package:yomikun/core/widgets/basic_name_row.dart';
 import 'package:yomikun/core/widgets/error_box.dart';
 import 'package:yomikun/core/widgets/loading_box.dart';
+import 'package:yomikun/localization/app_localizations_context.dart';
 import 'package:yomikun/search/models.dart';
 import 'package:collection/collection.dart';
 import 'package:yomikun/settings/models/settings_models.dart';
@@ -51,7 +52,7 @@ class UnisexNamesPage extends HookConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Unisex names'),
+        title: Text(context.loc.exUnisexNames),
       ),
       body: Container(
         padding: const EdgeInsets.symmetric(vertical: 10),
@@ -60,22 +61,22 @@ class UnisexNamesPage extends HookConsumerWidget {
             Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                const Text('Order by:'),
+                Text(context.loc.orderBy),
                 const SizedBox(width: 10),
                 DropdownButton<SortOrder>(
                   value: sortOrder.value,
-                  items: const [
+                  items: [
                     DropdownMenuItem(
                       value: SortOrder.popularity,
-                      child: Text('Popularity'),
+                      child: Text(context.loc.orderByPopularity),
                     ),
                     DropdownMenuItem(
                       value: SortOrder.neutrality,
-                      child: Text('Neutrality'),
+                      child: Text(context.loc.orderByNeutrality),
                     ),
                     DropdownMenuItem(
                       value: SortOrder.name,
-                      child: Text('Name'),
+                      child: Text(context.loc.orderByNameLocaleSpecific),
                     ),
                   ],
                   onChanged: (value) => sortOrder.value = value!,

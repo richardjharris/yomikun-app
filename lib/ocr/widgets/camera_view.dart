@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:google_ml_kit/google_ml_kit.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:yomikun/core/providers/core_providers.dart';
+import 'package:yomikun/localization/app_localizations_context.dart';
 
 enum ScreenMode { liveFeed, gallery }
 
@@ -171,14 +172,14 @@ class _CameraViewState extends State<CameraView> {
       Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16),
         child: ElevatedButton(
-          child: const Text('From Gallery'),
+          child: Text(context.loc.ocrFromGallery),
           onPressed: () => _getImage(ImageSource.gallery),
         ),
       ),
       Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16),
         child: ElevatedButton(
-          child: const Text('Take a picture'),
+          child: Text(context.loc.ocrTakePicture),
           onPressed: () => _getImage(ImageSource.camera),
         ),
       ),

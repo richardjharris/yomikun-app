@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:google_ml_kit/google_ml_kit.dart';
 import 'package:yomikun/core/providers/core_providers.dart';
+import 'package:yomikun/localization/app_localizations_context.dart';
 import 'package:yomikun/ocr/utilities/text_detector_painter.dart';
 import 'package:yomikun/ocr/widgets/camera_view.dart';
 
@@ -32,7 +33,7 @@ class OcrPageState extends State<OcrPage> {
       body: cameras.isEmpty
           ? noCameraBox(context)
           : CameraView(
-              title: 'OCR',
+              title: context.loc.ocrPageTitle,
               customPaint: customPaint,
               onImage: processImage,
             ),
@@ -47,10 +48,10 @@ class OcrPageState extends State<OcrPage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Text('No camera detected.'),
+            Text(context.loc.ocrNoCameraDetected),
             const SizedBox(height: 20),
             ElevatedButton(
-              child: const Text('Go back'),
+              child: Text(context.loc.goBack),
               onPressed: () {
                 Navigator.pop(context);
               },
