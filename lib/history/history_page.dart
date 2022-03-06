@@ -135,8 +135,9 @@ class HistoryList extends StatelessWidget {
                 ),
                 child: Center(
                     child: Text(queryModeToIcon(item.query.mode),
-                        style: const TextStyle(
-                            fontSize: 20, color: Colors.white))),
+                        style:
+                            const TextStyle(fontSize: 20, color: Colors.white),
+                        locale: const Locale('ja'))),
               ),
               title: Text(
                 item.query.text,

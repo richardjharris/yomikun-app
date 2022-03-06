@@ -66,8 +66,9 @@ class BookmarksPage extends HookConsumerWidget {
             final Bookmark bookmark = items[index];
             return Slidable(
               child: ListTile(
-                title:
-                    Text(bookmark.title, style: const TextStyle(fontSize: 20)),
+                title: Text(bookmark.title,
+                    style: const TextStyle(fontSize: 20),
+                    locale: const Locale('ja')),
                 onTap: () => _openBookmark(context, bookmark),
               ),
               groupTag: this,
