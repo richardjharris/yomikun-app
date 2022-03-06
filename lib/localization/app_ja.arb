@@ -2,7 +2,7 @@
   "appTitle": "よみくん",
   "debugBanner": "デバッグ",
   "noNameResultsFound": "検索条件に一致する結果が見つかりません。",
-  "enterNameInKanjiOrKana": "漢字もしくは仮名で名前を入力してください",
+  "enterNameInKanjiOrKana": "漢字もしくは読みで名前を入力してください",
   "changeQueryModeTooltip": "検索モードを変える",
   "nameRowM": "男",
   "nameRowF": "女",

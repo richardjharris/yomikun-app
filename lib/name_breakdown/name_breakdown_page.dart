@@ -94,10 +94,12 @@ class NameBreakdownPage extends HookConsumerWidget {
                 // Make a ListTile for each item in sortedResults.
                 for (var row in cache.sortedByHitsDescending())
                   SlidableNameRow(
-                      data: row,
-                      key: ValueKey(row.key()),
-                      groupTag: cache,
-                      showOnly: inverseKy),
+                    data: row,
+                    key: ValueKey(row.key()),
+                    groupTag: cache,
+                    showOnly: inverseKy,
+                    totalHits: cache.totalHits,
+                  ),
               ],
             ),
           ),

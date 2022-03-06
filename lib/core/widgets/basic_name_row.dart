@@ -11,10 +11,12 @@ class BasicNameRow extends ConsumerWidget {
     required Key key,
     required this.nameData,
     this.showOnly,
+    this.totalHits,
   }) : super(key: key);
 
   final NameData nameData;
   final KakiYomi? showOnly;
+  final int? totalHits;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -58,6 +60,19 @@ class BasicNameRow extends ConsumerWidget {
       ];
     }
 
+    if (totalHits != null) {
+      // Add a bar showing relative share.
+      titleWidgets.add(const Spacer());
+      titleWidgets.add(Container(
+        width: 200.0 * (nameData.hitsTotal / totalHits!),
+        height: 5.0,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(5.0),
+          color: Colors.green,
+        ),
+      ));
+    }
+
     int genderScore = nameData.genderMlScore;
     return ListTile(
       title: Row(children: titleWidgets),
@@ -94,12 +109,16 @@ class GenderBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Align(
       child: SizedBox(
-          width: 60,
+        width: 60,
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(5.0),
           child: LinearProgressIndicator(
             value: femaleRatio,
             valueColor: const AlwaysStoppedAnimation<Color>(Colors.pinkAccent),
             backgroundColor: Colors.blueAccent,
-          )),
+          ),
+        ),
+      ),
       alignment: Alignment.topLeft,
     );
   }

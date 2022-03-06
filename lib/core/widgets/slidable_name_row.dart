@@ -14,11 +14,15 @@ class SlidableNameRow extends ConsumerWidget {
   final Object groupTag;
   final KakiYomi? showOnly;
 
+  /// If set, shows each name's share relative to the total hit count.
+  final int? totalHits;
+
   const SlidableNameRow({
     required key,
     required this.data,
     required this.groupTag,
     this.showOnly,
+    this.totalHits,
   }) : super(key: key);
 
   @override
@@ -32,9 +36,13 @@ class SlidableNameRow extends ConsumerWidget {
         ref.watch(bookmarkDatabaseProvider).isBookmarked(nameUrl);
 
     return Slidable(
-      key: ValueKey(data.key()),
       child: BasicNameRow(
-          key: ValueKey(data.key()), nameData: data, showOnly: showOnly),
+        key: ValueKey(data.key()),
+        nameData: data,
+        showOnly: showOnly,
+        totalHits: totalHits,
+      ),
+      key: ValueKey(data.key()),
       groupTag: groupTag,
       endActionPane: ActionPane(
         extentRatio: 0.4,
