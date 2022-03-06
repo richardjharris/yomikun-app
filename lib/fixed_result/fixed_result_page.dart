@@ -5,6 +5,7 @@ import 'package:yomikun/core/widgets/error_box.dart';
 import 'package:yomikun/core/widgets/loading_box.dart';
 import 'package:yomikun/navigation/open_search_page.dart';
 import 'package:yomikun/search/models.dart';
+import 'package:yomikun/search/widgets/search_box.dart';
 import 'package:yomikun/search/widgets/search_results.dart';
 
 /// Displays a single search result, e.g. from bookmarks or history.
@@ -22,7 +23,7 @@ class FixedResultPage extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(query.text),
+        title: Text("${query.text} (${queryModeToIcon(query.mode)})"),
         actions: <Widget>[
           Padding(
             padding: const EdgeInsets.only(right: 10.0),

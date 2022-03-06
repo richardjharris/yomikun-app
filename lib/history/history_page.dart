@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:yomikun/core/widgets/error_box.dart';
 import 'package:yomikun/core/widgets/loading_box.dart';
+import 'package:yomikun/fixed_result/fixed_result_page.dart';
 import 'package:yomikun/history/search_history/models/history_grouping.dart';
 import 'package:yomikun/history/search_history/models/search_history_item.dart';
 import 'package:yomikun/history/search_history/providers/search_history_providers.dart';
@@ -104,6 +105,7 @@ class HistoryList extends StatelessWidget {
             String headingText =
                 '${startFormat.format(start)} $divider ${endFormat.format(end)}';
 
+            // Create a heading with the date range
             return Container(
               margin: const EdgeInsets.symmetric(vertical: 1),
               padding: const EdgeInsets.fromLTRB(10, 5, 10, 5),
@@ -117,7 +119,13 @@ class HistoryList extends StatelessWidget {
               ),
             );
           } else if (item is SearchHistoryItem) {
+            // Create a history item
             return ListTile(
+              onTap: () {
+                // Show the results of the historical query.
+                Navigator.pushNamed(context, FixedResultPage.routeName,
+                    arguments: item.query.toMap());
+              },
               leading: Container(
                 width: 30,
                 height: 30,
