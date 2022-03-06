@@ -108,8 +108,8 @@ class BookmarksPage extends HookConsumerWidget {
                         ? Icons.star_outline
                         : Icons.star,
                     label: bookmark == lastDeleted.value
-                        ? 'Bookmark'
-                        : 'Unbookmark',
+                        ? context.loc.addBookmarkAction
+                        : context.loc.removeBookmarkAction,
                   ),
                 ],
               ),

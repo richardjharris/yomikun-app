@@ -53,17 +53,8 @@ class NameBreakdownPage extends HookConsumerWidget {
           padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
           child: Row(
             children: [
-              ButtonSwitchBar(
-                items: const [
-                  MapEntry(GenderFilter.female, 'Female'),
-                  MapEntry(GenderFilter.male, 'Male'),
-                  MapEntry(GenderFilter.all, 'All'),
-                ],
-                onChanged: (GenderFilter value) {
-                  genderFilter.value = value;
-                },
-                value: genderFilter.value,
-              ),
+              if (query.mode == QueryMode.mei)
+                GenderFilterButtonSwitchBar.forValue(genderFilter),
               const Spacer(),
               _ActionButtons(
                 isBookmarked: isBookmarked,
@@ -156,12 +147,14 @@ class _ActionButtons extends ConsumerWidget {
         IconButton(
           icon: Icon(isBookmarked ? Icons.star : Icons.star_border),
           onPressed: onBookmark,
-          tooltip: isBookmarked ? 'Remove bookmark' : 'Add bookmark',
+          tooltip: isBookmarked
+              ? context.loc.removeBookmarkTooltip
+              : context.loc.addBookmarkTooltip,
         ),
         IconButton(
           icon: const Icon(Icons.share),
           onPressed: onShare,
-          tooltip: 'Share',
+          tooltip: context.loc.shareTooltip,
         ),
       ],
     );

@@ -40,7 +40,7 @@ class NamePersonPage extends HookWidget {
           Text(context.loc.allPossibleReadings),
         ],
         const SizedBox(height: 12),
-        NamePartSwitchButtons(
+        SeiMeiButtonSwitchBar(
           value: selectedNamePart.value,
           onChanged: (part) => selectedNamePart.value = part,
         ),
@@ -61,28 +61,6 @@ class NamePersonPage extends HookWidget {
             ),
           ),
         ),
-      ],
-    );
-  }
-}
-
-/// Button to switch between name part
-class NamePartSwitchButtons extends ConsumerWidget {
-  final NamePart value;
-  final ValueChanged<NamePart> onChanged;
-
-  const NamePartSwitchButtons(
-      {Key? key, required this.value, required this.onChanged})
-      : super(key: key);
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    return ButtonSwitchBar(
-      value: value,
-      onChanged: onChanged,
-      items: [
-        MapEntry(NamePart.sei, context.loc.surname),
-        MapEntry(NamePart.mei, context.loc.givenName),
       ],
     );
   }

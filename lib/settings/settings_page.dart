@@ -85,7 +85,7 @@ class SettingsPage extends ConsumerWidget {
         settings.nameFormat == NameFormatPreference.romaji) {
       settings.updateNameFormat(NameFormatPreference.hiragana);
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text('Changed name format to Hiragana'),
+        content: Text(context.loc.settingsChangedNameFormatToHiragana),
       ));
     }
   }

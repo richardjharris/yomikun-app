@@ -5,6 +5,7 @@ import 'package:share_plus/share_plus.dart';
 import 'package:yomikun/core/providers/core_providers.dart';
 import 'package:yomikun/core/widgets/basic_name_row.dart';
 import 'package:yomikun/fixed_result/fixed_result_page.dart';
+import 'package:yomikun/localization/app_localizations_context.dart';
 import 'package:yomikun/search/models.dart';
 
 /// Shows name data with slidable actions (share, bookmark)
@@ -49,7 +50,9 @@ class SlidableNameRow extends ConsumerWidget {
                   );
             },
             icon: isBookmarked ? Icons.star : Icons.star_border,
-            label: 'Bookmark',
+            label: isBookmarked
+                ? context.loc.removeBookmarkAction
+                : context.loc.addBookmarkAction,
           ),
           SlidableAction(
             backgroundColor: Colors.blue.shade900,
@@ -60,7 +63,7 @@ class SlidableNameRow extends ConsumerWidget {
               Share.share(back, subject: front);
             },
             icon: Icons.share,
-            label: 'Share',
+            label: context.loc.shareAction,
           ),
         ],
       ),

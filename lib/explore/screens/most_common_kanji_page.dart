@@ -30,29 +30,10 @@ class MostCommonKanjiPage extends HookConsumerWidget {
         padding: const EdgeInsets.all(10),
         child: Column(
           children: [
-            ButtonSwitchBar(
-              value: namePart.value,
-              onChanged: (NamePart value) {
-                namePart.value = value;
-              },
-              items: [
-                MapEntry(NamePart.mei, context.loc.givenName),
-                MapEntry(NamePart.sei, context.loc.surname),
-              ],
-            ),
+            SeiMeiButtonSwitchBar.forValue(namePart),
             if (namePart.value == NamePart.mei) ...[
               const SizedBox(height: 10),
-              ButtonSwitchBar(
-                value: genderFilter.value,
-                onChanged: (GenderFilter value) {
-                  genderFilter.value = value;
-                },
-                items: [
-                  MapEntry(GenderFilter.female, context.loc.femaleGender),
-                  MapEntry(GenderFilter.male, context.loc.maleGender),
-                  MapEntry(GenderFilter.all, context.loc.allGenders),
-                ],
-              ),
+              GenderFilterButtonSwitchBar.forValue(genderFilter),
             ],
             Expanded(
               child: MostCommonKanjiList(

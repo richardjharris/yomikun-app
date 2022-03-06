@@ -23,14 +23,14 @@ class HistoryPage extends ConsumerWidget {
     final historyListStream = ref.watch(searchHistoryListProvider);
 
     AlertDialog confirmDeleteDialog = AlertDialog(
-      title: const Text("Delete all history?"),
-      content: const Text("This cannot be undone."),
+      title: Text(context.loc.clearAllHistoryConfirm),
+      content: Text(context.loc.thisCannotBeUndone),
       actions: [
         TextButton(
-            child: const Text("Cancel"),
+            child: Text(context.loc.cancelAction),
             onPressed: () => Navigator.pop(context)),
         TextButton(
-            child: const Text("Delete"),
+            child: Text(context.loc.clearAllHistoryConfirmAction),
             onPressed: () {
               ref.read(searchHistoryServiceProvider).clearHistory();
               Navigator.pop(context);
@@ -47,7 +47,7 @@ class HistoryPage extends ConsumerWidget {
             padding: const EdgeInsets.only(right: 10.0),
             child: IconButton(
               icon: const Icon(Icons.delete),
-              tooltip: context.loc.clearHistory,
+              tooltip: context.loc.clearAllHistory,
               onPressed: () {
                 showDialog(
                     context: context, builder: (_) => confirmDeleteDialog);

@@ -55,17 +55,11 @@ class MostCommonNamesPage extends HookConsumerWidget {
         padding: const EdgeInsets.all(10),
         child: Column(
           children: [
-            ButtonSwitchBar(
-              value: viewMode.value,
-              onChanged: (_ViewMode value) {
-                viewMode.value = value;
-              },
-              items: const [
-                MapEntry(_ViewMode.exact, 'Exact'),
-                MapEntry(_ViewMode.kanji, 'Kanji'),
-                MapEntry(_ViewMode.kana, 'Kana'),
-              ],
-            ),
+            ButtonSwitchBar.forValue(viewMode, items: [
+              MapEntry(_ViewMode.exact, context.loc.exViewModeExact),
+              MapEntry(_ViewMode.kanji, context.loc.exViewModeKanji),
+              MapEntry(_ViewMode.kana, context.loc.exViewModeKana),
+            ]),
             Expanded(child: inner),
           ],
         ),
