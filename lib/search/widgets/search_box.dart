@@ -86,7 +86,15 @@ String queryModeToIcon(QueryMode mode) {
   }
 }
 
-Color queryModeToColor(QueryMode mode) {
+Color queryModeToColor(QueryMode mode, Brightness brightness) {
+  Color color = queryModeToColorLight(mode);
+  if (brightness == Brightness.dark) {
+    color = color.withOpacity(0.7);
+  }
+  return color;
+}
+
+Color queryModeToColorLight(QueryMode mode) {
   switch (mode) {
     case QueryMode.mei:
       return const Color.fromARGB(255, 255, 177, 251);
