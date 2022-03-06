@@ -15,13 +15,14 @@ class BookmarkDatabase extends ChangeNotifier {
   BookmarkDatabase() : _box = Hive.box(hiveBox);
 
   /// Add a bookmark by URL
-  Future<void> addBookmark(String url, String title) async {
+  Future<void> addBookmark(String url, String title,
+      [DateTime? dateAdded]) async {
     _box.put(
         url,
         Bookmark(
           url: url,
           title: title,
-          dateAdded: DateTime.now(),
+          dateAdded: dateAdded ?? DateTime.now(),
         ));
     notifyListeners();
   }

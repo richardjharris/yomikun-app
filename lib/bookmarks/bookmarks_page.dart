@@ -27,6 +27,7 @@ class BookmarksPage extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final bookmarkListData = ref.watch(bookmarkListProvider);
     final lastDeletedBookmark = useState<Bookmark?>(null);
+    final lastDeletedBookmarkId = useState<int>(0);
 
     return Scaffold(
       drawer: NavigationDrawer(),
@@ -38,6 +39,7 @@ class BookmarksPage extends HookConsumerWidget {
         ref,
         bookmarkListData,
         lastDeletedBookmark,
+        lastDeletedBookmarkId,
       ),
     );
   }
@@ -47,15 +49,26 @@ class BookmarksPage extends HookConsumerWidget {
     WidgetRef ref,
     List<Bookmark> items,
     ValueNotifier<Bookmark?> lastDeleted,
+    ValueNotifier<int> lastDeletedId,
   ) {
     if (items.isEmpty) {
       return PlaceholderMessage(context.loc.noBookmarksMessage);
     }
 
-    items = [
-      if (lastDeleted.value != null) lastDeleted.value!,
-      ...items,
-    ];
+    if (lastDeleted.value != null) {
+      // Add deleted item back in correct position
+      items = [
+        ...items.take(lastDeletedId.value),
+        lastDeleted.value!,
+        ...items.skip(lastDeletedId.value),
+      ];
+    }
+
+    const bookmarkStyle = TextStyle(fontSize: 20);
+    final deletedBookmarkStyle = bookmarkStyle.copyWith(
+      decoration: TextDecoration.lineThrough,
+      color: Colors.grey,
+    );
 
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 10),
@@ -67,7 +80,9 @@ class BookmarksPage extends HookConsumerWidget {
             return Slidable(
               child: ListTile(
                 title: Text(bookmark.title,
-                    style: const TextStyle(fontSize: 20),
+                    style: bookmark == lastDeleted.value
+                        ? deletedBookmarkStyle
+                        : bookmarkStyle,
                     locale: const Locale('ja')),
                 onTap: () => _openBookmark(context, bookmark),
               ),
@@ -86,6 +101,7 @@ class BookmarksPage extends HookConsumerWidget {
                       } else {
                         _deleteBookmark(ref, bookmark);
                         lastDeleted.value = bookmark;
+                        lastDeletedId.value = index;
                       }
                     },
                     icon: bookmark == lastDeleted.value
@@ -112,7 +128,7 @@ class BookmarksPage extends HookConsumerWidget {
   void _addBookmark(WidgetRef ref, Bookmark bookmark) {
     ref
         .read(bookmarkDatabaseProvider)
-        .addBookmark(bookmark.url, bookmark.title);
+        .addBookmark(bookmark.url, bookmark.title, bookmark.dateAdded);
   }
 
   void _deleteBookmark(WidgetRef ref, Bookmark bookmark) {
