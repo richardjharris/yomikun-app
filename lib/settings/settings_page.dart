@@ -40,7 +40,8 @@ class SettingsPage extends ConsumerWidget {
             DropdownSettingsTile<AppLanguagePreference>(
               title: context.loc.appLanguage,
               value: settings.appLanguage,
-              onChanged: settings.updateAppLanguage,
+              onChanged: (value) =>
+                  _updateAppLanguage(value, settings, context),
               items: {
                 AppLanguagePreference.system: context.loc.systemLanguage,
                 AppLanguagePreference.en: context.loc.englishLanguage,
@@ -73,6 +74,20 @@ class SettingsPage extends ConsumerWidget {
         ),
       ),
     );
+  }
+
+  void _updateAppLanguage(AppLanguagePreference? newLanguage,
+      SettingsController settings, BuildContext context) {
+    settings.updateAppLanguage(newLanguage);
+
+    // Users changing to Japanese language probably do not want romaji.
+    if (newLanguage == AppLanguagePreference.ja &&
+        settings.nameFormat == NameFormatPreference.romaji) {
+      settings.updateNameFormat(NameFormatPreference.hiragana);
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text('Changed name format to Hiragana'),
+      ));
+    }
   }
 }
 

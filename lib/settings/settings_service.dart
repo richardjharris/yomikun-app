@@ -5,6 +5,7 @@ import 'package:yomikun/settings/models/settings_models.dart';
 
 final settingsServiceProvider = Provider((_) => SettingsService());
 
+/// Settings storage backend. UI should use [SettingsController].
 class SettingsService {
   final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
 

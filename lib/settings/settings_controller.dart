@@ -4,12 +4,18 @@ import 'package:yomikun/settings/models/settings_models.dart';
 
 import 'settings_service.dart';
 
+/// Provider for the settings controller. Updates all listeners when settings
+/// are changed; use Riverpod `select` for more fine-grained control.
 final settingsControllerProvider = ChangeNotifierProvider((ref) {
   final service = ref.read(settingsServiceProvider);
 
   return SettingsController(service);
 });
 
+/// Settings interface for UI code.
+///
+/// Caches settings locally for async-less read, and allows settings to be
+/// changed. Notifies listeners of any changes.
 class SettingsController with ChangeNotifier {
   SettingsController(this._settingsService);
 
@@ -55,6 +61,7 @@ class SettingsController with ChangeNotifier {
     if (language == _appLanguage) return;
 
     _appLanguage = language;
+
     notifyListeners();
     await _settingsService.updateAppLanguage(language);
   }
@@ -78,12 +85,15 @@ class SettingsController with ChangeNotifier {
     await _settingsService.updateNameFormat(nameFormat);
   }
 
+  /// Returns the application's locale based on the settings. This allows the
+  /// user to force a specific locale just for this app.
   Locale? appLocale() {
     switch (appLanguage) {
+      // TODO(rjh) this forces en-US?
       case AppLanguagePreference.en:
-        return const Locale('en');
+        return const Locale('en', null);
       case AppLanguagePreference.ja:
-        return const Locale('ja');
+        return const Locale('ja', 'JP');
       case AppLanguagePreference.system:
         return null;
     }
