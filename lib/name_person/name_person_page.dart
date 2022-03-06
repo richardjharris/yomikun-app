@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:yomikun/core/widgets/button_switch_bar.dart';
 import 'package:yomikun/core/widgets/placeholder_message.dart';
 import 'package:yomikun/core/widgets/slidable_name_row.dart';
@@ -43,18 +44,21 @@ class NamePersonPage extends HookWidget {
           value: selectedNamePart.value,
           onChanged: (part) => selectedNamePart.value = part,
         ),
+        const SizedBox(height: 12),
         Expanded(
-          child: ListView(
-            children: _cache
-                .sortedByHitsDescending()
-                .where((name) => name.part == selectedNamePart.value)
-                .map<Widget>((name) => SlidableNameRow(
-                      data: name,
-                      key: ValueKey(name.key()),
-                      groupTag: _cache,
-                      showOnly: KakiYomi.yomi,
-                    ))
-                .toList(),
+          child: SlidableAutoCloseBehavior(
+            child: ListView(
+              children: _cache
+                  .sortedByHitsDescending()
+                  .where((name) => name.part == selectedNamePart.value)
+                  .map<Widget>((name) => SlidableNameRow(
+                        data: name,
+                        key: ValueKey(name.key()),
+                        groupTag: _cache,
+                        showOnly: KakiYomi.yomi,
+                      ))
+                  .toList(),
+            ),
           ),
         ),
       ],

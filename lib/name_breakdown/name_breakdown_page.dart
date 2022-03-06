@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:yomikun/core/providers/core_providers.dart';
 import 'package:yomikun/core/widgets/button_switch_bar.dart';
@@ -80,34 +81,36 @@ class NameBreakdownPage extends HookConsumerWidget {
           ),
         ),
         Expanded(
-          child: ListView(
-            children: [
-              if (cache.hasAtLeastOneHit &&
-                  viz == NameVisualizationPreference.treeMap) ...[
-                Container(
-                  constraints:
-                      const BoxConstraints(maxHeight: 400, maxWidth: 400),
-                  child: NameTreeMap(results: cache, splitBy: inverseKy),
-                  margin: const EdgeInsets.symmetric(vertical: 10),
-                ),
+          child: SlidableAutoCloseBehavior(
+            child: ListView(
+              children: [
+                if (cache.hasAtLeastOneHit &&
+                    viz == NameVisualizationPreference.treeMap) ...[
+                  Container(
+                    constraints:
+                        const BoxConstraints(maxHeight: 400, maxWidth: 400),
+                    child: NameTreeMap(results: cache, splitBy: inverseKy),
+                    margin: const EdgeInsets.symmetric(vertical: 10),
+                  ),
+                ],
+                if (cache.hasAtLeastOneHit &&
+                    viz == NameVisualizationPreference.pieChart) ...[
+                  Container(
+                    constraints:
+                        const BoxConstraints(maxHeight: 400, maxWidth: 400),
+                    child: NamePieChart(results: cache, splitBy: inverseKy),
+                    margin: const EdgeInsets.all(10),
+                  ),
+                ],
+                // Make a ListTile for each item in sortedResults.
+                for (var row in cache.sortedByHitsDescending())
+                  SlidableNameRow(
+                      data: row,
+                      key: ValueKey(row.key()),
+                      groupTag: cache,
+                      showOnly: inverseKy),
               ],
-              if (cache.hasAtLeastOneHit &&
-                  viz == NameVisualizationPreference.pieChart) ...[
-                Container(
-                  constraints:
-                      const BoxConstraints(maxHeight: 400, maxWidth: 400),
-                  child: NamePieChart(results: cache, splitBy: inverseKy),
-                  margin: const EdgeInsets.all(10),
-                ),
-              ],
-              // Make a ListTile for each item in sortedResults.
-              for (var row in cache.sortedByHitsDescending())
-                SlidableNameRow(
-                    data: row,
-                    key: ValueKey(row.key()),
-                    groupTag: cache,
-                    showOnly: inverseKy),
-            ],
+            ),
           ),
         ),
       ],
