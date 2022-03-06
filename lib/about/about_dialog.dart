@@ -4,6 +4,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:yomikun/gen/assets.gen.dart';
+import 'package:yomikun/localization/app_localizations_context.dart';
 
 final String developerEmail =
     String.fromCharCodes(base64.decode('cmljaGFyZGpoYXJyaXMreWtAZ21haWwuY29t'));
@@ -14,22 +15,23 @@ const String splashLogoSource =
     'https://commons.wikimedia.org/wiki/File:Miyajima_Island_(44617818220).jpg';
 
 /// Pops up an about dialog with app credits.
-Future<void> showYomikunAboutDialog(context) async {
+Future<void> showYomikunAboutDialog(BuildContext context) async {
   final style = Theme.of(context).textTheme.bodyText2;
 
-  TextSpan credits = TextSpan(
-      style: style,
-      text:
-          'This app was created by Richard Harris ($developerEmail). Please contact me if you have any issues or feature requests. ');
-  TextSpan credits2 = TextSpan(
-      style: style,
-      text:
-          'Miyajima Island photo credited to Flickr user Dumphasizer, used under the CC BY-SA 2.0 license.');
+  TextSpan devCredit =
+      TextSpan(style: style, text: context.loc.aboutDevCredit(developerEmail));
+  devCredit =
+      linkify(context, devCredit, developerEmail, 'mailto:$developerEmail');
 
-  credits = linkify(context, credits, developerEmail, 'mailto:$developerEmail');
-  credits2 =
-      linkify(context, credits2, 'Miyajima Island photo', splashLogoSource);
-  credits2 = linkify(context, credits2, 'CC BY-SA 2.0', creativeCommonsLink);
+  TextSpan photoCredit = TextSpan(
+      style: style,
+      text: context.loc.aboutPhotoCredit(
+          context.loc.aboutMiyajimaIslandPhoto, context.loc.aboutCcBySa2));
+
+  photoCredit = linkify(context, photoCredit,
+      context.loc.aboutMiyajimaIslandPhoto, splashLogoSource);
+  photoCredit = linkify(
+      context, photoCredit, context.loc.aboutCcBySa2, creativeCommonsLink);
 
   showAboutDialog(
     context: context,
@@ -39,12 +41,12 @@ Future<void> showYomikunAboutDialog(context) async {
         height: 40,
         filterQuality: FilterQuality.medium),
     applicationVersion: 'beta',
-    applicationLegalese: '\u{a9} 2022 Yomikun Developers',
+    applicationLegalese: '\u{a9} 2022 ' + context.loc.aboutAuthors,
     children: [
       const SizedBox(height: 20),
-      RichText(text: credits),
+      RichText(text: devCredit),
       const SizedBox(height: 10),
-      RichText(text: credits2),
+      RichText(text: photoCredit),
     ],
   );
 }

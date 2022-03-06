@@ -83,5 +83,21 @@
   "orderByNeutrality": "Neutrality",
   "@orderByNeutrality": {
     "description": "Label for ordering most gender-neutral names first, i.e. those with similar male and female hit counts"
+  },
+  "aboutAuthors": "Yomikun Developers",
+  "aboutDevCredit": "This app was created by Richard Harris ({appDeveloperEmail}). Please contact me if you have any issues or feature requests.",
+  "@aboutDevCredit": {
+    "placeholders": {
+      "appDeveloperEmail": { "type": "String" }
+    }
+  },
+  "aboutPhotoCredit": "{aboutMiyajimaIslandPhoto} credited to Flickr user Dumphasizer, used under the {aboutCcBySa2} license.",
+  "aboutMiyajimaIslandPhoto": "Miyajima Island photo",
+  "aboutCcBySa2": "CC BY-SA 2.0",
+  "@aboutPhotoCredit": {
+    "placeholders": {
+      "aboutMiyajimaIslandPhoto": { "type": "String" },
+      "aboutCcBySa2": { "type": "String" }
+    }
   }
 }

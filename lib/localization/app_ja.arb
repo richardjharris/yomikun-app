@@ -59,5 +59,10 @@
   "orderBy": "並べ替え：",
   "orderByNameLocaleSpecific": "五十音順",
   "orderByPopularity": "ありふれた名前順",
-  "orderByNeutrality": "中性が先に"
+  "orderByNeutrality": "中性が先に",
+  "aboutAuthors": "よみくん開発部",
+  "aboutDevCredit": "開発者：Richard Harris ({appDeveloperEmail})。ご意見やお気づきの点がありましたら、そのメールアドレスまでお願いいたします。",
+  "aboutPhotoCredit": "{aboutMiyajimaIslandPhoto}はDumphasizerというFlickrのユーザーの写真であり、{aboutCcBySa2}の提供で利用いたしました。",
+  "aboutCcBySa2": "CC BY-SA 2.0",
+  "aboutMiyajimaIslandPhoto": "宮島の写真"
 }
