@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:yomikun/about/about_page.dart';
+import 'package:yomikun/about/about_dialog.dart';
 import 'package:yomikun/bookmarks/bookmarks_page.dart';
 import 'package:yomikun/core/providers/core_providers.dart';
 import 'package:yomikun/explore/explore_page.dart';
@@ -84,9 +84,8 @@ class NavigationDrawer extends StatelessWidget {
           ListTile(
             leading: const Icon(Icons.info_outline),
             title: Text(context.loc.about),
-            onTap: () {
-              Navigator.pop(context);
-              Navigator.pushNamed(context, AboutPage.routeName);
+            onTap: () async {
+              await showYomikunAboutDialog(context);
             },
           ),
           const Divider(),

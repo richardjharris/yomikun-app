@@ -10,6 +10,7 @@ import 'package:flutter/widgets.dart';
 class Assets {
   Assets._();
 
+  static const AssetGenImage appicon = AssetGenImage('assets/appicon.png');
   static const String names = 'assets/names.db';
   static const AssetGenImage sidemenuSplash =
       AssetGenImage('assets/sidemenu_splash.jpg');

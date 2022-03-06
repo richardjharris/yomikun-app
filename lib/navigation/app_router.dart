@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:yomikun/about/about_page.dart';
 import 'package:yomikun/explore/explore_page.dart';
 import 'package:yomikun/explore/screens/kanji_and_gender_page.dart';
 import 'package:yomikun/explore/screens/most_common_kanji_page.dart';
@@ -71,9 +70,6 @@ class AppRouter {
 
       case SettingsPage.routeName:
         return const SettingsPage();
-
-      case AboutPage.routeName:
-        return const AboutPage();
 
       case AppRoutes.makotoPage:
         openSearchPage(context, ref, makotoQuery);

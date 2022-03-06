@@ -96,7 +96,7 @@ class _CameraViewState extends State<CameraView> {
       width: 70.0,
       child: FloatingActionButton(
         child: Icon(
-          Platform.isIOS
+          (kIsWeb ? false : Platform.isIOS)
               ? Icons.flip_camera_ios_outlined
               : Icons.flip_camera_android_outlined,
           size: 40,
