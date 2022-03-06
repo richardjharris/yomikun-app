@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:yomikun/core/models.dart';
 import 'package:yomikun/core/providers/core_providers.dart';
 import 'package:yomikun/core/widgets/button_switch_bar.dart';
 import 'package:yomikun/core/widgets/placeholder_message.dart';
@@ -13,8 +14,6 @@ import 'package:yomikun/name_breakdown/widgets/name_treemap.dart';
 import 'package:yomikun/search/models.dart';
 import 'package:yomikun/settings/models/settings_models.dart';
 import 'package:yomikun/settings/settings_controller.dart';
-
-enum GenderFilter { male, female, all }
 
 /// For a given name, show a breakdown of readings (if kanji) or kanji forms
 /// (if kana) sorted by most popular.

@@ -6,8 +6,8 @@ import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:synchronized/synchronized.dart';
+import 'package:yomikun/core/models.dart';
 import 'package:yomikun/core/providers/core_providers.dart';
-import 'package:yomikun/name_breakdown/name_breakdown_page.dart';
 import 'package:yomikun/search/models.dart';
 
 /// NamePart values in the same order as stored in SQLite as INT offsets.

@@ -1,4 +1,4 @@
-import 'package:yomikun/name_breakdown/name_breakdown_page.dart';
+import 'package:yomikun/core/models.dart';
 import 'package:yomikun/search/models.dart';
 import 'package:collection/collection.dart';
 

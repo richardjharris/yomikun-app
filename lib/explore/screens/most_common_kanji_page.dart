@@ -2,13 +2,13 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:yomikun/core/models.dart';
 import 'package:yomikun/core/providers/core_providers.dart';
 import 'package:yomikun/core/utilities/number_format.dart';
 import 'package:yomikun/core/widgets/button_switch_bar.dart';
 import 'package:yomikun/core/widgets/error_box.dart';
 import 'package:yomikun/core/widgets/loading_box.dart';
 import 'package:yomikun/localization/app_localizations_context.dart';
-import 'package:yomikun/name_breakdown/name_breakdown_page.dart';
 import 'package:yomikun/search/models.dart';
 
 /// Shows most common kanji in names
