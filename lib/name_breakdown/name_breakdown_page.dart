@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:yomikun/core/models.dart';
 import 'package:yomikun/core/providers/core_providers.dart';
 import 'package:yomikun/core/widgets/button_switch_bar.dart';
@@ -12,6 +13,7 @@ import 'package:yomikun/name_breakdown/cached_query_result.dart';
 import 'package:yomikun/name_breakdown/widgets/name_pie_chart.dart';
 import 'package:yomikun/name_breakdown/widgets/name_treemap.dart';
 import 'package:yomikun/search/models.dart';
+import 'package:yomikun/search/widgets/search_box.dart';
 import 'package:yomikun/settings/models/settings_models.dart';
 import 'package:yomikun/settings/settings_controller.dart';
 
@@ -71,10 +73,7 @@ class NameBreakdownPage extends HookConsumerWidget {
                         pageBookmarkTitle,
                       );
                 },
-                onShare: () {
-                  // TODO - have to share some breakdown of the top
-                  // readings.
-                },
+                onShare: () => onShareWholePage(cache, ref),
               ),
             ],
           ),
@@ -114,6 +113,26 @@ class NameBreakdownPage extends HookConsumerWidget {
         ),
       ],
     );
+  }
+
+  /// Invoked when clicking the page-global 'share' button. This will share
+  /// the top five readings for a name.
+  void onShareWholePage(CachedQueryResult cache, WidgetRef ref) {
+    final NameFormatPreference nameFormat =
+        ref.read(settingsControllerProvider).nameFormat;
+
+    final String front = '${query.text} (${queryModeToIcon(query.mode)})';
+
+    final String back = cache.sortedByHitsDescending().take(5).map((row) {
+      String label = query.ky == KakiYomi.kaki ? row.yomi : row.kaki;
+      label = formatYomiString(label, nameFormat);
+      String percent =
+          (row.hitsTotal / cache.totalHits * 100).toStringAsFixed(1);
+      return '$label ($percent%)';
+    }).join('; ');
+
+    Share.share(back, subject: front);
+    debugPrint("Shared $front ($back)");
   }
 }
 
