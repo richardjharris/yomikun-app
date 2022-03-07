@@ -47,6 +47,28 @@ class NameBreakdownPage extends HookConsumerWidget {
     final isBookmarked =
         ref.watch(bookmarkDatabaseProvider).isBookmarked(pageBookmarkUri);
 
+    List<NameData> items = cache.sortedByHitsDescending().toList();
+
+    List<Widget> charts = [
+      if (cache.hasAtLeastOneHit &&
+          viz == NameVisualizationPreference.treeMap) ...[
+        const SizedBox(height: 10),
+        Container(
+          constraints: const BoxConstraints(maxHeight: 400, maxWidth: 400),
+          child: NameTreeMap(results: cache, splitBy: inverseKy),
+          margin: const EdgeInsets.symmetric(vertical: 10),
+        ),
+      ],
+      if (cache.hasAtLeastOneHit &&
+          viz == NameVisualizationPreference.pieChart) ...[
+        Container(
+          constraints: const BoxConstraints(maxHeight: 400, maxWidth: 400),
+          child: NamePieChart(results: cache, splitBy: inverseKy),
+          margin: const EdgeInsets.all(10),
+        ),
+      ],
+    ];
+
     return Column(
       children: [
         Padding(
@@ -71,36 +93,22 @@ class NameBreakdownPage extends HookConsumerWidget {
         ),
         Expanded(
           child: SlidableAutoCloseBehavior(
-            child: ListView(
-              children: [
-                if (cache.hasAtLeastOneHit &&
-                    viz == NameVisualizationPreference.treeMap) ...[
-                  Container(
-                    constraints:
-                        const BoxConstraints(maxHeight: 400, maxWidth: 400),
-                    child: NameTreeMap(results: cache, splitBy: inverseKy),
-                    margin: const EdgeInsets.symmetric(vertical: 10),
-                  ),
-                ],
-                if (cache.hasAtLeastOneHit &&
-                    viz == NameVisualizationPreference.pieChart) ...[
-                  Container(
-                    constraints:
-                        const BoxConstraints(maxHeight: 400, maxWidth: 400),
-                    child: NamePieChart(results: cache, splitBy: inverseKy),
-                    margin: const EdgeInsets.all(10),
-                  ),
-                ],
-                // Make a ListTile for each item in sortedResults.
-                for (var row in cache.sortedByHitsDescending())
-                  SlidableNameRow(
-                    data: row,
-                    key: ValueKey(row.key()),
+            child: ListView.builder(
+              itemCount: items.length + charts.length,
+              itemBuilder: (context, index) {
+                if (index < charts.length) {
+                  return charts[index];
+                } else {
+                  final item = items[index - charts.length];
+                  return SlidableNameRow(
+                    data: item,
+                    key: ValueKey(item.key()),
                     groupTag: cache,
                     showOnly: inverseKy,
                     totalHits: cache.totalHits,
-                  ),
-              ],
+                  );
+                }
+              },
             ),
           ),
         ),
