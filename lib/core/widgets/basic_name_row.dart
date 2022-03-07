@@ -60,7 +60,7 @@ class BasicNameRow extends ConsumerWidget {
       ];
     }
 
-    if (totalHits != null) {
+    if (totalHits != null && totalHits! > 0) {
       // Add a bar showing relative share.
       titleWidgets.add(const Spacer());
       titleWidgets.add(Container(

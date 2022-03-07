@@ -52,7 +52,6 @@ class NameBreakdownPage extends HookConsumerWidget {
     List<Widget> charts = [
       if (cache.hasAtLeastOneHit &&
           viz == NameVisualizationPreference.treeMap) ...[
-        const SizedBox(height: 10),
         Container(
           constraints: const BoxConstraints(maxHeight: 400, maxWidth: 400),
           child: NameTreeMap(results: cache, splitBy: inverseKy),
