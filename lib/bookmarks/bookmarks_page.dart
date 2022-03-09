@@ -51,10 +51,6 @@ class BookmarksPage extends HookConsumerWidget {
     ValueNotifier<Bookmark?> lastDeleted,
     ValueNotifier<int> lastDeletedId,
   ) {
-    if (items.isEmpty) {
-      return PlaceholderMessage(context.loc.noBookmarksMessage);
-    }
-
     if (lastDeleted.value != null) {
       // Add deleted item back in correct position
       items = [
@@ -62,6 +58,10 @@ class BookmarksPage extends HookConsumerWidget {
         lastDeleted.value!,
         ...items.skip(lastDeletedId.value),
       ];
+    }
+
+    if (items.isEmpty) {
+      return PlaceholderMessage(context.loc.noBookmarksMessage);
     }
 
     const bookmarkStyle = TextStyle(fontSize: 20);
