@@ -1,4 +1,6 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:yomikun/about/show_about_dialog.dart';
 import 'package:yomikun/bookmarks/bookmarks_page.dart';
@@ -91,22 +93,24 @@ class NavigationDrawer extends ConsumerWidget {
               await showYomikunAboutDialog(context, dbVersion);
             },
           ),
-          const Divider(),
-          ListTile(
-            title: const Text('Makoto'),
-            onTap: () {
-              Navigator.pop(context);
-              Navigator.popUntil(context, (route) => route.isFirst);
-              Navigator.restorablePushNamed(context, '/makoto');
-            },
-          ),
-          ListTile(
-            title: const Text('Makoto (fixed)'),
-            onTap: () {
-              Navigator.pop(context);
-              Navigator.restorablePushNamed(context, '/makoto-fixed');
-            },
-          ),
+          if (kDebugMode) ...[
+            const Divider(),
+            ListTile(
+              title: const Text('Makoto'),
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.popUntil(context, (route) => route.isFirst);
+                Navigator.restorablePushNamed(context, '/makoto');
+              },
+            ),
+            ListTile(
+              title: const Text('Makoto (fixed)'),
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.restorablePushNamed(context, '/makoto-fixed');
+              },
+            ),
+          ], // /if kDebugMode
         ],
       ),
     );
