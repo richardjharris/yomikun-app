@@ -96,10 +96,10 @@ class BookmarksPage extends HookConsumerWidget {
                     foregroundColor: Colors.white,
                     onPressed: (context) {
                       if (bookmark == lastDeleted.value) {
-                        _addBookmark(ref, bookmark);
+                        _addBookmark(context, ref, bookmark);
                         lastDeleted.value = null;
                       } else {
-                        _deleteBookmark(ref, bookmark);
+                        _deleteBookmark(context, ref, bookmark);
                         lastDeleted.value = bookmark;
                         lastDeletedId.value = index;
                       }
@@ -125,13 +125,19 @@ class BookmarksPage extends HookConsumerWidget {
     Navigator.of(context).restorablePushNamed(bookmark.url);
   }
 
-  void _addBookmark(WidgetRef ref, Bookmark bookmark) {
+  void _addBookmark(BuildContext context, WidgetRef ref, Bookmark bookmark) {
     ref
         .read(bookmarkDatabaseProvider)
         .addBookmark(bookmark.url, bookmark.title, bookmark.dateAdded);
+
+    ScaffoldMessenger.of(context)
+        .showSnackBar(SnackBar(content: Text(context.loc.sbBookmarkAdded)));
   }
 
-  void _deleteBookmark(WidgetRef ref, Bookmark bookmark) {
+  void _deleteBookmark(BuildContext context, WidgetRef ref, Bookmark bookmark) {
     ref.read(bookmarkDatabaseProvider).removeBookmark(bookmark.url);
+
+    ScaffoldMessenger.of(context)
+        .showSnackBar(SnackBar(content: Text(context.loc.sbBookmarkRemoved)));
   }
 }

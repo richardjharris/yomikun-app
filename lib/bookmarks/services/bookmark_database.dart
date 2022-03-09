@@ -34,11 +34,14 @@ class BookmarkDatabase extends ChangeNotifier {
   }
 
   /// Toggle the bookmarked status of this URL
-  Future<void> toggleBookmark(String url, String titleIfAdded) {
+  /// Returns true if the bookmark was added.
+  Future<bool> toggleBookmark(String url, String titleIfAdded) async {
     if (isBookmarked(url)) {
-      return removeBookmark(url);
+      await removeBookmark(url);
+      return false;
     } else {
-      return addBookmark(url, titleIfAdded);
+      await addBookmark(url, titleIfAdded);
+      return true;
     }
   }
 

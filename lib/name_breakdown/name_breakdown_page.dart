@@ -8,6 +8,7 @@ import 'package:yomikun/core/providers/core_providers.dart';
 import 'package:yomikun/core/widgets/button_switch_bar.dart';
 import 'package:yomikun/core/widgets/placeholder_message.dart';
 import 'package:yomikun/core/widgets/slidable_name_row.dart';
+import 'package:yomikun/fixed_result/fixed_result_page.dart';
 import 'package:yomikun/localization/app_localizations_context.dart';
 import 'package:yomikun/name_breakdown/cached_query_result.dart';
 import 'package:yomikun/name_breakdown/widgets/name_pie_chart.dart';
@@ -37,10 +38,13 @@ class NameBreakdownPage extends HookConsumerWidget {
       return PlaceholderMessage(context.loc.noNameResultsFound, margin: 0);
     }
 
-    final String pageBookmarkUri = Uri(path: '/result', queryParameters: {
-      'text': query.text,
-      'mode': query.mode.name,
-    }).toString();
+    final String pageBookmarkUri = Uri(
+      path: FixedResultPage.routeName,
+      queryParameters: {
+        'text': query.text,
+        'mode': query.mode.name,
+      },
+    ).toString();
 
     final String pageBookmarkTitle = query.text;
 
@@ -79,11 +83,17 @@ class NameBreakdownPage extends HookConsumerWidget {
               const Spacer(),
               _ActionButtons(
                 isBookmarked: isBookmarked,
-                onBookmark: () {
-                  ref.read(bookmarkDatabaseProvider).toggleBookmark(
-                        pageBookmarkUri,
-                        pageBookmarkTitle,
-                      );
+                onBookmark: () async {
+                  bool added =
+                      await ref.read(bookmarkDatabaseProvider).toggleBookmark(
+                            pageBookmarkUri,
+                            pageBookmarkTitle,
+                          );
+                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                    content: Text(added
+                        ? context.loc.sbBookmarkAdded
+                        : context.loc.sbBookmarkRemoved),
+                  ));
                 },
                 onShare: () => onShareWholePage(cache, ref),
               ),

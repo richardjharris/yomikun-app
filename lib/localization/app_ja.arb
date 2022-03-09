@@ -46,6 +46,8 @@
   "removeBookmarkAction": "消去",
   "addBookmarkTooltip": "しおりを追加する",
   "removeBookmarkTooltip": "しおりを消去する",
+  "sbBookmarkAdded": "しおりを追加しました",
+  "sbBookmarkRemoved": "しおりを消去しました",
   "noHistoryMessage": "閲覧履歴がここに表示されます。",
   "allPossibleReadings": "全ての読み",
   "surname": "姓",

@@ -61,6 +61,8 @@
   "removeBookmarkAction": "Unbookmark",
   "addBookmarkTooltip": "Add bookmark",
   "removeBookmarkTooltip": "Remove bookmark",
+  "sbBookmarkAdded": "Bookmark added",
+  "sbBookmarkRemoved": "Bookmark removed",
   "noHistoryMessage": "No history to display.",
   "allPossibleReadings": "All possible readings:",
   "surname": "Surname",

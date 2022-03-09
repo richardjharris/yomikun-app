@@ -51,11 +51,17 @@ class SlidableNameRow extends ConsumerWidget {
           SlidableAction(
             backgroundColor: Colors.green.shade900,
             foregroundColor: Colors.white,
-            onPressed: (context) {
-              ref.read(bookmarkDatabaseProvider).toggleBookmark(
-                    nameUrl,
-                    '${data.kaki} (${data.yomi})',
-                  );
+            onPressed: (context) async {
+              String title = '${data.kaki} (${data.yomi})';
+              bool added = await ref
+                  .read(bookmarkDatabaseProvider)
+                  .toggleBookmark(nameUrl, title);
+
+              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                content: Text(added
+                    ? context.loc.sbBookmarkAdded
+                    : context.loc.sbBookmarkRemoved),
+              ));
             },
             icon: isBookmarked ? Icons.star : Icons.star_border,
             label: isBookmarked
