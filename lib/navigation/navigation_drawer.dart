@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:yomikun/about/about_dialog.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:yomikun/about/show_about_dialog.dart';
 import 'package:yomikun/bookmarks/bookmarks_page.dart';
 import 'package:yomikun/core/providers/core_providers.dart';
 import 'package:yomikun/explore/explore_page.dart';
@@ -10,9 +11,9 @@ import 'package:yomikun/ocr/ocr_page.dart';
 import 'package:yomikun/settings/settings_page.dart';
 
 /// Slide-out drawer for navigation (bookmarks, history, settings etc.)
-class NavigationDrawer extends StatelessWidget {
+class NavigationDrawer extends ConsumerWidget {
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final splashOpacity =
         Theme.of(context).brightness == Brightness.dark ? 0.8 : 1.0;
 
@@ -85,7 +86,9 @@ class NavigationDrawer extends StatelessWidget {
             leading: const Icon(Icons.info_outline),
             title: Text(context.loc.about),
             onTap: () async {
-              await showYomikunAboutDialog(context);
+              final int dbVersion =
+                  await ref.read(databaseProvider).getVersion();
+              await showYomikunAboutDialog(context, dbVersion);
             },
           ),
           const Divider(),

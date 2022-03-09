@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:camera/camera.dart';
@@ -189,7 +190,8 @@ class _CameraViewState extends State<CameraView> {
   Future _getImage(ImageSource source) async {
     final pickedFile = await _imagePicker?.pickImage(source: source);
     if (pickedFile != null) {
-      _processPickedFile(pickedFile);
+      // NOTE: this is from the example code, I added unawaited
+      unawaited(_processPickedFile(pickedFile));
     } else {
       print('No image selected.');
     }
@@ -214,7 +216,8 @@ class _CameraViewState extends State<CameraView> {
       ResolutionPreset.max,
       enableAudio: false,
     );
-    _controller?.initialize().then((_) {
+    // NOTE: this is from the example code, I added unawaited
+    unawaited(_controller?.initialize().then((_) {
       if (!mounted) {
         return;
       }
@@ -227,7 +230,7 @@ class _CameraViewState extends State<CameraView> {
       });
       _controller?.startImageStream(_processCameraImage);
       setState(() {});
-    });
+    }));
   }
 
   Future _stopLiveFeed() async {

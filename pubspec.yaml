@@ -58,7 +58,8 @@ flutter:
   uses-material-design: true
 
   assets:
-    - assets/names.db
+    - assets/namesdb.sqlite3
+    - assets/namesdb.version.txt
     - assets/sidemenu_splash.jpg
     - assets/appicon.png
 

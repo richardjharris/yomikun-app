@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
@@ -8,6 +9,7 @@ import 'package:sqflite/sqflite.dart';
 import 'package:synchronized/synchronized.dart';
 import 'package:yomikun/core/models.dart';
 import 'package:yomikun/core/providers/core_providers.dart';
+import 'package:yomikun/gen/assets.gen.dart';
 import 'package:yomikun/search/models.dart';
 
 /// NamePart values in the same order as stored in SQLite as INT offsets.
@@ -37,31 +39,64 @@ class NameDatabase {
   }
 
   /// Initialise the database, requesting permissions.
-  static Future _initialize() async {
-    Directory documentsDirectory = await getApplicationDocumentsDirectory();
-    String dbPath = join(documentsDirectory.path, "asset_names.db");
-    // Copy the database into the documents dir
+  static Future<Database> _initialize() async {
+    // We cannot open the db from assets directly, so we must copy it.
+    // Use SupportDirectory, as this is hidden from the user.
+    Directory documentsDirectory = await getApplicationSupportDirectory();
+    String targetFilename = join(documentsDirectory.path, "asset_names.db");
 
-    // Only copy if the database doesn't exist
-    if (FileSystemEntity.typeSync(dbPath) == FileSystemEntityType.notFound) {
-      // Load database from asset and copy
-      ByteData data = await rootBundle.load(join('assets', 'names.db'));
+    bool targetFileExists = FileSystemEntity.typeSync(targetFilename) !=
+        FileSystemEntityType.notFound;
+
+    Future<void> copyFromAssets() async {
+      ByteData data = await rootBundle.load(Assets.namesdb);
       List<int> bytes =
           data.buffer.asUint8List(data.offsetInBytes, data.lengthInBytes);
 
       // Save copied asset to documents
-      await File(dbPath).writeAsBytes(bytes);
-    } else {
-      // TODO check getVersion(db) against current version.
-      // Need to write the version to a file.
+      await File(targetFilename).writeAsBytes(bytes);
     }
 
-    return await openDatabase(dbPath);
+    Future<int> assetVersion() async {
+      String version =
+          (await rootBundle.loadString(Assets.namesdbVersion)).trim();
+      return int.tryParse(version) ?? -1;
+    }
+
+    late Database db;
+
+    debugPrint(
+        '[RJH] exists: $targetFileExists, version: ${await assetVersion()}, db: ${await _getVersion(await openDatabase(targetFilename))}');
+
+    if (targetFileExists) {
+      db = await openDatabase(targetFilename,
+          readOnly: true, singleInstance: false);
+      if (await assetVersion() != await _getVersion(db)) {
+        // Version mismatch, copy over new DB
+        debugPrint('[RJH] copy over new asset');
+        await copyFromAssets();
+        db = await openDatabase(targetFilename,
+            readOnly: true, singleInstance: false);
+      }
+    } else {
+      // First run or cache cleaned, copy over new DB
+      await copyFromAssets();
+      db = await openDatabase(targetFilename,
+          readOnly: true, singleInstance: false);
+    }
+
+    return db;
   }
 
-  /// Returns database version
-  static Future<int> getVersion(Database db) async {
+  // Returns database version (used when initialising, to copy over the new
+  // database when the version is updated).
+  static Future<int> _getVersion(Database db) async {
     return Sqflite.firstIntValue(await db.rawQuery('PRAGMA user_version'))!;
+  }
+
+  /// Returns database data version
+  Future<int> getVersion() async {
+    return await _getVersion(await database);
   }
 
   /// Returns bool indicating if a name exists (kaki or yomi) for the given

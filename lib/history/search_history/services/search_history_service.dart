@@ -20,7 +20,7 @@ class SearchHistoryService {
       return;
     }
     final item = SearchHistoryItem.now(query);
-    _box.add(item);
+    await _box.add(item);
   }
 
   /// Record history, but if multiple events are submitted in quick succession,

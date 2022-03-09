@@ -11,7 +11,8 @@ class Assets {
   Assets._();
 
   static const AssetGenImage appicon = AssetGenImage('assets/appicon.png');
-  static const String names = 'assets/names.db';
+  static const String namesdb = 'assets/namesdb.sqlite3';
+  static const String namesdbVersion = 'assets/namesdb.version.txt';
   static const AssetGenImage sidemenuSplash =
       AssetGenImage('assets/sidemenu_splash.jpg');
 }

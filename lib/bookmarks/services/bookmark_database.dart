@@ -17,7 +17,7 @@ class BookmarkDatabase extends ChangeNotifier {
   /// Add a bookmark by URL
   Future<void> addBookmark(String url, String title,
       [DateTime? dateAdded]) async {
-    _box.put(
+    await _box.put(
         url,
         Bookmark(
           url: url,
