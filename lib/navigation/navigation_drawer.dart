@@ -67,7 +67,7 @@ class NavigationDrawer extends ConsumerWidget {
               Navigator.restorablePushNamed(context, ExplorePage.routeName);
             },
           ),
-          if (cameras.isNotEmpty)
+          if (cameras.isNotEmpty && kDebugMode)
             ListTile(
               leading: const Icon(Icons.camera_alt_outlined),
               title: Text(context.loc.ocrPageTitle),
