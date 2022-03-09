@@ -1,12 +1,16 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:yomikun/bookmarks/services/bookmark_database.dart';
 import 'package:yomikun/core/providers/core_providers.dart';
+import 'package:yomikun/core/widgets/query_list_tile.dart';
 import 'package:yomikun/navigation/navigation_drawer.dart';
 import 'package:yomikun/core/widgets/placeholder_message.dart';
 import 'package:yomikun/localization/app_localizations_context.dart';
+import 'package:yomikun/search/models.dart';
+import 'package:yomikun/search/widgets/search_box.dart';
 
 import 'models/bookmark.dart';
 
@@ -77,40 +81,40 @@ class BookmarksPage extends HookConsumerWidget {
           itemCount: items.length,
           itemBuilder: (BuildContext context, int index) {
             final Bookmark bookmark = items[index];
+            bool isDeleted = bookmark == lastDeleted.value;
             return Slidable(
-              child: ListTile(
-                title: Text(bookmark.title,
-                    style: bookmark == lastDeleted.value
-                        ? deletedBookmarkStyle
-                        : bookmarkStyle,
-                    locale: const Locale('ja')),
-                onTap: () => _openBookmark(context, bookmark),
+              child: BookmarkListTile(
+                bookmark: bookmark,
+                isDeleted: isDeleted,
               ),
               groupTag: this,
               endActionPane: ActionPane(
                 extentRatio: 0.4,
                 motion: const ScrollMotion(),
                 children: [
-                  SlidableAction(
-                    backgroundColor: Colors.green.shade900,
-                    foregroundColor: Colors.white,
-                    onPressed: (context) {
-                      if (bookmark == lastDeleted.value) {
+                  if (isDeleted)
+                    SlidableAction(
+                      backgroundColor: Colors.green.shade900,
+                      foregroundColor: Colors.white,
+                      onPressed: (context) {
                         _addBookmark(context, ref, bookmark);
                         lastDeleted.value = null;
-                      } else {
+                      },
+                      icon: Icons.star_outline,
+                      label: context.loc.addBookmarkAction,
+                    ),
+                  if (!isDeleted)
+                    SlidableAction(
+                      backgroundColor: Colors.green.shade900,
+                      foregroundColor: Colors.white,
+                      onPressed: (context) {
                         _deleteBookmark(context, ref, bookmark);
                         lastDeleted.value = bookmark;
                         lastDeletedId.value = index;
-                      }
-                    },
-                    icon: bookmark == lastDeleted.value
-                        ? Icons.star_outline
-                        : Icons.star,
-                    label: bookmark == lastDeleted.value
-                        ? context.loc.addBookmarkAction
-                        : context.loc.removeBookmarkAction,
-                  ),
+                      },
+                      icon: Icons.star,
+                      label: context.loc.removeBookmarkAction,
+                    ),
                 ],
               ),
             );
@@ -118,11 +122,6 @@ class BookmarksPage extends HookConsumerWidget {
         ),
       ),
     );
-  }
-
-  void _openBookmark(BuildContext context, Bookmark bookmark) {
-    print(bookmark.url);
-    Navigator.of(context).restorablePushNamed(bookmark.url);
   }
 
   void _addBookmark(BuildContext context, WidgetRef ref, Bookmark bookmark) {
@@ -139,5 +138,74 @@ class BookmarksPage extends HookConsumerWidget {
 
     ScaffoldMessenger.of(context)
         .showSnackBar(SnackBar(content: Text(context.loc.sbBookmarkRemoved)));
+  }
+}
+
+class BookmarkListTile extends StatelessWidget {
+  final Bookmark bookmark;
+  final bool isDeleted;
+
+  const BookmarkListTile(
+      {Key? key, required this.bookmark, this.isDeleted = false})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    TextStyle style = const TextStyle(fontSize: 20);
+    if (isDeleted) {
+      style = style.copyWith(
+          decoration: TextDecoration.lineThrough, color: Colors.grey);
+    }
+
+    if (bookmark.urlAction == '/result' &&
+        setEquals(bookmark.urlParameters.keys.toSet(), {'text', 'mode'})) {
+      return QueryListTile(
+        query: Query.fromMap(bookmark.urlParameters),
+        isDeleted: isDeleted,
+      );
+    } else {
+      final brightness = Theme.of(context).brightness;
+      QueryMode? mode = _queryModeFromString(bookmark.urlParameters['part']);
+
+      Widget leading = mode == null
+          ? const SizedBox(height: 30, width: 30)
+          : Container(
+              width: 30,
+              height: 30,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(5),
+                color: queryModeToColor(mode, brightness),
+              ),
+              child: Center(
+                  child: Text(queryModeToIcon(mode),
+                      style: style.copyWith(color: Colors.white),
+                      locale: const Locale('ja'))),
+            );
+
+      return ListTile(
+        leading: leading,
+        title: Text(bookmark.title, style: style, locale: const Locale('ja')),
+        // TODO enable when /name route is implemented?
+        //onTap: () => _openBookmark(context, bookmark),
+      );
+    }
+  }
+
+  void _openBookmark(BuildContext context, Bookmark bookmark) {
+    Navigator.of(context).restorablePushNamed(bookmark.url);
+  }
+
+  // TODO remove NamePart if fixed.
+  QueryMode? _queryModeFromString(String? mode) {
+    switch (mode) {
+      case 'NamePart.mei':
+      case 'mei':
+        return QueryMode.mei;
+      case 'NamePart.sei':
+      case 'sei':
+        return QueryMode.sei;
+      default:
+        return null;
+    }
   }
 }

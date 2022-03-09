@@ -19,4 +19,13 @@ class Bookmark {
     required this.title,
     required this.dateAdded,
   });
+
+  String get urlAction => Uri.parse(url).path;
+
+  Map<String, String> get urlParameters => Uri.parse(url).queryParameters;
+
+  @override
+  String toString() {
+    return 'Bookmark{url: $url, title: $title, dateAdded: $dateAdded}';
+  }
 }

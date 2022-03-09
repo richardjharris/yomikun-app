@@ -27,10 +27,8 @@ class SlidableNameRow extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    String nameUrl = Uri(
-            path: FixedResultPage.routeName,
-            queryParameters: data.toRouteArgs())
-        .toString();
+    String nameUrl =
+        Uri(path: '/name', queryParameters: data.toRouteArgs()).toString();
 
     final isBookmarked =
         ref.watch(bookmarkDatabaseProvider).isBookmarked(nameUrl);

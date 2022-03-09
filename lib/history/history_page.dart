@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:yomikun/core/widgets/error_box.dart';
 import 'package:yomikun/core/widgets/loading_box.dart';
+import 'package:yomikun/core/widgets/query_list_tile.dart';
 import 'package:yomikun/fixed_result/fixed_result_page.dart';
 import 'package:yomikun/history/search_history/models/history_grouping.dart';
 import 'package:yomikun/history/search_history/models/search_history_item.dart';
@@ -76,8 +77,6 @@ class HistoryList extends StatelessWidget {
       return PlaceholderMessage(context.loc.noHistoryMessage);
     }
 
-    Brightness brightness = Theme.of(context).brightness;
-
     // Identify grouping points in the history
     var groups = GroupedHistoryList.fromItems(items);
 
@@ -88,68 +87,53 @@ class HistoryList extends StatelessWidget {
         itemBuilder: (BuildContext context, int index) {
           final item = groups.listItemAt(index);
           if (item is HistoryListGroup) {
-            DateTime start = item.start.toLocal();
-            DateTime end = item.end.toLocal();
-
-            // e.g. 'Feb 21, 2022 22:38 - Feb 22, 2022 00:37' if diff day,
-            // otherwise 'Feb 21, 2022 22:07 - 22:38'
-            // Locale-specific.
-            var tag = Localizations.maybeLocaleOf(context)?.toLanguageTag();
-            DateFormat startFormat = DateFormat.yMMMd(tag).add_Hm();
-            DateFormat endFormat = start.day == end.day
-                ? DateFormat.Hm(tag)
-                : DateFormat.yMMMd(tag).add_Hm();
-
-            var divider = (tag ?? '').startsWith('ja') ? '−' : '-';
-
-            String headingText =
-                '${startFormat.format(start)} $divider ${endFormat.format(end)}';
-
-            // Create a heading with the date range
-            return Container(
-              margin: const EdgeInsets.symmetric(vertical: 1),
-              padding: const EdgeInsets.fromLTRB(10, 5, 10, 5),
-              color: Theme.of(context).colorScheme.background,
-              child: Text(
-                headingText,
-                style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                    color: Theme.of(context).colorScheme.onBackground),
-              ),
-            );
+            return HistoryListHeader(item: item);
           } else if (item is SearchHistoryItem) {
-            // Create a history item
-            return ListTile(
-              onTap: () {
-                // Show the results of the historical query.
-                Navigator.pushNamed(context, FixedResultPage.routeName,
-                    arguments: item.query.toMap());
-              },
-              leading: Container(
-                width: 30,
-                height: 30,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(5),
-                  color: queryModeToColor(item.query.mode, brightness),
-                ),
-                child: Center(
-                    child: Text(queryModeToIcon(item.query.mode),
-                        style:
-                            const TextStyle(fontSize: 20, color: Colors.white),
-                        locale: const Locale('ja'))),
-              ),
-              title: Text(
-                item.query.text,
-                style: const TextStyle(
-                  fontSize: 20,
-                ),
-              ),
-            );
+            return QueryListTile(query: item.query);
           } else {
             throw Exception("Unknown history group item type");
           }
         },
+      ),
+    );
+  }
+}
+
+class HistoryListHeader extends StatelessWidget {
+  final HistoryListGroup item;
+
+  const HistoryListHeader({Key? key, required this.item}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    DateTime start = item.start.toLocal();
+    DateTime end = item.end.toLocal();
+
+    // e.g. 'Feb 21, 2022 22:38 - Feb 22, 2022 00:37' if diff day,
+    // otherwise 'Feb 21, 2022 22:07 - 22:38'
+    // Locale-specific.
+    var tag = Localizations.maybeLocaleOf(context)?.toLanguageTag();
+    DateFormat startFormat = DateFormat.yMMMd(tag).add_Hm();
+    DateFormat endFormat = start.day == end.day
+        ? DateFormat.Hm(tag)
+        : DateFormat.yMMMd(tag).add_Hm();
+
+    var divider = (tag ?? '').startsWith('ja') ? '−' : '-';
+
+    String headingText =
+        '${startFormat.format(start)} $divider ${endFormat.format(end)}';
+
+    // Create a heading with the date range
+    return Container(
+      margin: const EdgeInsets.symmetric(vertical: 1),
+      padding: const EdgeInsets.fromLTRB(10, 5, 10, 5),
+      color: Theme.of(context).colorScheme.background,
+      child: Text(
+        headingText,
+        style: TextStyle(
+            fontSize: 16,
+            fontWeight: FontWeight.bold,
+            color: Theme.of(context).colorScheme.onBackground),
       ),
     );
   }
