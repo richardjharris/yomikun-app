@@ -4,7 +4,6 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:yomikun/core/providers/core_providers.dart';
 import 'package:yomikun/core/widgets/basic_name_row.dart';
-import 'package:yomikun/fixed_result/fixed_result_page.dart';
 import 'package:yomikun/localization/app_localizations_context.dart';
 import 'package:yomikun/search/models.dart';
 

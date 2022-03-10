@@ -13,3 +13,9 @@ enum QueryMode {
   @HiveField(3)
   wildcard,
 }
+
+extension ToQueryMode on String {
+  QueryMode? toQueryMode() {
+    return QueryMode.values.firstWhere((e) => e.name == this);
+  }
+}

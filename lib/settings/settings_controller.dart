@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:yomikun/settings/models/settings_models.dart';
-
-import 'settings_service.dart';
+import 'package:yomikun/settings/settings_service.dart';
 
 /// Provider for the settings controller. Updates all listeners when settings
 /// are changed; use Riverpod `select` for more fine-grained control.

@@ -1,16 +1,8 @@
 import 'package:yomikun/core/providers/core_providers.dart';
 import 'package:yomikun/core/utilities/dakuten.dart';
+import 'package:yomikun/search/models/kaki_yomi.dart';
+import 'package:yomikun/search/models/name_part.dart';
 import 'package:yomikun/settings/models/settings_models.dart';
-
-enum NamePart { mei, sei, unknown, person }
-
-enum KakiYomi { kaki, yomi }
-
-extension KakiYomiMethods on KakiYomi {
-  KakiYomi inverse() {
-    return this == KakiYomi.kaki ? KakiYomi.yomi : KakiYomi.kaki;
-  }
-}
 
 class NameData {
   final String kaki;
@@ -64,7 +56,7 @@ class NameData {
     return {
       'kaki': kaki,
       'yomi': yomi,
-      'part': part.toString(),
+      'part': part.name.toString(),
     };
   }
 }

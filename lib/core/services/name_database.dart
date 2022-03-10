@@ -137,6 +137,7 @@ class NameDatabase {
 
   /// Returns all results with kaki/yomi equal to the given string, for the
   /// given part of speech.
+  // TODO remove get* prefix (style)
   Future<Iterable<NameData>> getResults(
       String query, NamePart part, KakiYomi ky) async {
     var db = await database;

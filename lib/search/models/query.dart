@@ -29,10 +29,10 @@ class Query extends Equatable {
     };
   }
 
-  static Query fromMap(Map map) {
+  static Query fromMap(Map<String, dynamic> map) {
     return Query(
       map['text'] as String,
-      QueryMode.values.firstWhere((e) => e.name == map['mode']),
+      (map['mode'] as String).toQueryMode()!,
     );
   }
 }

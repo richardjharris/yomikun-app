@@ -11,8 +11,7 @@ import 'package:yomikun/core/widgets/placeholder_message.dart';
 import 'package:yomikun/localization/app_localizations_context.dart';
 import 'package:yomikun/search/models.dart';
 import 'package:yomikun/search/widgets/search_box.dart';
-
-import 'models/bookmark.dart';
+import 'package:yomikun/bookmarks/models/bookmark.dart';
 
 final bookmarkSortModeProvider = Provider((_) => BookmarkSortMode.newestFirst);
 final bookmarkListProvider = Provider((ref) {
@@ -67,12 +66,6 @@ class BookmarksPage extends HookConsumerWidget {
     if (items.isEmpty) {
       return PlaceholderMessage(context.loc.noBookmarksMessage);
     }
-
-    const bookmarkStyle = TextStyle(fontSize: 20);
-    final deletedBookmarkStyle = bookmarkStyle.copyWith(
-      decoration: TextDecoration.lineThrough,
-      color: Colors.grey,
-    );
 
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 10),
@@ -165,7 +158,8 @@ class BookmarkListTile extends StatelessWidget {
       );
     } else {
       final brightness = Theme.of(context).brightness;
-      QueryMode? mode = _queryModeFromString(bookmark.urlParameters['part']);
+      QueryMode? mode =
+          bookmark.urlParameters['part']?.toNamePart()?.toQueryMode();
 
       Widget leading = mode == null
           ? const SizedBox(height: 30, width: 30)
@@ -191,21 +185,7 @@ class BookmarkListTile extends StatelessWidget {
     }
   }
 
-  void _openBookmark(BuildContext context, Bookmark bookmark) {
+  /*void _openBookmark(BuildContext context, Bookmark bookmark) {
     Navigator.of(context).restorablePushNamed(bookmark.url);
-  }
-
-  // TODO remove NamePart if fixed.
-  QueryMode? _queryModeFromString(String? mode) {
-    switch (mode) {
-      case 'NamePart.mei':
-      case 'mei':
-        return QueryMode.mei;
-      case 'NamePart.sei':
-      case 'sei':
-        return QueryMode.sei;
-      default:
-        return null;
-    }
-  }
+  }*/
 }

@@ -4,14 +4,12 @@ import 'package:intl/intl.dart';
 import 'package:yomikun/core/widgets/error_box.dart';
 import 'package:yomikun/core/widgets/loading_box.dart';
 import 'package:yomikun/core/widgets/query_list_tile.dart';
-import 'package:yomikun/fixed_result/fixed_result_page.dart';
 import 'package:yomikun/history/search_history/models/history_grouping.dart';
 import 'package:yomikun/history/search_history/models/search_history_item.dart';
 import 'package:yomikun/history/search_history/providers/search_history_providers.dart';
 import 'package:yomikun/navigation/navigation_drawer.dart';
 import 'package:yomikun/core/widgets/placeholder_message.dart';
 import 'package:yomikun/localization/app_localizations_context.dart';
-import 'package:yomikun/search/widgets/search_box.dart';
 
 /// Shows recently visited names, grouped by date.
 class HistoryPage extends ConsumerWidget {
