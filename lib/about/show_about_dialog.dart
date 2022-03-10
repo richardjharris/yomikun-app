@@ -27,12 +27,12 @@ Future<void> showYomikunAboutDialog(
   TextSpan photoCredit = TextSpan(
       style: style,
       text: context.loc.aboutPhotoCredit(
-          context.loc.aboutMiyajimaIslandPhoto, context.loc.aboutCcBySa2));
+          context.loc.aboutMiyajimaIslandPhoto, context.loc.aboutCCBySA2));
 
   photoCredit = linkify(context, photoCredit,
       context.loc.aboutMiyajimaIslandPhoto, splashLogoSource);
   photoCredit = linkify(
-      context, photoCredit, context.loc.aboutCcBySa2, creativeCommonsLink);
+      context, photoCredit, context.loc.aboutCCBySA2, creativeCommonsLink);
 
   showAboutDialog(
     context: context,

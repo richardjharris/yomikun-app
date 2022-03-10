@@ -107,13 +107,13 @@
       "appDeveloperEmail": { "type": "String" }
     }
   },
-  "aboutPhotoCredit": "{aboutMiyajimaIslandPhoto} credited to Flickr user Dumphasizer, used under the {aboutCcBySa2} license.",
+  "aboutPhotoCredit": "{aboutMiyajimaIslandPhoto} credited to Flickr user Dumphasizer, used under the {aboutCCBySA2} license.",
   "aboutMiyajimaIslandPhoto": "Miyajima Island photo",
-  "aboutCcBySa2": "CC BY-SA 2.0",
+  "aboutCCBySA2": "CC BY-SA 2.0",
   "@aboutPhotoCredit": {
     "placeholders": {
       "aboutMiyajimaIslandPhoto": { "type": "String" },
-      "aboutCcBySa2": { "type": "String" }
+      "aboutCCBySA2": { "type": "String" }
     }
   }
 }
