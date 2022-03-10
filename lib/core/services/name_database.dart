@@ -94,7 +94,7 @@ class NameDatabase {
     return Sqflite.firstIntValue(await db.rawQuery('PRAGMA user_version'))!;
   }
 
-  /// Returns database data version
+  /// Returns database data version.
   Future<int> getVersion() async {
     return await _getVersion(await database);
   }
@@ -137,7 +137,6 @@ class NameDatabase {
 
   /// Returns all results with kaki/yomi equal to the given string, for the
   /// given part of speech.
-  // TODO remove get* prefix (style)
   Future<Iterable<NameData>> getResults(
       String query, NamePart part, KakiYomi ky) async {
     var db = await database;
