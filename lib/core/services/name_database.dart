@@ -106,7 +106,7 @@ class NameDatabase {
     var column = ky.name;
 
     if (ky == KakiYomi.yomi) {
-      prefix = _kanaToRomaji(prefix);
+      prefix = kanaToRomaji(prefix);
     }
 
     final result = await db.rawQuery('''
@@ -124,7 +124,7 @@ class NameDatabase {
     var column = ky.name;
 
     if (ky == KakiYomi.yomi) {
-      match = _kanaToRomaji(match);
+      match = kanaToRomaji(match);
     }
 
     final result = await db.rawQuery('''
@@ -143,7 +143,7 @@ class NameDatabase {
     var column = ky.name;
 
     if (ky == KakiYomi.yomi) {
-      query = _kanaToRomaji(query);
+      query = kanaToRomaji(query);
     }
 
     final result = await db.rawQuery('''
@@ -161,7 +161,7 @@ class NameDatabase {
     query = query.replaceAll(RegExp(r'[\*＊]', unicode: true), '%');
     query = query.replaceAll(RegExp(r'[\?？]', unicode: true), '_');
 
-    String romaji = _kanaToRomaji(query);
+    String romaji = kanaToRomaji(query);
 
     var db = await database;
     final results = await db.query(
@@ -177,7 +177,7 @@ class NameDatabase {
   Future<NameData?> get(String kaki, String yomi, NamePart part) async {
     var db = await database;
 
-    yomi = _kanaToRomaji(yomi);
+    yomi = kanaToRomaji(yomi);
 
     final result = await db.query(
       'names',
@@ -228,7 +228,7 @@ class NameDatabase {
     return result.map((row) {
       String kakiOrYomi = row[field] as String;
       if (ky == KakiYomi.yomi) {
-        kakiOrYomi = _romajiToKana(kakiOrYomi);
+        kakiOrYomi = romajiToKana(kakiOrYomi);
       }
       return MapEntry(kakiOrYomi, row['hits'] as int);
     }).toList();
@@ -337,12 +337,12 @@ int _partId(NamePart part) {
 }
 
 /// Convert a kana string to romaji.
-String _kanaToRomaji(String kana) {
-  return kanaKit.toRomaji(kana);
+String kanaToRomaji(String kana) {
+  return kanaKit.toRomaji(kana).replaceAll("nn", "n'n");
 }
 
 /// Convert a romaji string to kana.
-String _romajiToKana(String romaji) {
+String romajiToKana(String romaji) {
   return kanaKit.toHiragana(romaji);
 }
 
@@ -350,7 +350,7 @@ String _romajiToKana(String romaji) {
 NameData _toNameData(Map<String, Object?> row) {
   NamePart part = _partName(row['part'] as int);
   String kaki = row['kaki'] as String;
-  String yomi = _romajiToKana(row['yomi'] as String);
+  String yomi = romajiToKana(row['yomi'] as String);
 
   return NameData(
     kaki: kaki,
