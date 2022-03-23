@@ -8,6 +8,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:synchronized/synchronized.dart';
 import 'package:yomikun/core/models.dart';
+import 'package:yomikun/core/name_lookup.dart';
 import 'package:yomikun/core/providers/core_providers.dart';
 import 'package:yomikun/gen/assets.gen.dart';
 import 'package:yomikun/search/models.dart';
@@ -156,20 +157,44 @@ class NameDatabase {
 
   /// Perform a general database search given the specified query.
   /// Query may contain wildcards */?
-  Future<Iterable<NameData>> search(String query) async {
-    // Convert query to SQL like form
-    query = query.replaceAll(RegExp(r'[\*＊]', unicode: true), '%');
-    query = query.replaceAll(RegExp(r'[\?？]', unicode: true), '_');
+  Future<Iterable<NameData>> search(final String query) async {
+    final ky = guessKY(query);
 
-    String romaji = kanaToRomaji(query);
+    // We treat wildcards differently in kana mode (treated as a whole kana
+    // mora, such as 'ki' or 'ka' rather than one letter). To handle this, ? is
+    // mapped to one or two characters, and we post-process the results.
+    bool kanaMode = ky == KakiYomi.yomi &&
+        query.contains(
+            RegExp(r'[\p{Script=Hiragana}\p{Script=Katakana}]', unicode: true));
+    debugPrint(
+        "[rjh] $query $ky ${query.contains(RegExp(r'[\p{Script=Hiragana}\p{Script=Katakana}]', unicode: true))}");
+
+    // Convert query to SQL like form
+    var sqlQuery = query.replaceAll(RegExp(r'[\*＊]', unicode: true), '%');
+    sqlQuery = sqlQuery.replaceAll(
+        RegExp(r'[\?？]', unicode: true), kanaMode ? '%' : '_');
+
+    String romaji = kanaToRomaji(sqlQuery);
 
     var db = await database;
-    final results = await db.query(
+    Iterable<Map<String, Object?>> results = await db.query(
       'names',
       where: " kaki LIKE ? OR yomi LIKE ? ",
-      whereArgs: [query, romaji],
+      whereArgs: [sqlQuery, romaji],
       orderBy: 'hits_total DESC',
     );
+
+    if (kanaMode) {
+      String mora =
+          r'([kstnmrgzdbp]?[aiueo]|fu|shi|chi|tsu|y[auo]|w[ao]|nn?|ji|(ky|sh|ch|ny|hy|my|ry|gy|j|by|py)[auo])';
+
+      String filter = r'^' + kanaToRomaji(query) + r'$';
+      filter = filter.replaceAll(RegExp(r'[\*＊]', unicode: true), mora + '*');
+      filter = filter.replaceAll(RegExp(r'[\?？]', unicode: true), mora);
+      final filterRe = RegExp(filter);
+      results = results.where((r) => filterRe.hasMatch(r['yomi'] as String));
+    }
+
     return results.map(_toNameData);
   }
 
