@@ -167,7 +167,7 @@ class NameDatabase {
     final results = await db.query(
       'names',
       where: " kaki LIKE ? OR yomi LIKE ? ",
-      whereArgs: [romaji, query],
+      whereArgs: [query, romaji],
       orderBy: 'hits_total DESC',
     );
     return results.map(_toNameData);
