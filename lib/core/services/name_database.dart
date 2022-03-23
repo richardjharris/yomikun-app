@@ -306,7 +306,7 @@ class NameDatabase {
       SELECT * FROM names
       WHERE part = ?
         AND hits_total > 25
-        AND ml_score >= 20 AND ml_score <= 230
+        AND female_ratio >= 20 AND female_ratio <= 230
       ORDER BY hits_total DESC
       LIMIT 500
     ''', [_partId(NamePart.mei)]);
@@ -360,6 +360,6 @@ NameData _toNameData(Map<String, Object?> row) {
     hitsMale: row['hits_male'] as int,
     hitsFemale: row['hits_female'] as int,
     hitsPseudo: row['hits_pseudo'] as int,
-    genderMlScore: row['ml_score'] as int,
+    femaleRatio: row['female_ratio'] as int,
   );
 }
