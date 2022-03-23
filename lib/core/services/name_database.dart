@@ -234,7 +234,7 @@ class NameDatabase {
     }).toList();
   }
 
-  /// Returns kanji stat information, ordered by female ratio ascending.
+  /// Returns kanji stat information, ordered by female ratio descending.
   Future<List<KanjiStats>> getKanjiByFemaleRatio() async {
     final db = await database;
 
@@ -242,7 +242,7 @@ class NameDatabase {
       SELECT kanji, hits_total, female_ratio
       FROM kanji_stats
       WHERE gender = 'A'
-      ORDER BY female_ratio
+      ORDER BY female_ratio DESC
     ''');
 
     return result.map((row) {

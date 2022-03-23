@@ -18,11 +18,12 @@ class KanjiAndGenderPage extends HookConsumerWidget {
   const KanjiAndGenderPage({Key? key}) : super(key: key);
 
   static const String routeName = '/explore/kanji-and-gender';
+  static int initialMinHits = 1000;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final kanjiStats = ref.watch(kanjiStatsProvider);
-    final minHits = useState<int>(500);
+    final minHits = useState<int>(initialMinHits);
 
     return Scaffold(
       appBar: AppBar(
