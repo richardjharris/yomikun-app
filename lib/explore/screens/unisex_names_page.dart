@@ -27,7 +27,7 @@ final sortedProvider =
       // Negate so we sort in reverse.
       return data.sortedBy<num>((n) => -n.hitsTotal);
     case SortOrder.neutrality:
-      return data.sortedBy<num>((n) => (127 - n.femaleRatio).abs());
+      return data.sortedBy<num>((n) => (0.5 - n.femaleRatio).abs());
     case SortOrder.name:
       // Sort alphabetically for romaji names, gojuon for kana names.
       switch (nameFormat) {

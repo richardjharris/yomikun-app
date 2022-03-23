@@ -17,8 +17,8 @@ class NameData {
   /* number of fictional/pseudonym hits for this name */
   final int hitsPseudo;
 
-  /* score between 0 (all Male) and 255 (all Female) */
-  final int femaleRatio;
+  /* score between 0.0 (all Male) and 1.0 (all Female) */
+  final double femaleRatio;
 
   const NameData({
     required this.kaki,
@@ -49,7 +49,7 @@ class NameData {
   String toString() {
     return 'NameData{kaki: $kaki, yomi: $yomi, part: $part, '
         'hitsTotal: $hitsTotal, hitsMale: $hitsMale, hitsFemale: $hitsFemale, '
-        'hitsPseudo: $hitsPseudo, femaleRatio: $femaleRatio}';
+        'hitsPseudo: $hitsPseudo, femaleRatio: ${femaleRatio.toStringAsFixed(2)}}';
   }
 
   Map<String, dynamic> toRouteArgs() {

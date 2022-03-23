@@ -48,9 +48,9 @@ class CachedQueryResult {
       case GenderFilter.all:
         return true;
       case GenderFilter.male:
-        return item.femaleRatio <= 200;
+        return item.femaleRatio <= 0.8;
       case GenderFilter.female:
-        return item.femaleRatio >= 50;
+        return item.femaleRatio >= 0.2;
     }
   }
 

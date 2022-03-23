@@ -40,7 +40,7 @@ class NameTreeMap extends ConsumerWidget {
             ),
             padding: const EdgeInsets.symmetric(horizontal: 10),
             children: treeResults.map((r) {
-              final color = genderColor(r.femaleRatio / 255.0);
+              final color = genderColor(r.femaleRatio);
 
               final label = r.format(splitBy, formatPref);
 

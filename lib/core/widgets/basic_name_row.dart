@@ -73,11 +73,10 @@ class BasicNameRow extends ConsumerWidget {
       ));
     }
 
-    int femaleRatio = nameData.femaleRatio;
     return ListTile(
       title: Row(children: titleWidgets),
       subtitle: Row(children: [
-        if (nameData.part == NamePart.mei) GenderBar(femaleRatio / 255),
+        if (nameData.part == NamePart.mei) GenderBar(nameData.femaleRatio),
         const Spacer(),
         if (nameData.hitsPseudo > 0 &&
             nameData.hitsPseudo / nameData.hitsTotal > 0.1) ...[

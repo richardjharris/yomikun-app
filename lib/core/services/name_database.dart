@@ -360,6 +360,6 @@ NameData _toNameData(Map<String, Object?> row) {
     hitsMale: row['hits_male'] as int,
     hitsFemale: row['hits_female'] as int,
     hitsPseudo: row['hits_pseudo'] as int,
-    femaleRatio: row['female_ratio'] as int,
+    femaleRatio: (row['female_ratio'] as int) / 255.0,
   );
 }

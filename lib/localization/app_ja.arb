@@ -75,7 +75,7 @@
   "orderBy": "並べ替え：",
   "orderByNameLocaleSpecific": "五十音順",
   "orderByPopularity": "ありふれた名前順",
-  "orderByNeutrality": "中性が先に",
+  "orderByNeutrality": "中性順",
   "aboutAuthors": "よみくん開発部",
   "aboutDevCredit": "開発者：リチャード・ハリス (Richard HARRIS, {appDeveloperEmail})。ご意見やお気づきの点がありましたら、そのメールアドレスまでお願いいたします。",
   "aboutPhotoCredit": "{aboutMiyajimaIslandPhoto}はDumphasizerというFlickrのユーザーの写真であり、{aboutCCBySA2}の提供で利用いたしました。",
