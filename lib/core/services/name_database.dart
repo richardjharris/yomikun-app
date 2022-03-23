@@ -338,7 +338,7 @@ int _partId(NamePart part) {
 
 /// Convert a kana string to romaji.
 String kanaToRomaji(String kana) {
-  return kanaKit.toRomaji(kana).replaceAll("nn", "n'n");
+  return kanaKit.toRomaji(kana);
 }
 
 /// Convert a romaji string to kana.
