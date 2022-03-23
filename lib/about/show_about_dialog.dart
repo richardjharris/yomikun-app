@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:yomikun/gen/assets.gen.dart';
 import 'package:yomikun/localization/app_localizations_context.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 
 final String developerEmail =
     String.fromCharCodes(base64.decode('cmljaGFyZGpoYXJyaXMreWtAZ21haWwuY29t'));
@@ -34,6 +35,11 @@ Future<void> showYomikunAboutDialog(
   photoCredit = linkify(
       context, photoCredit, context.loc.aboutCCBySA2, creativeCommonsLink);
 
+  final packageInfo = await PackageInfo.fromPlatform();
+
+  final versionString =
+      '${packageInfo.version}+${packageInfo.buildNumber} (db ${dbVersionAsString(databaseVersion)})';
+
   showAboutDialog(
     context: context,
     applicationIcon: const Image(
@@ -41,7 +47,7 @@ Future<void> showYomikunAboutDialog(
         width: 40,
         height: 40,
         filterQuality: FilterQuality.medium),
-    applicationVersion: 'beta (db ${dbVersionAsString(databaseVersion)})',
+    applicationVersion: versionString,
     applicationLegalese: '\u{a9} 2022 ' + context.loc.aboutAuthors,
     children: [
       const SizedBox(height: 20),
