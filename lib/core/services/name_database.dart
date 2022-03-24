@@ -156,8 +156,21 @@ class NameDatabase {
   }
 
   /// Perform a general database search given the specified query.
-  /// Query may contain wildcards */?
-  Future<Iterable<NameData>> search(final String query) async {
+  ///
+  /// Inside the query, the characters * and ＊ substitute for any number of
+  /// letters (if the query is romaji) or mora (if the query is kana or mixed).
+  /// The characters ? and ？ substitute for one letter or mora.
+  ///
+  /// Whitespace will be stripped. If the stripped query only contains wildcards,
+  /// no results will be returned.
+  Future<Iterable<NameData>> search(String query) async {
+    query = query.trim();
+
+    if (!RegExp(r'[^*＊?？]').hasMatch(query)) {
+      // Query only contains wildcards
+      return [];
+    }
+
     final ky = guessKY(query);
 
     // We treat wildcards differently in kana mode (treated as a whole kana

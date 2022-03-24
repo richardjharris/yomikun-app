@@ -1,10 +1,11 @@
+import 'package:equatable/equatable.dart';
 import 'package:yomikun/core/providers/core_providers.dart';
 import 'package:yomikun/core/utilities/dakuten.dart';
 import 'package:yomikun/search/models/kaki_yomi.dart';
 import 'package:yomikun/search/models/name_part.dart';
 import 'package:yomikun/settings/models/settings_models.dart';
 
-class NameData {
+class NameData extends Equatable {
   final String kaki;
   final String yomi;
   final NamePart part;
@@ -30,6 +31,15 @@ class NameData {
     this.hitsPseudo = 0,
     this.femaleRatio = 0,
   });
+
+  const NameData.sei(String kaki, String yomi)
+      : this(kaki: kaki, yomi: yomi, part: NamePart.sei);
+
+  const NameData.mei(String kaki, String yomi)
+      : this(kaki: kaki, yomi: yomi, part: NamePart.mei);
+
+  @override
+  List<Object> get props => [kaki, yomi, part];
 
   String key() {
     return kaki + "|" + yomi + "|" + part.toString();

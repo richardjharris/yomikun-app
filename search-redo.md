@@ -1,3 +1,28 @@
+Problems:
+ 1) (fixed) but should normalise an'na to anna.
+  --
+  wildcard broken e.g. しげ＊
+  also ? ought to match kana, e.g. shige? = shigeki, shigeo etc. atm only matches one char.
+
+ 2) Search picks the wrong mode (sei/mei)
+   - specifically, if there are only 0-hit results, we should switch.
+
+ 3) sometimes typing stuff just doesn't do anything. input box being rebuilt?
+    loss of focus? 
+
+ 4) no results appears in Person mode. minor, but could show something else.
+
+## Current search logic
+
+User text: textEditingController (searchTextProvider)
+query mode: queryModeProvider
+
+allowedQueryModeProvider: reacts to search text change, updates
+
+queryProvider: listens to searchText and queryMode; updates queryMode if not allowed
+
+queryResultProvider: makes queries when query updates.
+
 ## Notes on redoing the search logic
 
 Search logic should go into a SearchController that gets passed around.
