@@ -8,6 +8,7 @@ import 'package:yomikun/core/providers/core_providers.dart';
 import 'package:yomikun/core/widgets/button_switch_bar.dart';
 import 'package:yomikun/core/widgets/name_icons.dart';
 import 'package:yomikun/core/widgets/placeholder_message.dart';
+import 'package:yomikun/core/widgets/pressable_name_row.dart';
 import 'package:yomikun/core/widgets/slidable_name_row.dart';
 import 'package:yomikun/fixed_result/fixed_result_page.dart';
 import 'package:yomikun/localization/app_localizations_context.dart';

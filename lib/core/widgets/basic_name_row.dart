@@ -17,12 +17,15 @@ class BasicNameRow extends ConsumerWidget {
   /// If true, show [NamePart] as an icon on the left of each row.
   final bool showNamePart;
 
+  final VoidCallback? onTap;
+
   const BasicNameRow({
     required Key key,
     required this.nameData,
     this.showOnly,
     this.totalHits,
     this.showNamePart = false,
+    this.onTap,
   }) : super(key: key);
 
   @override
@@ -81,6 +84,7 @@ class BasicNameRow extends ConsumerWidget {
     }
 
     return ListTile(
+      onTap: onTap,
       leading: showNamePart ? NamePartIcon(nameData.part) : null,
       title: Row(children: titleWidgets),
       subtitle: Row(children: [

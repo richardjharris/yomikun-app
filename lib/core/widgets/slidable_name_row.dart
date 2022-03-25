@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:share_plus/share_plus.dart';
 import 'package:yomikun/core/providers/core_providers.dart';
+import 'package:yomikun/core/services/share_service.dart';
 import 'package:yomikun/core/widgets/basic_name_row.dart';
 import 'package:yomikun/localization/app_localizations_context.dart';
 import 'package:yomikun/search/models.dart';
@@ -74,9 +74,7 @@ class SlidableNameRow extends ConsumerWidget {
             backgroundColor: Colors.blue.shade900,
             foregroundColor: Colors.white,
             onPressed: (context) {
-              final front = data.kaki;
-              final back = data.yomi;
-              Share.share(back, subject: front);
+              ShareService.shareNameData(data);
             },
             icon: Icons.share,
             label: context.loc.shareAction,

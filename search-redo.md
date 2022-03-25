@@ -1,8 +1,19 @@
+UI redo:
+ - use tap for android. tap name, pops up a menu
+   Heading: the name selected
+   Choices: 
+    - See other readings
+    - Copy
+    - Share
+    - Bookmark
+
+   Can maybe keep sliding for iOS.
+
+   Grid should be clickable, and jump to the correct item.
+
+---
 Problems:
- 1) (fixed) but should normalise an'na to anna.
-  --
-  wildcard broken e.g. しげ＊
-  also ? ought to match kana, e.g. shige? = shigeki, shigeo etc. atm only matches one char.
+ 1) tiny problem with wildcard: ん* matches no, na etc.
 
  2) Search picks the wrong mode (sei/mei)
    - specifically, if there are only 0-hit results, we should switch.
