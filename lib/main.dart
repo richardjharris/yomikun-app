@@ -48,9 +48,7 @@ Future<void> main() async {
 
   runApp(
     ProviderScope(
-      observers: [
-        ProviderLogger(),
-      ],
+      observers: kDebugMode ? [ProviderLogger()] : [],
       overrides: [
         settingsControllerProvider.overrideWithValue(settingsController),
       ],
