@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:yomikun/core/widgets/pressable_name_row.dart';
 import 'package:yomikun/core/widgets/slidable_name_row.dart';
 import 'package:yomikun/localization/app_localizations_context.dart';
 import 'package:yomikun/search/models/namedata.dart';
