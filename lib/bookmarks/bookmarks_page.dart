@@ -5,12 +5,12 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:yomikun/bookmarks/services/bookmark_database.dart';
 import 'package:yomikun/core/providers/core_providers.dart';
+import 'package:yomikun/core/widgets/name_icons.dart';
 import 'package:yomikun/core/widgets/query_list_tile.dart';
 import 'package:yomikun/navigation/navigation_drawer.dart';
 import 'package:yomikun/core/widgets/placeholder_message.dart';
 import 'package:yomikun/localization/app_localizations_context.dart';
 import 'package:yomikun/search/models.dart';
-import 'package:yomikun/search/widgets/search_box.dart';
 import 'package:yomikun/bookmarks/models/bookmark.dart';
 
 final bookmarkSortModeProvider = Provider((_) => BookmarkSortMode.newestFirst);
@@ -157,27 +157,10 @@ class BookmarkListTile extends StatelessWidget {
         isDeleted: isDeleted,
       );
     } else {
-      final brightness = Theme.of(context).brightness;
-      QueryMode? mode =
-          bookmark.urlParameters['part']?.toNamePart()?.toQueryMode();
-
-      Widget leading = mode == null
-          ? const SizedBox(height: 30, width: 30)
-          : Container(
-              width: 30,
-              height: 30,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(5),
-                color: queryModeToColor(mode, brightness),
-              ),
-              child: Center(
-                  child: Text(queryModeToIcon(mode),
-                      style: style.copyWith(color: Colors.white),
-                      locale: const Locale('ja'))),
-            );
+      NamePart? part = bookmark.urlParameters['part']?.toNamePart();
 
       return ListTile(
-        leading: leading,
+        leading: part == null ? NameIconPlaceholder() : NamePartIcon(part),
         title: Text(bookmark.title, style: style, locale: const Locale('ja')),
         // TODO enable when /name route is implemented?
         //onTap: () => _openBookmark(context, bookmark),

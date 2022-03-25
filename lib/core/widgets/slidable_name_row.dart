@@ -16,12 +16,16 @@ class SlidableNameRow extends ConsumerWidget {
   /// If set, shows each name's share relative to the total hit count.
   final int? totalHits;
 
+  /// If true, show [NamePart] as an icon on the left of each row.
+  final bool showNamePart;
+
   const SlidableNameRow({
     required key,
     required this.data,
     required this.groupTag,
     this.showOnly,
     this.totalHits,
+    this.showNamePart = false,
   }) : super(key: key);
 
   @override
@@ -38,6 +42,7 @@ class SlidableNameRow extends ConsumerWidget {
         nameData: data,
         showOnly: showOnly,
         totalHits: totalHits,
+        showNamePart: showNamePart,
       ),
       key: ValueKey(data.key()),
       groupTag: groupTag,

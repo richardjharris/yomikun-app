@@ -1,22 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:yomikun/core/utilities/number_format.dart';
+import 'package:yomikun/core/widgets/name_icons.dart';
 import 'package:yomikun/localization/app_localizations_context.dart';
 import 'package:yomikun/search/models.dart';
 import 'package:yomikun/settings/settings_controller.dart';
 
 /// Shows name data with no interactivity.
 class BasicNameRow extends ConsumerWidget {
+  final NameData nameData;
+  final KakiYomi? showOnly;
+
+  /// If set, shows each name's share relative to the total hit count.
+  final int? totalHits;
+
+  /// If true, show [NamePart] as an icon on the left of each row.
+  final bool showNamePart;
+
   const BasicNameRow({
     required Key key,
     required this.nameData,
     this.showOnly,
     this.totalHits,
+    this.showNamePart = false,
   }) : super(key: key);
-
-  final NameData nameData;
-  final KakiYomi? showOnly;
-  final int? totalHits;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -74,6 +81,7 @@ class BasicNameRow extends ConsumerWidget {
     }
 
     return ListTile(
+      leading: showNamePart ? NamePartIcon(nameData.part) : null,
       title: Row(children: titleWidgets),
       subtitle: Row(children: [
         if (nameData.part == NamePart.mei) GenderBar(nameData.femaleRatio),

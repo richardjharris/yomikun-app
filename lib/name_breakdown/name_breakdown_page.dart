@@ -6,6 +6,7 @@ import 'package:share_plus/share_plus.dart';
 import 'package:yomikun/core/models.dart';
 import 'package:yomikun/core/providers/core_providers.dart';
 import 'package:yomikun/core/widgets/button_switch_bar.dart';
+import 'package:yomikun/core/widgets/name_icons.dart';
 import 'package:yomikun/core/widgets/placeholder_message.dart';
 import 'package:yomikun/core/widgets/slidable_name_row.dart';
 import 'package:yomikun/fixed_result/fixed_result_page.dart';
@@ -14,7 +15,6 @@ import 'package:yomikun/name_breakdown/cached_query_result.dart';
 import 'package:yomikun/name_breakdown/widgets/name_pie_chart.dart';
 import 'package:yomikun/name_breakdown/widgets/name_treemap.dart';
 import 'package:yomikun/search/models.dart';
-import 'package:yomikun/search/widgets/search_box.dart';
 import 'package:yomikun/settings/models/settings_models.dart';
 import 'package:yomikun/settings/settings_controller.dart';
 

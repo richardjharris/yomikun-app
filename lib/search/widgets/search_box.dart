@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:yomikun/core/widgets/name_icons.dart';
 import 'package:yomikun/localization/app_localizations_context.dart';
 import 'package:yomikun/search/providers/search_providers.dart';
-import 'package:yomikun/search/models.dart';
 
 /// Allows the user to change the search query and mode.
 class SearchBox extends ConsumerWidget {
@@ -70,39 +70,5 @@ class QueryModeButton extends HookConsumerWidget {
     int index = allowedModes.indexOf(currentMode);
     int newIndex = (index + 1) % allowedModes.length;
     ref.read(queryModeProvider.notifier).state = allowedModes[newIndex];
-  }
-}
-
-String queryModeToIcon(QueryMode mode) {
-  switch (mode) {
-    case QueryMode.mei:
-      return '名';
-    case QueryMode.sei:
-      return '姓';
-    case QueryMode.wildcard:
-      return '✴';
-    case QueryMode.person:
-      return '人';
-  }
-}
-
-Color queryModeToColor(QueryMode mode, Brightness brightness) {
-  Color color = queryModeToColorLight(mode);
-  if (brightness == Brightness.dark) {
-    color = color.withOpacity(0.7);
-  }
-  return color;
-}
-
-Color queryModeToColorLight(QueryMode mode) {
-  switch (mode) {
-    case QueryMode.mei:
-      return const Color.fromARGB(255, 255, 177, 251);
-    case QueryMode.sei:
-      return const Color.fromARGB(255, 255, 217, 160);
-    case QueryMode.wildcard:
-      return const Color.fromARGB(255, 255, 249, 199);
-    case QueryMode.person:
-      return const Color.fromARGB(255, 202, 255, 204);
   }
 }

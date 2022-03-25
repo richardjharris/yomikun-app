@@ -3,9 +3,9 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:yomikun/core/providers/core_providers.dart';
 import 'package:yomikun/core/widgets/error_box.dart';
 import 'package:yomikun/core/widgets/loading_box.dart';
+import 'package:yomikun/core/widgets/name_icons.dart';
 import 'package:yomikun/navigation/open_search_page.dart';
 import 'package:yomikun/search/models.dart';
-import 'package:yomikun/search/widgets/search_box.dart';
 import 'package:yomikun/search/widgets/search_results.dart';
 
 /// Displays a single search result, e.g. from bookmarks or history.
