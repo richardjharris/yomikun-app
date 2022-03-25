@@ -8,10 +8,14 @@ import 'package:yomikun/navigation/open_search_page.dart';
 import 'package:yomikun/search/models.dart';
 import 'package:yomikun/search/widgets/search_results.dart';
 
-/// Displays a single search result, e.g. from bookmarks or history.
-/// Unlike the SearchPage, which shows the results within a sub-page
-/// (with search box on top) this page shows the title, a *back* button and
-/// a search button that can be used to initiate a new search.
+/// Displays saved search results, e.g. from bookmarks or history.
+///
+/// Unlike the SearchPage (which has a search box and responds to the global
+/// search text / query mode) this widget has its own fixed Query object with
+/// a Back button, e.g. to go back to the bookmark or history page.
+///
+/// The user can also click the search icon to open the [SearchPage] with the
+/// same query, and then modify the search query or issue a new one.
 class FixedResultPage extends HookConsumerWidget {
   final Query query;
 

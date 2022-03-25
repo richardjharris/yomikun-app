@@ -69,6 +69,14 @@ class NameData extends Equatable {
       'part': part.name.toString(),
     };
   }
+
+  factory NameData.fromRouteArgs(Map<dynamic, dynamic> args) {
+    return NameData(
+      kaki: args['kaki'] as String,
+      yomi: args['yomi'] as String,
+      part: NamePart.values.firstWhere((p) => p.name == args['part']),
+    );
+  }
 }
 
 String formatYomiString(String name, NameFormatPreference pref) {

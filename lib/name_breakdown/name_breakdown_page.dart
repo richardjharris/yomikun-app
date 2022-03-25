@@ -8,7 +8,6 @@ import 'package:yomikun/core/providers/core_providers.dart';
 import 'package:yomikun/core/widgets/button_switch_bar.dart';
 import 'package:yomikun/core/widgets/name_icons.dart';
 import 'package:yomikun/core/widgets/placeholder_message.dart';
-import 'package:yomikun/core/widgets/pressable_name_row.dart';
 import 'package:yomikun/core/widgets/slidable_name_row.dart';
 import 'package:yomikun/fixed_result/fixed_result_page.dart';
 import 'package:yomikun/localization/app_localizations_context.dart';
@@ -82,7 +81,7 @@ class NameBreakdownPage extends HookConsumerWidget {
               if (query.mode == QueryMode.mei)
                 GenderFilterButtonSwitchBar.forValue(genderFilter),
               const Spacer(),
-              _ActionButtons(
+              NamePageActionButtons(
                 isBookmarked: isBookmarked,
                 onBookmark: () async {
                   bool added =
@@ -147,12 +146,12 @@ class NameBreakdownPage extends HookConsumerWidget {
   }
 }
 
-class _ActionButtons extends ConsumerWidget {
+class NamePageActionButtons extends ConsumerWidget {
   final bool isBookmarked;
   final VoidCallback onBookmark;
   final VoidCallback onShare;
 
-  const _ActionButtons(
+  const NamePageActionButtons(
       {Key? key,
       required this.isBookmarked,
       required this.onBookmark,

@@ -43,6 +43,9 @@ class SlidableNameRow extends ConsumerWidget {
         showOnly: showOnly,
         totalHits: totalHits,
         showNamePart: showNamePart,
+        onTap: () {
+          Navigator.pushNamed(context, '/name', arguments: data.toRouteArgs());
+        },
       ),
       key: ValueKey(data.key()),
       groupTag: groupTag,

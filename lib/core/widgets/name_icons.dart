@@ -73,6 +73,10 @@ String queryModeToIcon(QueryMode mode) {
   return IconData.forQueryMode(mode).iconJa;
 }
 
+String namePartToIcon(NamePart part) {
+  return IconData.forNamePart(part).iconJa;
+}
+
 class QueryModeIcon extends StatelessWidget {
   final QueryMode mode;
 

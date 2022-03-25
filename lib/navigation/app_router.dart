@@ -6,6 +6,7 @@ import 'package:yomikun/explore/screens/most_common_kanji_page.dart';
 import 'package:yomikun/explore/screens/most_common_names_page.dart';
 import 'package:yomikun/explore/screens/unisex_names_page.dart';
 import 'package:yomikun/history/history_page.dart';
+import 'package:yomikun/name/name_page.dart';
 import 'package:yomikun/navigation/open_search_page.dart';
 import 'package:yomikun/ocr/ocr_page.dart';
 import 'package:yomikun/search/models.dart';
@@ -83,6 +84,10 @@ class AppRouter {
         final query = Query.fromMap(args);
         openSearchPage(context, ref, query);
         return null;
+
+      case NamePage.routeName:
+        final data = NameData.fromRouteArgs(args);
+        return NamePage(data: data);
 
       case MostCommonNamesPage.routeNameFamily:
         return const MostCommonNamesPage(part: NamePart.sei);
