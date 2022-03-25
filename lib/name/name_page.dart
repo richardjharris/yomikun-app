@@ -66,13 +66,12 @@ class NamePageInner extends HookConsumerWidget {
         ref.watch(bookmarkDatabaseProvider).isBookmarked(nameUrl);
 
     return SingleChildScrollView(
-      child: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
-            child: Row(
+      child: Padding(
+        padding: const EdgeInsets.all(10),
+        child: Column(
+          children: [
+            Row(
               children: [
-                Text('${data.hitsTotal} hits'),
                 const Spacer(),
                 NamePageActionButtons(
                   isBookmarked: isBookmarked,
@@ -92,13 +91,115 @@ class NamePageInner extends HookConsumerWidget {
                 ),
               ],
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(10),
-            child: Text(data.toString()),
-          ),
-        ],
+            const Divider(),
+            Padding(
+              padding: const EdgeInsets.all(5),
+              child: Row(
+                children: [
+                  const Text('Total hits'),
+                  const Spacer(),
+                  Text(data.hitsTotal.toString()),
+                ],
+              ),
+            ),
+            GenderSplitGraph(data),
+            const Divider(),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 5),
+              child: Row(
+                children: [
+                  const Text('Fictional hits'),
+                  const Spacer(),
+                  Text(data.hitsTotal.toString()),
+                ],
+              ),
+            ),
+            const SizedBox(height: 30),
+            OutlinedButton(
+                onPressed: () {
+                  Navigator.restorablePushNamed(context, '/result', arguments: {
+                    'text': data.kaki,
+                    'mode': (data.part.toQueryMode() ?? QueryMode.mei)
+                        .name
+                        .toString(),
+                  });
+                },
+                child: const Text('See names with the same kanji')),
+            const SizedBox(height: 20),
+            OutlinedButton(
+                onPressed: () {
+                  Navigator.restorablePushNamed(context, '/result', arguments: {
+                    'text': data.yomi,
+                    'mode': (data.part.toQueryMode() ?? QueryMode.mei)
+                        .name
+                        .toString(),
+                  });
+                },
+                child: const Text('See names with the same reading')),
+          ],
+        ),
       ),
+    );
+  }
+}
+
+class GenderSplitGraphItem {
+  final String label;
+  final Color color;
+  final int count;
+
+  const GenderSplitGraphItem({
+    required this.label,
+    required this.color,
+    required this.count,
+  });
+}
+
+class GenderSplitGraph extends StatelessWidget {
+  final NameData data;
+
+  const GenderSplitGraph(this.data);
+
+  @override
+  Widget build(BuildContext context) {
+    List<GenderSplitGraphItem> items = [
+      GenderSplitGraphItem(
+          label: 'Female', count: data.hitsFemale, color: Colors.pink),
+      GenderSplitGraphItem(
+          label: 'Male', count: data.hitsMale, color: Colors.blue),
+      GenderSplitGraphItem(
+          label: 'Unknown', count: data.hitsUnknown, color: Colors.grey),
+    ].where((item) => item.count > 0).toList();
+
+    return Column(
+      children: [
+        Padding(
+          padding: const EdgeInsets.all(5),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(5.0),
+            child: Row(
+              children: items
+                  .map((item) => Expanded(
+                        flex: item.count,
+                        child: Container(
+                          color: item.color,
+                          height: 10,
+                        ),
+                      ))
+                  .toList(),
+            ),
+          ),
+        ),
+        ...items
+            .map((item) => Padding(
+                padding: const EdgeInsets.all(5),
+                child: Row(children: [
+                  Text(item.label),
+                  const Spacer(),
+                  Text('${item.count}')
+                ])))
+            .toList(),
+      ],
     );
   }
 }

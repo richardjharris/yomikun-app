@@ -7,6 +7,8 @@ UI redo:
     - Share
     - Bookmark
 
+  - another option: tap name just puts that into the search box.
+
    Can maybe keep sliding for iOS.
 
    Grid should be clickable, and jump to the correct item.

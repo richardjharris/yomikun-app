@@ -156,19 +156,24 @@ class BookmarkListTile extends StatelessWidget {
         query: Query.fromMap(bookmark.urlParameters),
         isDeleted: isDeleted,
       );
-    } else {
+    } else if (bookmark.urlAction == '/name') {
       NamePart? part = bookmark.urlParameters['part']?.toNamePart();
 
       return ListTile(
         leading: part == null ? NameIconPlaceholder() : NamePartIcon(part),
         title: Text(bookmark.title, style: style, locale: const Locale('ja')),
-        // TODO enable when /name route is implemented?
-        //onTap: () => _openBookmark(context, bookmark),
+        onTap: () => _openBookmark(context, bookmark),
+      );
+    } else {
+      return ListTile(
+        leading: NameIconPlaceholder(),
+        title: Text(bookmark.title, style: style, locale: const Locale('ja')),
+        subtitle: Text(bookmark.url),
       );
     }
   }
 
-  /*void _openBookmark(BuildContext context, Bookmark bookmark) {
+  void _openBookmark(BuildContext context, Bookmark bookmark) {
     Navigator.of(context).restorablePushNamed(bookmark.url);
-  }*/
+  }
 }
