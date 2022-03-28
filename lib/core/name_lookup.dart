@@ -1,8 +1,6 @@
-import 'package:flutter/material.dart';
-import 'package:path/path.dart';
+import 'package:yomikun/core/services/name_database.dart';
 import 'package:yomikun/core/split.dart';
 import 'package:yomikun/search/models.dart';
-import 'package:yomikun/core/services/name_database.dart';
 
 /// Utilities for parsing and querying names.
 
