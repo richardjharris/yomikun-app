@@ -32,10 +32,15 @@ class NamePersonPage extends HookWidget {
       return PlaceholderMessage(context.loc.noNameResultsFound, margin: 0);
     }
 
+    final splitResult = query.splitResult;
+
     return Column(
       children: [
-        if (mei != null && sei != null) ...[
-          NameGuessBox(sei, mei),
+        if (splitResult != null) ...[
+          NameGuessBox(
+            sei ?? NameData.sei(splitResult.sei, '?'),
+            mei ?? NameData.mei(splitResult.mei, '?'),
+          ),
           const Divider(),
           Text(context.loc.allPossibleReadings),
         ],

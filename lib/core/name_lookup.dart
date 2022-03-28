@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+import 'package:path/path.dart';
 import 'package:yomikun/core/split.dart';
 import 'package:yomikun/search/models.dart';
 import 'package:yomikun/core/services/name_database.dart';
@@ -51,19 +53,22 @@ Future<QueryResult> performQuery(
   text = _cleanInputText(text);
 
   final ky = guessKY(text);
-  Future<Iterable<NameData>> results;
+  Iterable<NameData> results;
+  SplitResult? splitResult;
   switch (mode) {
     case QueryMode.mei:
-      results = db.getResults(text, NamePart.mei, ky);
+      results = await db.getResults(text, NamePart.mei, ky);
       break;
     case QueryMode.sei:
-      results = db.getResults(text, NamePart.sei, ky);
+      results = await db.getResults(text, NamePart.sei, ky);
       break;
     case QueryMode.wildcard:
-      results = db.search(text);
+      results = await db.search(text);
       break;
     case QueryMode.person:
-      results = getPersonResult(db, text);
+      final personResult = await getPersonResult(db, text);
+      results = [...personResult.sei, ...personResult.mei];
+      splitResult = personResult.splitResult;
       break;
   }
 
@@ -71,26 +76,59 @@ Future<QueryResult> performQuery(
     ky: ky,
     text: text,
     mode: mode,
-    results: (await results).toList(),
+    results: results.toList(),
+    splitResult: splitResult,
   );
+}
+
+/// Result of interpreting an input as a person name.
+///
+/// [sei] and [mei] hold [NameData] objects indicating possible readings of the
+/// name components.
+/// [splitResult] indicates the result of splitting the name into components,
+/// or null if unsuccessful.
+class PersonResult {
+  final Iterable<NameData> sei;
+  final Iterable<NameData> mei;
+  final SplitResult? splitResult;
+
+  const PersonResult({
+    this.sei = const [],
+    this.mei = const [],
+    this.splitResult,
+  });
 }
 
 /// Treat [text] as a person name (optionally split with whitespace) and return
 /// possible interpretations of both the first and last name part together.
 ///
-/// [NameData] records will have a [NamePart] of `sei` or `mei` depending on
-/// the part they belong to.
+/// It is possible to split even if only one part of the name (sei/mei) is in
+/// the database. In this case, the part that is not in the database will have
+/// no [NameData] records returned. For example, the name 任天堂 will return:
 ///
-/// If splitting fails, will return an empty list.
-Future<List<NameData>> getPersonResult(NameDatabase db, String text) async {
+/// ```dart
+/// PersonResult(
+///  splitResult: SplitResult("任", "天堂"),
+///  sei: [NameData.sei("任", "にん"), NameData.sei("任", "じん"), ...]
+///  mei: [],
+/// );
+/// ```
+///
+/// This indicates that the surname is probably 任 with one of the above readings,
+/// while the given name is probably 天堂, but we don't know how to read it.
+///
+/// If splitting fails, will return an empty [PersonResult] object.
+Future<PersonResult> getPersonResult(NameDatabase db, String text) async {
   final splitResult = await splitKanjiName(db, text);
   if (splitResult == null) {
-    return [];
+    return const PersonResult();
   } else {
-    return [
-      ...await db.getResults(splitResult.sei, NamePart.sei, KakiYomi.kaki),
-      ...await db.getResults(splitResult.mei, NamePart.mei, KakiYomi.kaki),
-    ];
+    // Look up all possible readings for the split kanji parts.
+    return PersonResult(
+      splitResult: splitResult,
+      sei: await db.getResults(splitResult.sei, NamePart.sei, KakiYomi.kaki),
+      mei: await db.getResults(splitResult.mei, NamePart.mei, KakiYomi.kaki),
+    );
   }
 }
 

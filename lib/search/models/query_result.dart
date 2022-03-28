@@ -1,3 +1,4 @@
+import 'package:yomikun/core/split.dart';
 import 'package:yomikun/search/models.dart';
 
 class QueryResult {
@@ -13,17 +14,21 @@ class QueryResult {
   /// Error, if relevant
   final String? error;
 
+  /// Split result, used for Person queries.
+  final SplitResult? splitResult;
+
   const QueryResult({
     required this.text,
     required this.mode,
     required this.results,
     this.ky,
     this.error,
+    this.splitResult,
   });
 
   @override
   String toString() {
-    return "QueryResult(text: $text, mode: $mode, results: $results, ky: ${ky ?? ''}, error: ${error ?? ''})";
+    return "QueryResult(text: $text, mode: $mode, results: $results, ky: ${ky ?? ''}, error: ${error ?? ''}, splitResult: ${splitResult ?? ''})";
   }
 
   static QueryResult initialState() {
@@ -33,6 +38,7 @@ class QueryResult {
       results: [],
       ky: KakiYomi.kaki,
       error: null,
+      splitResult: null,
     );
   }
 }
