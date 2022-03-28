@@ -27,6 +27,7 @@ class HistoryListGroup {
 class GroupedHistoryList {
   List<HistoryListGroup> groups = [];
 
+  /// Build an empty list.
   GroupedHistoryList();
 
   /// Build a grouped history list from a list of search history items.

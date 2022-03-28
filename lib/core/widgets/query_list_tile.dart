@@ -3,7 +3,7 @@ import 'package:yomikun/core/widgets/name_icons.dart';
 import 'package:yomikun/fixed_result/fixed_result_page.dart';
 import 'package:yomikun/search/models/query.dart';
 
-/// ListTile that displays a Query object, for use in bookmarks
+/// ListTile that displays a [Query] object, for use in bookmarks
 /// and history.
 class QueryListTile extends StatelessWidget {
   final Query query;

@@ -7,6 +7,7 @@ import 'package:yomikun/core/models.dart';
 import 'package:yomikun/core/providers/core_providers.dart';
 import 'package:yomikun/core/widgets/button_switch_bar.dart';
 import 'package:yomikun/core/widgets/name_icons.dart';
+import 'package:yomikun/core/widgets/name_page_action_buttons.dart';
 import 'package:yomikun/core/widgets/placeholder_message.dart';
 import 'package:yomikun/core/widgets/slidable_name_row.dart';
 import 'package:yomikun/fixed_result/fixed_result_page.dart';
@@ -95,7 +96,7 @@ class NameBreakdownPage extends HookConsumerWidget {
                         : context.loc.sbBookmarkRemoved),
                   ));
                 },
-                onShare: () => onShareWholePage(cache, ref),
+                onShare: () => shareNameBreakdownData(cache, ref),
               ),
             ],
           ),
@@ -125,11 +126,9 @@ class NameBreakdownPage extends HookConsumerWidget {
     );
   }
 
-  /// Invoked when clicking the page-global 'share' button. This will share
-  /// the top five readings for a name.
-  void onShareWholePage(CachedQueryResult cache, WidgetRef ref) {
-    final NameFormatPreference nameFormat =
-        ref.read(settingsControllerProvider).nameFormat;
+  /// Shares up to five popular readings for the current name.
+  void shareNameBreakdownData(CachedQueryResult cache, WidgetRef ref) {
+    final nameFormat = ref.read(settingsControllerProvider).nameFormat;
 
     final String front = '${query.text} (${queryModeToIcon(query.mode)})';
 
@@ -143,39 +142,5 @@ class NameBreakdownPage extends HookConsumerWidget {
 
     Share.share(back, subject: front);
     debugPrint("Shared $front ($back)");
-  }
-}
-
-class NamePageActionButtons extends ConsumerWidget {
-  final bool isBookmarked;
-  final VoidCallback onBookmark;
-  final VoidCallback onShare;
-
-  const NamePageActionButtons(
-      {Key? key,
-      required this.isBookmarked,
-      required this.onBookmark,
-      required this.onShare})
-      : super(key: key);
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    return Row(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        IconButton(
-          icon: Icon(isBookmarked ? Icons.star : Icons.star_border),
-          onPressed: onBookmark,
-          tooltip: isBookmarked
-              ? context.loc.removeBookmarkTooltip
-              : context.loc.addBookmarkTooltip,
-        ),
-        IconButton(
-          icon: const Icon(Icons.share),
-          onPressed: onShare,
-          tooltip: context.loc.shareTooltip,
-        ),
-      ],
-    );
   }
 }

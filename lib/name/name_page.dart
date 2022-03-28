@@ -5,9 +5,10 @@ import 'package:yomikun/core/services/share_service.dart';
 import 'package:yomikun/core/widgets/error_box.dart';
 import 'package:yomikun/core/widgets/loading_box.dart';
 import 'package:yomikun/core/widgets/name_icons.dart';
+import 'package:yomikun/core/widgets/name_page_action_buttons.dart';
 import 'package:yomikun/localization/app_localizations_context.dart';
-import 'package:yomikun/name_breakdown/name_breakdown_page.dart';
 import 'package:yomikun/search/models.dart';
+import 'package:yomikun/settings/settings_controller.dart';
 
 final nameDataProvider =
     FutureProvider.family<NameData?, NameData>((ref, data) {
@@ -31,18 +32,20 @@ class NamePage extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final fullData = ref.watch(nameDataProvider(data));
 
-    // TODO need to format yomi appropriately
+    final nameFormat =
+        ref.watch(settingsControllerProvider.select((p) => p.nameFormat));
+
     return Scaffold(
       appBar: AppBar(
         title: Row(children: [
-          Text("${data.kaki} (${data.yomi})"),
+          Text("${data.kaki} (${data.formatYomi(nameFormat)})"),
           const Spacer(),
           NamePartIcon(data.part),
         ]),
       ),
       body: fullData.when(
         data: (data) => data == null
-            ? const ErrorBox('No results found')
+            ? ErrorBox(context.loc.npNoResultFound)
             : NamePageInner(data: data),
         loading: () => const LoadingBox(),
         error: (error, stacktrace) => ErrorBox(error, stacktrace),
@@ -96,7 +99,7 @@ class NamePageInner extends HookConsumerWidget {
               padding: const EdgeInsets.all(5),
               child: Row(
                 children: [
-                  const Text('Total hits'),
+                  Text(context.loc.npTotalHits),
                   const Spacer(),
                   Text(data.hitsTotal.toString()),
                 ],
@@ -108,7 +111,7 @@ class NamePageInner extends HookConsumerWidget {
               padding: const EdgeInsets.symmetric(horizontal: 5),
               child: Row(
                 children: [
-                  const Text('Fictional hits'),
+                  Text(context.loc.npFictionalHits),
                   const Spacer(),
                   Text(data.hitsTotal.toString()),
                 ],
@@ -116,26 +119,28 @@ class NamePageInner extends HookConsumerWidget {
             ),
             const SizedBox(height: 30),
             OutlinedButton(
-                onPressed: () {
-                  Navigator.restorablePushNamed(context, '/result', arguments: {
-                    'text': data.kaki,
-                    'mode': (data.part.toQueryMode() ?? QueryMode.mei)
-                        .name
-                        .toString(),
-                  });
-                },
-                child: const Text('See names with the same kanji')),
+              onPressed: () {
+                Navigator.restorablePushNamed(context, '/result', arguments: {
+                  'text': data.kaki,
+                  'mode': (data.part.toQueryMode() ?? QueryMode.mei)
+                      .name
+                      .toString(),
+                });
+              },
+              child: Text(context.loc.npSeeNamesWithSameKanji),
+            ),
             const SizedBox(height: 20),
             OutlinedButton(
-                onPressed: () {
-                  Navigator.restorablePushNamed(context, '/result', arguments: {
-                    'text': data.yomi,
-                    'mode': (data.part.toQueryMode() ?? QueryMode.mei)
-                        .name
-                        .toString(),
-                  });
-                },
-                child: const Text('See names with the same reading')),
+              onPressed: () {
+                Navigator.restorablePushNamed(context, '/result', arguments: {
+                  'text': data.yomi,
+                  'mode': (data.part.toQueryMode() ?? QueryMode.mei)
+                      .name
+                      .toString(),
+                });
+              },
+              child: Text(context.loc.npSeeNamesWithSameReading),
+            ),
           ],
         ),
       ),
@@ -164,11 +169,20 @@ class GenderSplitGraph extends StatelessWidget {
   Widget build(BuildContext context) {
     List<GenderSplitGraphItem> items = [
       GenderSplitGraphItem(
-          label: 'Female', count: data.hitsFemale, color: Colors.pink),
+        label: context.loc.npFemale,
+        count: data.hitsFemale,
+        color: Colors.pink,
+      ),
       GenderSplitGraphItem(
-          label: 'Male', count: data.hitsMale, color: Colors.blue),
+        label: context.loc.npMale,
+        count: data.hitsMale,
+        color: Colors.blue,
+      ),
       GenderSplitGraphItem(
-          label: 'Unknown', count: data.hitsUnknown, color: Colors.grey),
+        label: context.loc.npUnknown,
+        count: data.hitsUnknown,
+        color: Colors.grey,
+      ),
     ].where((item) => item.count > 0).toList();
 
     return Column(

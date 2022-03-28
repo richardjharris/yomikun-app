@@ -115,5 +115,13 @@
       "aboutMiyajimaIslandPhoto": { "type": "String" },
       "aboutCCBySA2": { "type": "String" }
     }
-  }
+  },
+  "npTotalHits": "Total hits",
+  "npFictionalHits": "Fictional hits",
+  "npMale": "Male",
+  "npFemale": "Female",
+  "npUnknown": "Unknown",
+  "npSeeNamesWithSameKanji": "See names with the same kanji",
+  "npSeeNamesWithSameReading": "See names with the same reading",
+  "npNoResultFound": "No results found"
 }
