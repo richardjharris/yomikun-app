@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:yomikun/core/services/name_database.dart';
+import 'package:yomikun/core/utilities/kana.dart';
 
 void main() {
   test('romaji apostrophes are used to avoid ambiguity', () {

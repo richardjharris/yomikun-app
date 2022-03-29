@@ -9,7 +9,7 @@ import 'package:sqflite/sqflite.dart';
 import 'package:synchronized/synchronized.dart';
 import 'package:yomikun/core/models.dart';
 import 'package:yomikun/core/name_lookup.dart';
-import 'package:yomikun/core/providers/core_providers.dart';
+import 'package:yomikun/core/utilities/kana.dart';
 import 'package:yomikun/gen/assets.gen.dart';
 import 'package:yomikun/search/models.dart';
 
@@ -372,16 +372,6 @@ NamePart _partName(int id) {
 /// Convert a NamePart to a database part ID.
 int _partId(NamePart part) {
   return namePartsInDatabaseOrder.indexOf(part);
-}
-
-/// Convert a kana string to romaji.
-String kanaToRomaji(String kana) {
-  return kanaKit.toRomaji(kana);
-}
-
-/// Convert a romaji string to kana.
-String romajiToKana(String romaji) {
-  return kanaKit.toHiragana(romaji);
 }
 
 /// Convert a database row to a NameData object.

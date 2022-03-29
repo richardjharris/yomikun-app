@@ -9,6 +9,7 @@ import 'package:yomikun/gen/assets.gen.dart';
 import 'package:yomikun/history/history_page.dart';
 import 'package:yomikun/localization/app_localizations_context.dart';
 import 'package:yomikun/ocr/ocr_page.dart';
+import 'package:yomikun/quiz/quiz_page.dart';
 import 'package:yomikun/settings/settings_page.dart';
 
 /// Slide-out drawer for navigation (bookmarks, history, settings etc.)
@@ -75,6 +76,14 @@ class NavigationDrawer extends ConsumerWidget {
                 Navigator.restorablePushNamed(context, OcrPage.routeName);
               },
             ),
+          ListTile(
+            leading: const Icon(Icons.quiz),
+            title: Text(context.loc.quiz),
+            onTap: () {
+              Navigator.pop(context);
+              Navigator.restorablePushNamed(context, QuizPage.routeName);
+            },
+          ),
           ListTile(
             leading: const Icon(Icons.settings),
             title: Text(context.loc.settings),

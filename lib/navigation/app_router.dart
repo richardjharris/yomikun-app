@@ -1,18 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:yomikun/bookmarks/bookmarks_page.dart';
 import 'package:yomikun/explore/explore_page.dart';
 import 'package:yomikun/explore/screens/kanji_and_gender_page.dart';
 import 'package:yomikun/explore/screens/most_common_kanji_page.dart';
 import 'package:yomikun/explore/screens/most_common_names_page.dart';
 import 'package:yomikun/explore/screens/unisex_names_page.dart';
+import 'package:yomikun/fixed_result/fixed_result_page.dart';
 import 'package:yomikun/history/history_page.dart';
 import 'package:yomikun/name/name_page.dart';
 import 'package:yomikun/navigation/open_search_page.dart';
 import 'package:yomikun/ocr/ocr_page.dart';
+import 'package:yomikun/quiz/quiz_page.dart';
 import 'package:yomikun/search/models.dart';
 import 'package:yomikun/search/search_page.dart';
-import 'package:yomikun/bookmarks/bookmarks_page.dart';
-import 'package:yomikun/fixed_result/fixed_result_page.dart';
 //import 'package:yomikun/history/history_page.dart';
 import 'package:yomikun/settings/settings_page.dart';
 
@@ -103,6 +104,9 @@ class AppRouter {
 
       case KanjiAndGenderPage.routeName:
         return const KanjiAndGenderPage();
+
+      case QuizPage.routeName:
+        return const QuizPage();
 
       default:
         assert(false, "Unknown route: ${settings.name}");

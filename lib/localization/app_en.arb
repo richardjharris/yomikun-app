@@ -22,6 +22,7 @@
   "bookmarks": "Bookmarks",
   "history": "History",
   "explore": "Explore",
+  "quiz": "Quiz",
   "settings": "Settings",
   "ocrPageTitle": "Camera OCR",
   "@ocrPageTitle": {
@@ -123,5 +124,6 @@
   "npUnknown": "Unknown",
   "npSeeNamesWithSameKanji": "See names with the same kanji",
   "npSeeNamesWithSameReading": "See names with the same reading",
-  "npNoResultFound": "No results found"
+  "npNoResultFound": "No results found",
+  "qzStart": "Start Quiz"
 }

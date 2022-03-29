@@ -1,24 +1,18 @@
-/// Utilities to split Japanese names into two parts when the space is missing.
-///
-/// Japanese names are usually written without spaces, e.g. 山田太郎 is
-/// implicitly understood to be 山田(surname) + 太郎(given name). Names that can
-/// be both surnames and given names are fairly rare, so it is usually obvious
-/// which one is which.
-///
-/// We do not currently use frequency information in the event of a tie (i.e.
-/// not sure which way name is ordered). Could improve on this.
-import 'package:freezed_annotation/freezed_annotation.dart';
+// ignore_for_file: public_member_api_docs, sort_constructors_first
+
 import 'package:yomikun/core/services/name_database.dart';
 import 'package:yomikun/search/models.dart';
 
-part 'split.freezed.dart';
-
 /// Holds the result of a split operation: the surname (sei) and given name
 /// (mei) components.
-@freezed
-class SplitResult with _$SplitResult {
-  factory SplitResult({required String sei, required String mei}) =
-      _SplitResult;
+class SplitResult {
+  final String sei;
+  final String mei;
+
+  SplitResult({required this.sei, required this.mei});
+
+  @override
+  String toString() => 'SplitResult(sei: $sei, mei: $mei)';
 }
 
 RegExp whitespaceRe = RegExp(r'\s+', unicode: true);

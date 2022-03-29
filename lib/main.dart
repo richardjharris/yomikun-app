@@ -3,24 +3,26 @@ import 'dart:io';
 import 'package:camera/camera.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
+import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 import 'package:yomikun/bookmarks/models/bookmark.dart';
+import 'package:yomikun/bookmarks/services/bookmark_database.dart';
 import 'package:yomikun/core/providers/core_providers.dart';
 import 'package:yomikun/core/utilities/provider_logger.dart';
-import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 import 'package:yomikun/history/search_history/models/search_history_item.dart';
 import 'package:yomikun/history/search_history/services/search_history_service.dart';
-import 'package:yomikun/navigation/app_router.dart';
-import 'package:yomikun/bookmarks/services/bookmark_database.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:yomikun/localization/app_localizations_context.dart';
+import 'package:yomikun/navigation/app_router.dart';
 import 'package:yomikun/search/models/query.dart';
 import 'package:yomikun/search/models/query_mode.dart';
 import 'package:yomikun/settings/settings_controller.dart';
 import 'package:yomikun/settings/settings_service.dart';
+
+const initialRoute = '/quiz';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -79,7 +81,7 @@ class MyApp extends ConsumerWidget {
       themeMode: themeMode,
       onGenerateRoute: (settings) =>
           AppRouter.onGenerateRoute(context, ref, settings),
-      initialRoute: '/',
+      initialRoute: initialRoute,
       // Show debug banner in custom position
       builder: (context, child) => Banner(
         message: context.loc.debugBanner,

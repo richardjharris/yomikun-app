@@ -1,13 +1,5 @@
 {
   "ja": [
-    "ocrTakePicture",
-    "npTotalHits",
-    "npFictionalHits",
-    "npMale",
-    "npFemale",
-    "npUnknown",
-    "npSeeNamesWithSameKanji",
-    "npSeeNamesWithSameReading",
-    "npNoResultFound"
+    "ocrTakePicture"
   ]
 }

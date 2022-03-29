@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:yomikun/core/providers/core_providers.dart';
-import 'package:yomikun/core/utilities/dakuten.dart';
+import 'package:yomikun/core/utilities/kana.dart';
 import 'package:yomikun/search/models/kaki_yomi.dart';
 import 'package:yomikun/search/models/name_part.dart';
 import 'package:yomikun/settings/models/settings_models.dart';

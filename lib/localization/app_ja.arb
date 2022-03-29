@@ -13,6 +13,7 @@
   "bookmarks": "しおり",
   "history": "履歴",
   "explore": "資料等",
+  "quiz": "クイズ",
   "settings": "設定",
   "ocrPageTitle": "カメラで読み取る",
   "about": "このアプリについて",
@@ -81,12 +82,13 @@
   "aboutPhotoCredit": "{aboutMiyajimaIslandPhoto}はDumphasizerというFlickrのユーザーの写真であり、{aboutCCBySA2}の提供で利用いたしました。",
   "aboutCCBySA2": "CC BY-SA 2.0",
   "aboutMiyajimaIslandPhoto": "宮島の写真",
-  "npTotalHits": "総人数,
+  "npTotalHits": "総人数",
   "npFictionalHits": "架空・偽名の人数",
   "npMale": "男性",
   "npFemale": "女性",
   "npUnknown": "性別不明",
   "npSeeNamesWithSameKanji": "同じ書きの人名を見る",
   "npSeeNamesWithSameReading": "同じ読みの人名を見る",
-  "npNoResultFound": "名前は見つかりませんでした。" 
+  "npNoResultFound": "名前は見つかりませんでした。" ,
+  "qzStart": "スタート"
 }
