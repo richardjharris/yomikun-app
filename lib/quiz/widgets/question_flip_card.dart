@@ -33,7 +33,6 @@ class QuestionFlipCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    debugPrint('[RJH] QuestionFlipCard.build() showCardFront = $showCardFront');
     final front = QuestionCard(question.text,
         sublabel: question.subtext, key: const ValueKey(false));
     final back =

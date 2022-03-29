@@ -8,15 +8,22 @@ class AnswerField extends StatelessWidget {
   final TextEditingController? controller;
   final FocusNode? focusNode;
   final VoidCallback? onSubmitted;
+  final bool? wasCorrect;
 
   static const maxLength = 30;
 
   const AnswerField(
-      {Key? key, this.controller, this.onSubmitted, this.focusNode})
+      {Key? key,
+      this.controller,
+      this.onSubmitted,
+      this.focusNode,
+      this.wasCorrect})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final correct = wasCorrect;
+
     return TextField(
       autofocus: true,
       controller: controller,
@@ -25,6 +32,11 @@ class AnswerField extends StatelessWidget {
         // Hide the '0/30' that would appear because [maxLength] is set.
         counterText: '',
         hintText: onSubmitted != null ? 'Enter answer' : 'No answer',
+        suffixIcon:
+            correct != null ? Icon(correct ? Icons.done : Icons.close) : null,
+        filled: correct != null,
+        fillColor:
+            correct != null ? (correct ? Colors.green : Colors.red) : null,
       ),
       enabled: onSubmitted != null,
       focusNode: focusNode,

@@ -32,15 +32,18 @@ enum QuestionFlipCardState {
 class _QuestionPageState extends State<QuestionPage> {
   late TextEditingController answerController;
   late FocusNode focusNode;
-  QuestionFlipCardState flipCardState = QuestionFlipCardState.front;
+  late QuestionFlipCardState flipCardState;
+  late bool? wasCorrect;
 
   static const flipDuration = Duration(milliseconds: 500);
 
   @override
   void initState() {
     super.initState();
+    flipCardState = QuestionFlipCardState.front;
     answerController = TextEditingController();
     focusNode = FocusNode();
+    wasCorrect = null;
   }
 
   @override
@@ -54,6 +57,7 @@ class _QuestionPageState extends State<QuestionPage> {
   Widget build(BuildContext context) {
     debugPrint('[RJH] flipCardState = $flipCardState');
     final disableButtons = flipCardState != QuestionFlipCardState.front;
+    final showNextButton = flipCardState == QuestionFlipCardState.back;
 
     return Padding(
       padding: const EdgeInsets.all(10),
@@ -70,24 +74,30 @@ class _QuestionPageState extends State<QuestionPage> {
             controller: answerController,
             focusNode: focusNode,
             onSubmitted: disableButtons ? null : _submitAnswer,
+            wasCorrect: wasCorrect,
           ),
           const SizedBox(height: 15),
           Row(
             children: [
-              TextButton(
-                  child: const Text('Clear'),
-                  onPressed: disableButtons ? null : _clearAnswer),
-              TextButton(
-                  child: const Text('Skip'),
-                  onPressed: disableButtons ? null : _skipQuestion),
-              ValueListenableBuilder<TextEditingValue>(
-                valueListenable: answerController,
-                builder: (context, answerValue, _) => ElevatedButton(
-                    child: const Text('Submit'),
-                    onPressed: disableButtons || answerValue.text.isEmpty
-                        ? null
-                        : _submitAnswer),
-              ),
+              if (showNextButton)
+                ElevatedButton(
+                    onPressed: _nextQuestion, child: const Text('Next')),
+              if (!showNextButton) ...[
+                TextButton(
+                    child: const Text('Clear'),
+                    onPressed: disableButtons ? null : _clearAnswer),
+                TextButton(
+                    child: const Text('Skip'),
+                    onPressed: disableButtons ? null : _skipQuestion),
+                ValueListenableBuilder<TextEditingValue>(
+                  valueListenable: answerController,
+                  builder: (context, answerValue, _) => ElevatedButton(
+                      child: const Text('Submit'),
+                      onPressed: disableButtons || answerValue.text.isEmpty
+                          ? null
+                          : _submitAnswer),
+                )
+              ],
             ]
                 .map((e) => Expanded(child: SizedBox(height: 50, child: e)))
                 .toList(),
@@ -110,6 +120,9 @@ class _QuestionPageState extends State<QuestionPage> {
 
   void _submitAnswer() {
     debugPrint('[RJH _submitAnswer (${answerController.text})]');
+    setState(() {
+      wasCorrect = widget.question.isCorrectAnswer(answerController.text);
+    });
     _flipCard();
   }
 
@@ -121,9 +134,18 @@ class _QuestionPageState extends State<QuestionPage> {
   }
 
   void _onFlipCompleted() {
-    debugPrint('[RJH] flip completed');
+    if (flipCardState != QuestionFlipCardState.flipping) {
+      // the callback can be triggered during hot reload even when no flip
+      // has taken place: ignore
+      return;
+    }
+
     setState(() {
       flipCardState = QuestionFlipCardState.back;
     });
+  }
+
+  void _nextQuestion() {
+    widget.onFinish(wasCorrect!);
   }
 }
