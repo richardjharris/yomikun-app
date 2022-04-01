@@ -33,7 +33,7 @@ dependencies:
   path_provider: any
   riverpod: ^2.0.0-dev.3
   rxdart: ^0.27.3
-  share_plus: ^3.0.4
+  share_plus: ^4.0.3
   shared_preferences: ^2.0.12
   sqflite: ^2.0.2
   synchronized: ^3.0.0
