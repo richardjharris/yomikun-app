@@ -6,7 +6,7 @@ void main() {
   test('QuizState', () {
     final quiz = QuizState(
       questions: [
-        Question(
+        const Question(
           text: '田中',
           subtext: 'Surname',
           answers: ['たなか'],

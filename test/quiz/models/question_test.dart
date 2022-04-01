@@ -4,7 +4,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:yomikun/quiz/models/question.dart';
 
 void main() {
-  final q = Question(
+  const q = Question(
     text: '田中',
     subtext: 'Surname',
     answers: ['たなか'],
