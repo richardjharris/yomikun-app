@@ -12,13 +12,13 @@ class AnswerField extends StatelessWidget {
 
   static const maxLength = 30;
 
-  const AnswerField(
-      {Key? key,
-      this.controller,
-      this.onSubmitted,
-      this.focusNode,
-      this.wasCorrect})
-      : super(key: key);
+  const AnswerField({
+    Key? key,
+    this.controller,
+    this.onSubmitted,
+    this.focusNode,
+    this.wasCorrect,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

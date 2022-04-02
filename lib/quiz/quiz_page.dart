@@ -94,13 +94,14 @@ class _QuizPageState extends State<QuizPage> {
                       },
                     )
                   : QuestionPanel(
-                      key: ObjectKey(quiz.currentQuestion),
+                      key: ObjectKey(quiz),
                       quiz: quiz,
                       onAnswer: (answer) {
+                        debugPrint('[RJH] QuizPage.build() onAnswer: $answer');
                         final correct =
                             quiz.currentQuestion.isCorrectAnswer(answer);
                         setState(() {
-                          _quizState = quiz.answer(correct);
+                          _quizState = quiz.answer(answer, correct);
                         });
                       },
                       onNextQuestion: () {

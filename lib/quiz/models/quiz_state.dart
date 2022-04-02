@@ -71,6 +71,8 @@ class QuizState {
 
   bool get finished => questionIndex >= questionCount;
 
+  bool get isLastQuestion => questionIndex == questionCount - 1;
+
   // Indicate question is done, even if we haven't moved on to the next
   // one yet.
   int get questionsDone => questionIndex + (showingAnswer ? 1 : 0);
@@ -81,10 +83,11 @@ class QuizState {
       currentQuestionState == CurrentQuestionState.question;
   bool get showingAnswer => currentQuestionState == CurrentQuestionState.answer;
 
-  QuizState answer(bool correct) {
+  QuizState answer(String answer, bool correct) {
     return copyWith(
       score: score + (correct ? 1 : 0),
       currentQuestionState: CurrentQuestionState.answer,
+      currentUserAnswer: answer,
     );
   }
 

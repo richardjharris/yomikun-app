@@ -55,7 +55,11 @@ class _QuestionPanelState extends State<QuestionPanel> {
       wasCorrect = question.isCorrectAnswer(quiz.currentUserAnswer);
     }
 
-    answerController = TextEditingController();
+    // If card back is displayed, populate the [AnswerField] so it can display
+    // the user's answer. If card front, don't restore.
+    answerController = TextEditingController(
+      text: quiz.showingAnswer ? quiz.currentUserAnswer : '',
+    );
     focusNode = FocusNode();
   }
 
@@ -93,7 +97,10 @@ class _QuestionPanelState extends State<QuestionPanel> {
             width: double.infinity,
             height: 50,
             child: ElevatedButton(
-                onPressed: _nextQuestion, child: const Text('Next')),
+                onPressed: _nextQuestion,
+                child: Text(
+                  widget.quiz.isLastQuestion ? 'Show results' : 'Next',
+                )),
           ),
         if (!showNextButton)
           ValueListenableBuilder<TextEditingValue>(
@@ -131,6 +138,7 @@ class _QuestionPanelState extends State<QuestionPanel> {
   void _skipQuestion() {
     // set an empty answer to indicate we skipped the question.
     answerController.text = '';
+    widget.onAnswer('');
     _flipCard();
   }
 
