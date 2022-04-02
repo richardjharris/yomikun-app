@@ -107,10 +107,12 @@ class _QuestionPanelState extends State<QuestionPanel> {
             width: double.infinity,
             height: 50,
             child: ElevatedButton(
-                onPressed: _nextQuestion,
-                child: Text(
-                  widget.quiz.isLastQuestion ? 'Show results' : 'Next',
-                )),
+              onPressed: _nextQuestion,
+              child: Text(
+                widget.quiz.isLastQuestion ? 'Show results' : 'Next',
+              ),
+              autofocus: true,
+            ),
           ),
         if (!showNextButton)
           ValueListenableBuilder<TextEditingValue>(

@@ -93,7 +93,7 @@ class QuizSummaryPanel extends StatelessWidget {
     return SizedBox(
       height: 50,
       width: double.infinity,
-      child: ElevatedButton(
+      child: TextButton(
         child: const Text('New Quiz'),
         onPressed: onReset,
       ),
@@ -107,6 +107,7 @@ class QuizSummaryPanel extends StatelessWidget {
       child: TextButton(
         child: const Text('Quit'),
         onPressed: onQuit,
+        autofocus: true,
       ),
     );
   }
