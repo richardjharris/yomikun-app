@@ -94,7 +94,6 @@ class _QuizPageState extends State<QuizPage> {
                       },
                     )
                   : QuestionPanel(
-                      key: ObjectKey(quiz),
                       quiz: quiz,
                       onAnswer: (answer) {
                         debugPrint('[RJH] QuizPage.build() onAnswer: $answer');

@@ -22,12 +22,13 @@ void main() {
     expect(quiz.finished, false);
     expect(quiz.progressRatio, 0);
 
-    final correct = quiz.answer(true);
+    final correct = quiz.answer('たなか', true);
     expect(correct.currentQuestionState, CurrentQuestionState.answer);
+    expect(correct.currentUserAnswer, 'たなか');
     expect(correct.score, 1);
     expect(correct.progressRatio, 1.0);
 
-    final wrong = quiz.answer(false);
+    final wrong = quiz.answer('', false);
     expect(wrong.currentQuestionState, CurrentQuestionState.answer);
     expect(wrong.score, 0);
     expect(wrong.progressRatio, 1.0);

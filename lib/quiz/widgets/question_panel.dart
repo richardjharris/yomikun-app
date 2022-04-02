@@ -3,6 +3,11 @@ import 'package:yomikun/quiz/models/quiz_state.dart';
 import 'package:yomikun/quiz/widgets/question_flip_card.dart';
 import 'package:yomikun/quiz/widgets/question_page/answer_field.dart';
 
+/// For some reason ObjectKey(quiz.currentQuestion) loses the animation flip
+/// effect, but a global key will work. I think this is because the ObjectKey
+/// depends on QuestionPanel not rebuilding.
+final globalKey = GlobalKey();
+
 /// Widget that displays a single question and prompts for the answer, then
 /// shows the correct answer.
 class QuestionPanel extends StatefulWidget {
@@ -14,12 +19,12 @@ class QuestionPanel extends StatefulWidget {
   /// Called when user moves to the next question
   final VoidCallback onNextQuestion;
 
-  const QuestionPanel({
+  QuestionPanel({
     Key? key,
     required this.quiz,
     required this.onAnswer,
     required this.onNextQuestion,
-  }) : super(key: key);
+  }) : super(key: key ?? ObjectKey(quiz));
 
   @override
   State<QuestionPanel> createState() => _QuestionPanelState();
@@ -42,6 +47,7 @@ class _QuestionPanelState extends State<QuestionPanel> {
   @override
   void initState() {
     super.initState();
+    debugPrint('[RJH] QuestionPanel.initState()');
 
     final quiz = widget.quiz;
     final question = quiz.currentQuestion;
@@ -72,13 +78,17 @@ class _QuestionPanelState extends State<QuestionPanel> {
 
   @override
   Widget build(BuildContext context) {
-    debugPrint('[RJH] flipCardState = $flipCardState');
+    debugPrint(
+        '[RJH] flipCardState = $flipCardState code = ${identityHashCode(widget.quiz.currentQuestion)}');
     final disableButtons = flipCardState != QuestionFlipCardState.front;
     final showNextButton = flipCardState == QuestionFlipCardState.back;
 
     return Column(
       children: [
+        // As explained above, using an ObjectKey does not work, the card loses
+        // its animation.
         QuestionFlipCard(
+          key: globalKey,
           question: widget.quiz.currentQuestion,
           showCardFront: flipCardState == QuestionFlipCardState.front,
           flipDuration: flipDuration,
