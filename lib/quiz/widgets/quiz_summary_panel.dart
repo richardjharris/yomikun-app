@@ -30,9 +30,9 @@ class QuizSummaryPanel extends ConsumerWidget {
           child: _questionSummary(context, ref),
         ),
         const Spacer(),
-        _resetButton(),
+        _resetButton(context),
         const SizedBox(height: 10),
-        _quitButton(),
+        _quitButton(context),
       ],
     );
   }
@@ -44,7 +44,7 @@ class QuizSummaryPanel extends ConsumerWidget {
         child: Column(
           children: [
             Text(
-              'Your score',
+              context.loc.qzYourScore,
               style: Theme.of(context).textTheme.headline6,
             ),
             const SizedBox(height: 8),
@@ -106,23 +106,23 @@ class QuizSummaryPanel extends ConsumerWidget {
     );
   }
 
-  Widget _resetButton() {
+  Widget _resetButton(BuildContext context) {
     return SizedBox(
       height: 50,
       width: double.infinity,
       child: TextButton(
-        child: const Text('New Quiz'),
+        child: Text(context.loc.qzSummaryNewQuizAction),
         onPressed: onReset,
       ),
     );
   }
 
-  Widget _quitButton() {
+  Widget _quitButton(BuildContext context) {
     return SizedBox(
       height: 50,
       width: double.infinity,
       child: TextButton(
-        child: const Text('Quit'),
+        child: Text(context.loc.qzSummaryQuitAction),
         onPressed: onQuit,
         autofocus: true,
       ),

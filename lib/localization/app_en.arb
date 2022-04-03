@@ -127,5 +127,14 @@
   "npNoResultFound": "No results found",
   "qzStart": "Start Quiz",
   "qzQuestion": "Question",
-  "qzAnswer": "Answer"
+  "qzAnswer": "Answer",
+  "qzYourScore": "Your score",
+  "qzClearAnswerAction": "Clear",
+  "qzSkipQuestionAction": "Skip",
+  "qzSubmitAnswerAction": "Submit",
+  "qzShowQuizResults": "Show results",
+  "qzNextQuestionAction": "Next",
+  "qzSummaryNewQuizAction": "New quiz",
+  "qzSummaryQuitAction": "Quit",
+  "qzTooltipNewQuiz": "New quiz"
 }

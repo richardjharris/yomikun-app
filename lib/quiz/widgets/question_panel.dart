@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:yomikun/localization/app_localizations_context.dart';
 import 'package:yomikun/quiz/models/quiz_state.dart';
 import 'package:yomikun/quiz/widgets/question_flip_card.dart';
 import 'package:yomikun/quiz/widgets/question_page/answer_field.dart';
@@ -106,7 +107,9 @@ class _QuestionPanelState extends State<QuestionPanel> {
             child: ElevatedButton(
               onPressed: _nextQuestion,
               child: Text(
-                widget.quiz.isLastQuestion ? 'Show results' : 'Next',
+                widget.quiz.isLastQuestion
+                    ? context.loc.qzShowQuizResults
+                    : context.loc.qzNextQuestionAction,
               ),
               autofocus: true,
             ),
@@ -117,16 +120,16 @@ class _QuestionPanelState extends State<QuestionPanel> {
             builder: (context, value, child) => Row(
               children: [
                 TextButton(
-                  child: const Text('Clear'),
+                  child: Text(context.loc.qzClearAnswerAction),
                   onPressed: disableButtons || value.text.isEmpty
                       ? null
                       : _clearAnswer,
                 ),
                 TextButton(
-                    child: const Text('Skip'),
+                    child: Text(context.loc.qzSkipQuestionAction),
                     onPressed: disableButtons ? null : _skipQuestion),
                 ElevatedButton(
-                    child: const Text('Submit'),
+                    child: Text(context.loc.qzSubmitAnswerAction),
                     onPressed: disableButtons || value.text.isEmpty
                         ? null
                         : _submitAnswer),

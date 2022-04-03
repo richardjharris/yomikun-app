@@ -92,5 +92,6 @@
   "npNoResultFound": "名前は見つかりませんでした。" ,
   "qzStart": "スタート",
   "qzQuestion": "質問",
-  "qzAnswer": "答え"
+  "qzAnswer": "答え",
+  "qzYourScore": "採点"
 }

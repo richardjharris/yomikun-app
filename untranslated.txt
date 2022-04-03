@@ -1,5 +1,13 @@
 {
   "ja": [
-    "ocrTakePicture"
+    "ocrTakePicture",
+    "qzClearAnswerAction",
+    "qzSkipQuestionAction",
+    "qzSubmitAnswerAction",
+    "qzShowQuizResults",
+    "qzNextQuestionAction",
+    "qzSummaryNewQuizAction",
+    "qzSummaryQuitAction",
+    "qzTooltipNewQuiz"
   ]
 }

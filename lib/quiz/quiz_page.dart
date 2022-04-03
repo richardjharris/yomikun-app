@@ -80,7 +80,7 @@ class _QuizPageState extends ConsumerState<QuizPage> {
           IconButton(
             onPressed: generateNewQuiz,
             icon: const Icon(Icons.refresh),
-            tooltip: 'New quiz',
+            tooltip: context.loc.qzTooltipNewQuiz,
           ),
           const SizedBox(width: 10),
         ],
