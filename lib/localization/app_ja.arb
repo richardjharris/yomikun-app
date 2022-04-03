@@ -93,5 +93,13 @@
   "qzStart": "スタート",
   "qzQuestion": "質問",
   "qzAnswer": "答え",
-  "qzYourScore": "採点"
+  "qzYourScore": "結果",
+  "qzClearAnswerAction": "削除",
+  "qzSkipQuestionAction": "スキップ",
+  "qzSubmitAnswerAction": "返答",
+  "qzShowQuizResults": "採点を",
+  "qzNextQuestionAction": "結果を見る",
+  "qzSummaryNewQuizAction": "もう一回",
+  "qzSummaryQuitAction": "やめる",
+  "qzTooltipNewQuiz": "クイズを作り直す"
 }
