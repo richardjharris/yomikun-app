@@ -1,3 +1,4 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
 
 import 'package:yomikun/quiz/models/question.dart';
@@ -18,8 +19,8 @@ class QuizState {
   /// finished.
   final int questionIndex;
 
-  /// Number of correct questions so far.
-  final int score;
+  /// For each question, whether or not it was answered correctly.
+  final List<bool> scores;
 
   /// For the current question, whether we are showing the correct answer
   /// to the user
@@ -31,7 +32,7 @@ class QuizState {
   const QuizState({
     required this.questions,
     this.questionIndex = 0,
-    this.score = 0,
+    this.scores = const [],
     this.currentQuestionState = CurrentQuestionState.question,
     this.currentUserAnswer = '',
   }) : assert(questions.length > 0);
@@ -41,6 +42,9 @@ class QuizState {
 
   /// Total number of questions.
   int get questionCount => questions.length;
+
+  /// Number of correct answers.
+  int get score => scores.where((s) => s).length;
 
   /// True if all questions have been completed or skipped.
   bool get finished => questionIndex >= questionCount;
@@ -68,7 +72,7 @@ class QuizState {
   /// string to skip) and whether the answer was [correct].
   QuizState answer(String answer, bool correct) {
     return copyWith(
-      score: score + (correct ? 1 : 0),
+      scores: [...scores, correct],
       currentQuestionState: CurrentQuestionState.answer,
       currentUserAnswer: answer,
     );
@@ -85,14 +89,14 @@ class QuizState {
   QuizState copyWith({
     List<Question>? questions,
     int? questionIndex,
-    int? score,
+    List<bool>? scores,
     CurrentQuestionState? currentQuestionState,
     String? currentUserAnswer,
   }) {
     return QuizState(
       questions: questions ?? this.questions,
       questionIndex: questionIndex ?? this.questionIndex,
-      score: score ?? this.score,
+      scores: scores ?? this.scores,
       currentQuestionState: currentQuestionState ?? this.currentQuestionState,
       currentUserAnswer: currentUserAnswer ?? this.currentUserAnswer,
     );
@@ -100,14 +104,14 @@ class QuizState {
 
   @override
   String toString() {
-    return 'QuizState(questions: $questions, questionIndex: $questionIndex, score: $score, currentQuestionState: $currentQuestionState, currentUserAnswer: $currentUserAnswer)';
+    return 'QuizState(questions: $questions, questionIndex: $questionIndex, scores: $scores, currentQuestionState: $currentQuestionState, currentUserAnswer: $currentUserAnswer)';
   }
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
       'questions': questions.map((x) => x.toMap()).toList(),
       'questionIndex': questionIndex,
-      'score': score,
+      'scores': scores,
       'currentQuestionState': currentQuestionState.name.toString(),
       'currentUserAnswer': currentUserAnswer,
     };
@@ -119,7 +123,7 @@ class QuizState {
           .map((x) => Question.fromMap(x))
           .toList(),
       questionIndex: map['questionIndex'] as int,
-      score: map['score'] as int,
+      scores: (map['scores'] as List<dynamic>).cast<bool>(),
       currentQuestionState: CurrentQuestionState.values
           .firstWhere((state) => state.name == map['currentQuestionState']),
       currentUserAnswer: map['currentUserAnswer'] as String,

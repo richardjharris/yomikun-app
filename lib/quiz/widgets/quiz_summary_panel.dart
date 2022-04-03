@@ -1,3 +1,4 @@
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:yomikun/quiz/models/quiz_state.dart';
 
@@ -76,12 +77,17 @@ class QuizSummaryPanel extends StatelessWidget {
         TableRow(
           children: List.filled(3, const Divider()),
         ),
-        ...quiz.questions.map((question) {
+        ...quiz.questions.mapIndexed((index, question) {
+          final wasCorrect = quiz.scores[index];
           return TableRow(
             children: [
               Text(question.text, style: value),
               Text(question.answers.first, style: value),
-              Icon(Icons.close, color: Colors.red, size: value.fontSize! * 1.5),
+              wasCorrect
+                  ? Icon(Icons.done,
+                      color: Colors.green, size: value.fontSize! * 1.5)
+                  : Icon(Icons.close,
+                      color: Colors.red, size: value.fontSize! * 1.5),
             ],
           );
         }),

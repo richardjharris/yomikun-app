@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:yomikun/quiz/models/quiz_state.dart';
 
@@ -11,6 +12,7 @@ class QuizPersistenceService {
   /// Persists the quiz state.
   static Future<bool> persist(QuizState quizState) async {
     final prefs = await _prefs;
+    debugPrint('[RJH] Saving state: ${quizState.toJson()}');
     return prefs.setString(prefKey, quizState.toJson());
   }
 
@@ -20,8 +22,10 @@ class QuizPersistenceService {
   static Future<QuizState?> load() async {
     final prefs = await _prefs;
     if (prefs.containsKey(prefKey)) {
+      debugPrint('[RJH] Got state: ${prefs.getString(prefKey)}');
       return QuizState.fromJson(prefs.getString(prefKey)!);
     } else {
+      debugPrint('[RJH] Got no state.');
       return null;
     }
   }

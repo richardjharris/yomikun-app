@@ -57,10 +57,13 @@ class _QuizPageState extends ConsumerState<QuizPage> {
 
   @override
   void dispose() async {
+    // Must be done first, before async code
+    super.dispose();
+
     if (_quizState != null) {
+      debugPrint("[RJH] Saving quiz state");
       await QuizPersistenceService.persist(_quizState!);
     }
-    super.dispose();
   }
 
   @override
