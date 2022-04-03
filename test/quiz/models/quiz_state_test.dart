@@ -1,19 +1,20 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:yomikun/quiz/models/question.dart';
 import 'package:yomikun/quiz/models/quiz_state.dart';
+import 'package:yomikun/search/models.dart';
 
 void main() {
   test('QuizState', () {
     final quiz = QuizState(
       questions: [
         const Question(
-          text: '田中',
-          subtext: 'Surname',
-          answers: ['たなか'],
+          kanji: '田中',
+          part: NamePart.sei,
+          readings: ['たなか'],
         ),
       ],
     );
-    expect(quiz.currentQuestion.text, '田中');
+    expect(quiz.currentQuestion.kanji, '田中');
     expect(quiz.currentQuestionState, CurrentQuestionState.question);
     expect(quiz.currentUserAnswer, '');
     expect(quiz.showingAnswer, false);

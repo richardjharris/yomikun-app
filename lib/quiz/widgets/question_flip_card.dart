@@ -33,10 +33,15 @@ class QuestionFlipCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final front = QuestionCard(question.text,
-        sublabel: question.subtext, key: const ValueKey(false));
-    final back =
-        QuestionCard(question.answers.join('、'), key: const ValueKey(true));
+    final front = QuestionCard(
+      question.kanji,
+      part: question.part,
+      key: const ValueKey(false),
+    );
+    final back = QuestionCard(
+      question.readings.join('、'),
+      key: const ValueKey(true),
+    );
 
     return AnimatedSwitcher(
       duration: flipDuration,

@@ -90,5 +90,7 @@
   "npSeeNamesWithSameKanji": "同じ書きの人名を見る",
   "npSeeNamesWithSameReading": "同じ読みの人名を見る",
   "npNoResultFound": "名前は見つかりませんでした。" ,
-  "qzStart": "スタート"
+  "qzStart": "スタート",
+  "qzQuestion": "質問",
+  "qzAnswer": "答え"
 }

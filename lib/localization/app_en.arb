@@ -125,5 +125,7 @@
   "npSeeNamesWithSameKanji": "See names with the same kanji",
   "npSeeNamesWithSameReading": "See names with the same reading",
   "npNoResultFound": "No results found",
-  "qzStart": "Start Quiz"
+  "qzStart": "Start Quiz",
+  "qzQuestion": "Question",
+  "qzAnswer": "Answer"
 }

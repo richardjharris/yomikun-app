@@ -2,12 +2,13 @@ import 'dart:convert';
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:yomikun/quiz/models/question.dart';
+import 'package:yomikun/search/models.dart';
 
 void main() {
   const q = Question(
-    text: '田中',
-    subtext: 'Surname',
-    answers: ['たなか'],
+    kanji: '田中',
+    part: NamePart.sei,
+    readings: ['たなか'],
   );
 
   test('isCorrectAnswer', () {
@@ -23,14 +24,14 @@ void main() {
 
   test('Serialization', () {
     final copy = Question.fromMap(q.toMap());
-    expect(copy.text, q.text);
-    expect(copy.subtext, q.subtext);
-    expect(copy.answers, q.answers);
+    expect(copy.kanji, q.kanji);
+    expect(copy.part, q.part);
+    expect(copy.readings, q.readings);
 
     final copy2 = Question.fromMap(
-        jsonDecode('{"text":"田中","subtext":"Surname","answers":["たなか"]}'));
-    expect(copy2.text, q.text);
-    expect(copy2.subtext, q.subtext);
-    expect(copy2.answers, q.answers);
+        jsonDecode('{"kanji":"田中","part":"sei","readings":["たなか"]}'));
+    expect(copy2.kanji, q.kanji);
+    expect(copy2.part, q.part);
+    expect(copy2.readings, q.readings);
   });
 }

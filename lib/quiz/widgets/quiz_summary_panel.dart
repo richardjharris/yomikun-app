@@ -1,5 +1,6 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
+import 'package:yomikun/localization/app_localizations_context.dart';
 import 'package:yomikun/quiz/models/quiz_state.dart';
 
 /// Shows the quiz results and allows the quiz to be reset.
@@ -23,7 +24,7 @@ class QuizSummaryPanel extends StatelessWidget {
         const Divider(),
         Padding(
           padding: const EdgeInsets.all(8),
-          child: _questionSummary(),
+          child: _questionSummary(context),
         ),
         const Spacer(),
         _resetButton(),
@@ -55,10 +56,13 @@ class QuizSummaryPanel extends StatelessWidget {
     );
   }
 
-  Widget _questionSummary() {
+  Widget _questionSummary(BuildContext context) {
     TextStyle value = const TextStyle(fontSize: 24);
     TextStyle header =
         const TextStyle(fontSize: 20, fontWeight: FontWeight.bold);
+
+    // TODO change depending on kanji preference
+    const comma = ', ';
 
     return Table(
       columnWidths: const {
@@ -69,8 +73,8 @@ class QuizSummaryPanel extends StatelessWidget {
       children: [
         TableRow(
           children: [
-            Text('Question', style: header),
-            Text('Answer', style: header),
+            Text(context.loc.qzQuestion, style: header),
+            Text(context.loc.qzAnswer, style: header),
             const Spacer(),
           ],
         ),
@@ -81,8 +85,9 @@ class QuizSummaryPanel extends StatelessWidget {
           final wasCorrect = quiz.scores[index];
           return TableRow(
             children: [
-              Text(question.text, style: value),
-              Text(question.answers.first, style: value),
+              Text(question.kanji,
+                  style: value, locale: const Locale('ja', 'JP')),
+              Text(question.readings.join(comma), style: value),
               wasCorrect
                   ? Icon(Icons.done,
                       color: Colors.green, size: value.fontSize! * 1.5)

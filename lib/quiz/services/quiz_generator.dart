@@ -13,9 +13,9 @@ Future<List<Question>> generateQuiz({
   return data
       .take(numQuestions)
       .map((row) => Question(
-            text: row.kaki,
-            subtext: row.part.name,
-            answers: row.yomi,
+            kanji: row.kaki,
+            part: row.part,
+            readings: row.yomi,
           ))
       .toList();
 }

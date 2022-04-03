@@ -1,38 +1,39 @@
 import 'package:yomikun/core/utilities/kana.dart';
+import 'package:yomikun/search/models.dart';
 
 class Question {
-  final String text;
-  final String subtext;
-  final List<String> answers;
+  final String kanji;
+  final NamePart part;
+  final List<String> readings;
 
   const Question({
-    required this.text,
-    required this.subtext,
-    required this.answers,
+    required this.kanji,
+    required this.part,
+    required this.readings,
   });
 
   bool isCorrectAnswer(String answer) {
     answer = romajiToKana(answer.trim());
-    return answers.contains(answer);
+    return readings.contains(answer);
   }
 
   @override
   String toString() =>
-      'Question(text: $text, subtext: $subtext, answers: $answers)';
+      'Question(kanji: $kanji, part: ${part.name}, readings: $readings)';
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
-      'text': text,
-      'subtext': subtext,
-      'answers': answers,
+      'kanji': kanji,
+      'part': part.name.toString(),
+      'readings': readings,
     };
   }
 
   factory Question.fromMap(Map<String, dynamic> map) {
     return Question(
-      text: map['text'] as String,
-      subtext: map['subtext'] as String,
-      answers: (map['answers'] as List).cast<String>(),
+      kanji: map['kanji'] as String,
+      part: (map['part'] as String).toNamePart()!,
+      readings: (map['readings'] as List).cast<String>(),
     );
   }
 }
