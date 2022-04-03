@@ -36,53 +36,36 @@ class QuizState {
     this.currentUserAnswer = '',
   }) : assert(questions.length > 0);
 
-  factory QuizState.sample() {
-    return QuizState(
-      questions: [
-        const Question(
-          text: '田中',
-          subtext: 'Surname',
-          answers: ['たなか'],
-        ),
-      ],
-    );
-  }
-
-  factory QuizState.sampleTwo() {
-    return QuizState(
-      questions: [
-        const Question(
-          text: '木村',
-          subtext: 'Surname',
-          answers: ['きむら'],
-        ),
-        const Question(
-          text: '大野',
-          subtext: 'Surname',
-          answers: ['おおの'],
-        ),
-      ],
-    );
-  }
-
+  /// Index of currently displayed question, starting from 0.
   Question get currentQuestion => questions[questionIndex];
 
+  /// Total number of questions.
   int get questionCount => questions.length;
 
+  /// True if all questions have been completed or skipped.
   bool get finished => questionIndex >= questionCount;
 
+  /// True if the quiz is displaying the final question.
   bool get isLastQuestion => questionIndex == questionCount - 1;
 
-  // Indicate question is done, even if we haven't moved on to the next
-  // one yet.
+  /// Count of questions done. This includes the currently displayed question
+  /// IF the user has submitted an answer.
   int get questionsDone => questionIndex + (showingAnswer ? 1 : 0);
 
+  /// Current progress as a percentage (0.0-1.0)
   double get progressRatio => questionsDone / questionCount;
 
+  /// True if the front side of a question card is displayed (i.e. user is
+  /// answering)
   bool get showingQuestion =>
       currentQuestionState == CurrentQuestionState.question;
+
+  /// True if the back side of a question card is displayed (i.e. user has
+  /// answered).
   bool get showingAnswer => currentQuestionState == CurrentQuestionState.answer;
 
+  /// Returns a new state after the user has submitted [answer] (use an empty
+  /// string to skip) and whether the answer was [correct].
   QuizState answer(String answer, bool correct) {
     return copyWith(
       score: score + (correct ? 1 : 0),
@@ -91,6 +74,7 @@ class QuizState {
     );
   }
 
+  /// Returns a new state after the user has moved on to the next question.
   QuizState nextQuestion() {
     return copyWith(
       questionIndex: questionIndex + 1,

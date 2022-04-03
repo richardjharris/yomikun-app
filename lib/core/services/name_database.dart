@@ -67,14 +67,14 @@ class NameDatabase {
     late Database db;
 
     debugPrint(
-        '[RJH] exists: $targetFileExists, version: ${await assetVersion()}, db: ${await _getVersion(await openDatabase(targetFilename))}');
+        '[RJH] DB exists: $targetFileExists, version: ${await assetVersion()}, db: ${await _getVersion(await openDatabase(targetFilename))}');
 
     if (targetFileExists) {
       db = await openDatabase(targetFilename,
           readOnly: true, singleInstance: false);
       if (await assetVersion() != await _getVersion(db)) {
         // Version mismatch, copy over new DB
-        debugPrint('[RJH] copy over new asset');
+        debugPrint('[RJH] DB copy over new asset');
         await copyFromAssets();
         db = await openDatabase(targetFilename,
             readOnly: true, singleInstance: false);
@@ -179,8 +179,6 @@ class NameDatabase {
     bool kanaMode = ky == KakiYomi.yomi &&
         query.contains(
             RegExp(r'[\p{Script=Hiragana}\p{Script=Katakana}]', unicode: true));
-    debugPrint(
-        "[rjh] $query $ky ${query.contains(RegExp(r'[\p{Script=Hiragana}\p{Script=Katakana}]', unicode: true))}");
 
     // Convert query to SQL like form
     var sqlQuery = query.replaceAll(RegExp(r'[\*＊]', unicode: true), '%');
@@ -351,6 +349,56 @@ class NameDatabase {
 
     return result.map(_toNameData).toList();
   }
+
+  /// Returns name data in quiz format (top [limit] most common kaki with all of
+  /// their readings)
+  Future<Iterable<QuizQuestionData>> getQuizData([int limit = 200]) async {
+    final db = await database;
+
+    final result = await db.rawQuery('''
+      -- Get top N kaki
+      WITH most_common AS (
+        SELECT kaki, part, SUM(hits_total) total
+        FROM names
+        GROUP BY kaki, part
+        ORDER BY total DESC
+        LIMIT $limit
+      ),
+      -- For top N kaki, get all readings and filter to those with >20% share.
+      ungrouped AS (
+        SELECT names.kaki, names.part, yomi, hits_total, most_common.total, hits_total*1.0/most_common.total pc
+        FROM names
+        JOIN most_common ON most_common.kaki = names.kaki AND most_common.part = names.part
+        WHERE pc > 0.2
+        ORDER BY names.kaki, names.part
+      )
+      -- Group concat the readings so we return one row per kaki.
+      SELECT kaki, part, GROUP_CONCAT(yomi) yomi
+      FROM ungrouped
+      GROUP BY kaki, part
+    ''');
+
+    return result.map((row) => QuizQuestionData(
+          kaki: row['kaki'] as String,
+          part: _partName(row['part'] as int),
+          yomi: (row['yomi'] as String)
+              .split(',')
+              .map((yomi) => romajiToKana(yomi))
+              .toList(),
+        ));
+  }
+}
+
+class QuizQuestionData {
+  final String kaki;
+  final NamePart part;
+  final List<String> yomi;
+
+  QuizQuestionData({
+    required this.kaki,
+    required this.part,
+    required this.yomi,
+  });
 }
 
 class KanjiStats {

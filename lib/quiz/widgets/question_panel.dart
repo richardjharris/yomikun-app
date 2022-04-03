@@ -42,12 +42,11 @@ class _QuestionPanelState extends State<QuestionPanel> {
   late QuestionFlipCardState flipCardState;
   late bool? wasCorrect;
 
-  static const flipDuration = Duration(milliseconds: 500);
+  static const flipDuration = Duration(milliseconds: 400);
 
   @override
   void initState() {
     super.initState();
-    debugPrint('[RJH] QuestionPanel.initState()');
 
     final quiz = widget.quiz;
     final question = quiz.currentQuestion;
@@ -78,8 +77,6 @@ class _QuestionPanelState extends State<QuestionPanel> {
 
   @override
   Widget build(BuildContext context) {
-    debugPrint(
-        '[RJH] flipCardState = $flipCardState code = ${identityHashCode(widget.quiz.currentQuestion)}');
     final disableButtons = flipCardState != QuestionFlipCardState.front;
     final showNextButton = flipCardState == QuestionFlipCardState.back;
 
@@ -155,13 +152,11 @@ class _QuestionPanelState extends State<QuestionPanel> {
   }
 
   void _submitAnswer() {
-    debugPrint('[RJH _submitAnswer (${answerController.text})]');
     widget.onAnswer(answerController.text);
     _flipCard();
   }
 
   void _flipCard() {
-    debugPrint('[RJH] flipCard');
     setState(() {
       flipCardState = QuestionFlipCardState.flipping;
     });

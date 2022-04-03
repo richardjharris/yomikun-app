@@ -19,9 +19,14 @@ class QuestionCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              FittedBox(
-                child: Text(label),
-                fit: BoxFit.fitWidth,
+              Expanded(
+                child: FittedBox(
+                  child: Text(
+                    label,
+                    locale: const Locale('ja', 'JP'),
+                  ),
+                  fit: BoxFit.fitWidth,
+                ),
               ),
               if (sublabel != null)
                 Container(

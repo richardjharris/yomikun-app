@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:yomikun/quiz/models/quiz_state.dart';
 
@@ -21,7 +20,6 @@ class QuizPersistenceService {
   static Future<QuizState?> load() async {
     final prefs = await _prefs;
     if (prefs.containsKey(prefKey)) {
-      debugPrint('[RJH] ${prefs.getString(prefKey)}');
       return QuizState.fromJson(prefs.getString(prefKey)!);
     } else {
       return null;

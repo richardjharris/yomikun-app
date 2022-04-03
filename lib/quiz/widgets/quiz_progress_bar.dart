@@ -52,7 +52,7 @@ class GradientProgressIndicator extends StatefulWidget {
     required this.backgroundColor,
     this.value = 0.0,
     this.minHeight,
-    this.animateDuration = const Duration(milliseconds: 800),
+    this.animateDuration = const Duration(milliseconds: 500),
   })  : assert(minHeight == null || minHeight > 0),
         super(key: key);
 
