@@ -89,3 +89,7 @@ String formatYomiString(String name, NameFormatPreference pref) {
       return expandDakuten(name);
   }
 }
+
+String nameJoinComma(NameFormatPreference pref) {
+  return pref.isRomaji ? ', ' : '、';
+}

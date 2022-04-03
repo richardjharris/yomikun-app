@@ -7,3 +7,7 @@ enum NameVisualizationPreference { pieChart, treeMap, none }
 
 /// User's chosen display format for names.
 enum NameFormatPreference { hiragana, hiraganaBigAccent, romaji }
+
+extension NameFormatPreferenceMethods on NameFormatPreference {
+  bool get isRomaji => this == NameFormatPreference.romaji;
+}

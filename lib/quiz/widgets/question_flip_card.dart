@@ -2,14 +2,17 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:yomikun/quiz/models/question.dart';
 import 'package:yomikun/quiz/widgets/question_page/question_card.dart';
+import 'package:yomikun/search/models/namedata.dart';
+import 'package:yomikun/settings/settings_controller.dart';
 
 /// Displays a [Card] with the question on one side and answer on the other.
 ///
 /// When [showCardFront] is changed, will animate a flip to the other side of
 /// the card.
-class QuestionFlipCard extends StatelessWidget {
+class QuestionFlipCard extends ConsumerWidget {
   /// Question to display.
   final Question question;
 
@@ -32,16 +35,19 @@ class QuestionFlipCard extends StatelessWidget {
   }) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final formatPref =
+        ref.watch(settingsControllerProvider.select((p) => p.nameFormat));
+    final readings = question.readings
+        .map((r) => formatYomiString(r, formatPref))
+        .join(nameJoinComma(formatPref));
+
     final front = QuestionCard(
       question.kanji,
       part: question.part,
       key: const ValueKey(false),
     );
-    final back = QuestionCard(
-      question.readings.join('、'),
-      key: const ValueKey(true),
-    );
+    final back = QuestionCard(readings, key: const ValueKey(true));
 
     return AnimatedSwitcher(
       duration: flipDuration,

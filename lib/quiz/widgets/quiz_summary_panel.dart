@@ -1,10 +1,13 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:yomikun/localization/app_localizations_context.dart';
 import 'package:yomikun/quiz/models/quiz_state.dart';
+import 'package:yomikun/search/models/namedata.dart';
+import 'package:yomikun/settings/settings_controller.dart';
 
 /// Shows the quiz results and allows the quiz to be reset.
-class QuizSummaryPanel extends StatelessWidget {
+class QuizSummaryPanel extends ConsumerWidget {
   final QuizState quiz;
   final VoidCallback onReset;
   final VoidCallback onQuit;
@@ -17,14 +20,14 @@ class QuizSummaryPanel extends StatelessWidget {
       : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Column(
       children: [
         _scoreBox(context),
         const Divider(),
         Padding(
           padding: const EdgeInsets.all(8),
-          child: _questionSummary(context),
+          child: _questionSummary(context, ref),
         ),
         const Spacer(),
         _resetButton(),
@@ -56,13 +59,13 @@ class QuizSummaryPanel extends StatelessWidget {
     );
   }
 
-  Widget _questionSummary(BuildContext context) {
+  Widget _questionSummary(BuildContext context, WidgetRef ref) {
     TextStyle value = const TextStyle(fontSize: 24);
     TextStyle header =
         const TextStyle(fontSize: 20, fontWeight: FontWeight.bold);
 
-    // TODO change depending on kanji preference
-    const comma = ', ';
+    final formatPref =
+        ref.watch(settingsControllerProvider.select((p) => p.nameFormat));
 
     return Table(
       columnWidths: const {
@@ -83,11 +86,14 @@ class QuizSummaryPanel extends StatelessWidget {
         ),
         ...quiz.questions.mapIndexed((index, question) {
           final wasCorrect = quiz.scores[index];
+          final readings = question.readings
+              .map((r) => formatYomiString(r, formatPref))
+              .join(nameJoinComma(formatPref));
           return TableRow(
             children: [
               Text(question.kanji,
                   style: value, locale: const Locale('ja', 'JP')),
-              Text(question.readings.join(comma), style: value),
+              Text(readings, style: value),
               wasCorrect
                   ? Icon(Icons.done,
                       color: Colors.green, size: value.fontSize! * 1.5)
