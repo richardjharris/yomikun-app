@@ -16,6 +16,12 @@ class QuizPersistenceService {
     return prefs.setString(prefKey, quizState.toJson());
   }
 
+  /// Clears any existing quiz state.
+  static Future<bool> clear() async {
+    final prefs = await _prefs;
+    return prefs.remove(prefKey);
+  }
+
   /// Loads the quiz state.
   ///
   /// Returns [null] if there is no stored state.

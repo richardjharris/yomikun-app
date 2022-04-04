@@ -12,7 +12,7 @@ class ButtonSwitchBar<T> extends StatelessWidget {
   final ValueChanged<T> onChanged;
 
   /// Ordered list of [MapEntry] mapping items to their textual labels.
-  final List<MapEntry<T, String>> items;
+  final List<MapEntry<String, T>> items;
 
   const ButtonSwitchBar({
     Key? key,
@@ -28,16 +28,16 @@ class ButtonSwitchBar<T> extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isSelected = items.map((item) => item.key == value).toList();
+    final isSelected = items.map((item) => item.value == value).toList();
     return ToggleButtons(
       children: items
           .map((item) => Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 8),
-                child: Text(item.value),
+                child: Text(item.key),
               ))
           .toList(),
       onPressed: (int index) {
-        onChanged(items[index].key);
+        onChanged(items[index].value);
       },
       isSelected: isSelected,
       borderRadius: const BorderRadius.all(Radius.circular(10)),
@@ -66,8 +66,8 @@ class SeiMeiButtonSwitchBar extends StatelessWidget {
       value: value,
       onChanged: onChanged,
       items: [
-        MapEntry(NamePart.sei, context.loc.surname),
-        MapEntry(NamePart.mei, context.loc.givenName),
+        MapEntry(context.loc.surname, NamePart.sei),
+        MapEntry(context.loc.givenName, NamePart.mei),
       ],
     );
   }
@@ -95,9 +95,9 @@ class GenderFilterButtonSwitchBar extends StatelessWidget {
       value: value,
       onChanged: onChanged,
       items: [
-        MapEntry(GenderFilter.female, context.loc.femaleGender),
-        MapEntry(GenderFilter.male, context.loc.maleGender),
-        MapEntry(GenderFilter.all, context.loc.allGenders),
+        MapEntry(context.loc.femaleGender, GenderFilter.female),
+        MapEntry(context.loc.maleGender, GenderFilter.male),
+        MapEntry(context.loc.allGenders, GenderFilter.all),
       ],
     );
   }

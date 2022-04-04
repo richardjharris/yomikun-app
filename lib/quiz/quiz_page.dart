@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:yomikun/core/providers/core_providers.dart';
-import 'package:yomikun/core/widgets/loading_box.dart';
 import 'package:yomikun/localization/app_localizations_context.dart';
+import 'package:yomikun/quiz/models/quiz_settings.dart';
 import 'package:yomikun/quiz/models/quiz_state.dart';
 import 'package:yomikun/quiz/services/quiz_generator.dart';
 import 'package:yomikun/quiz/services/quiz_persistence_service.dart';
 import 'package:yomikun/quiz/widgets/question_panel.dart';
 import 'package:yomikun/quiz/widgets/quiz_progress_bar.dart';
-import 'package:yomikun/quiz/widgets/quiz_summary_panel.dart';
+import 'package:yomikun/quiz/widgets/screens/new_quiz_page.dart';
+import 'package:yomikun/quiz/widgets/screens/quiz_summary_panel.dart';
 
 /// Tests the user to see if they know the correct reading of common Japanese
 /// names.
@@ -42,17 +43,20 @@ class _QuizPageState extends ConsumerState<QuizPage> {
       debugPrint("[RJH] Error loading quiz state, ignoring: ${e.toString()}");
       debugPrintStack(stackTrace: stack);
     }
-
-    if (_quizState == null) {
-      await generateNewQuiz();
-    }
   }
 
-  Future<void> generateNewQuiz() async {
+  Future<void> generateNewQuiz(QuizSettings settings) async {
     _quizState = QuizState(
-      questions: await generateQuiz(db: ref.watch(databaseProvider)),
+      questions: await generateQuiz(settings, db: ref.watch(databaseProvider)),
     );
     setState(() {});
+  }
+
+  void resetQuiz() async {
+    await QuizPersistenceService.clear();
+    setState(() {
+      _quizState = null;
+    });
   }
 
   @override
@@ -69,7 +73,7 @@ class _QuizPageState extends ConsumerState<QuizPage> {
   @override
   Widget build(BuildContext context) {
     if (_quizState == null) {
-      return const LoadingBox();
+      return NewQuizPage(onStart: (settings) => generateNewQuiz(settings));
     }
 
     final QuizState quiz = _quizState!;
@@ -78,7 +82,7 @@ class _QuizPageState extends ConsumerState<QuizPage> {
         title: Text(context.loc.quiz),
         actions: [
           IconButton(
-            onPressed: generateNewQuiz,
+            onPressed: resetQuiz,
             icon: const Icon(Icons.refresh),
             tooltip: context.loc.qzTooltipNewQuiz,
           ),
@@ -94,7 +98,7 @@ class _QuizPageState extends ConsumerState<QuizPage> {
               child: quiz.finished
                   ? QuizSummaryPanel(
                       quiz: quiz,
-                      onReset: generateNewQuiz,
+                      onReset: resetQuiz,
                       onQuit: () {
                         Navigator.of(context).pop();
                       },
