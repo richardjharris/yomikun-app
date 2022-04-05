@@ -45,13 +45,20 @@ class _QuizSummaryPanelState extends ConsumerState<QuizSummaryPanel> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    _confetti.play();
+    playConfettiForMaxScore();
   }
 
   @override
   void reassemble() {
     super.reassemble();
-    _confetti.play();
+    playConfettiForMaxScore();
+  }
+
+  void playConfettiForMaxScore() {
+    if (widget.quiz.gotPerfectScore) {
+      debugPrint('[RJH] Perfect score!');
+      _confetti.play();
+    }
   }
 
   @override

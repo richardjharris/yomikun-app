@@ -49,6 +49,9 @@ class QuizState {
   /// True if all questions have been completed or skipped.
   bool get finished => questionIndex >= questionCount;
 
+  /// True if the user has a perfect score and the quiz is complete.
+  bool get gotPerfectScore => score == questionCount && finished;
+
   /// True if the quiz is displaying the final question.
   bool get isLastQuestion => questionIndex == questionCount - 1;
 
