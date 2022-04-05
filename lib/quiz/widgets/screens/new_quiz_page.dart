@@ -1,22 +1,23 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:yomikun/localization/app_localizations_context.dart';
 import 'package:yomikun/quiz/models/quiz_settings.dart';
 import 'package:yomikun/quiz/widgets/quiz_settings/quiz_settings_editor.dart';
 import 'package:yomikun/quiz/widgets/quiz_settings/quiz_settings_overview.dart';
 
-class NewQuizPage extends HookWidget {
-  final Function(QuizSettings) onStart;
+class NewQuizPage extends StatelessWidget {
+  final VoidCallback onStart;
+  final ValueChanged<QuizSettings> onChangeSettings;
+  final QuizSettings settings;
 
   const NewQuizPage({
     Key? key,
     required this.onStart,
+    required this.settings,
+    required this.onChangeSettings,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final settings = useState(const QuizSettings());
-
     return Scaffold(
       appBar: AppBar(
         title: Text(context.loc.quiz),
@@ -33,22 +34,20 @@ class NewQuizPage extends HookWidget {
                     child:
                         Text('Start New Quiz', style: TextStyle(fontSize: 36)),
                   ),
-                  onPressed: () {
-                    onStart(settings.value);
-                  },
+                  onPressed: onStart,
                 ),
               ),
             ),
-            QuizSettingsOverview(settings: settings.value),
+            QuizSettingsOverview(settings: settings),
             TextButton(
               onPressed: () {
                 showDialog(
                   context: context,
                   builder: (context) => Dialog(
                     child: QuizSettingsEditor(
-                      initialValue: settings.value,
+                      initialValue: settings,
                       onDone: (value) {
-                        settings.value = value;
+                        onChangeSettings(value);
                         Navigator.pop(context);
                       },
                     ),

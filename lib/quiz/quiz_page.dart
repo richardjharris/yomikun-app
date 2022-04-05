@@ -27,6 +27,7 @@ class QuizPage extends ConsumerStatefulWidget {
 
 class _QuizPageState extends ConsumerState<QuizPage> {
   QuizState? _quizState;
+  QuizSettings _quizSettings = const QuizSettings();
 
   @override
   void initState() {
@@ -37,23 +38,37 @@ class _QuizPageState extends ConsumerState<QuizPage> {
   /// Load quiz state from persistent storage, or create a new one.
   void loadQuizState() async {
     try {
-      _quizState = await QuizPersistenceService.load();
+      final savedSettings = await QuizPersistenceService.loadSettings();
+      if (savedSettings != null) {
+        _quizSettings = savedSettings;
+      }
+    } catch (e, stack) {
+      debugPrint('[RJH] Error loading quiz settings, ignoring: $e\n$stack');
+    }
+
+    try {
+      _quizState = await QuizPersistenceService.loadState();
       setState(() {});
     } catch (e, stack) {
-      debugPrint("[RJH] Error loading quiz state, ignoring: ${e.toString()}");
-      debugPrintStack(stackTrace: stack);
+      debugPrint("[RJH] Error loading quiz state, ignoring: $e\n$stack");
     }
   }
 
-  Future<void> generateNewQuiz(QuizSettings settings) async {
-    _quizState = QuizState(
-      questions: await generateQuiz(settings, db: ref.watch(databaseProvider)),
+  Future<void> generateNewQuiz() async {
+    final questions = await generateQuiz(
+      _quizSettings,
+      db: ref.watch(databaseProvider),
     );
-    setState(() {});
+
+    setState(() {
+      _quizState = QuizState(
+        questions: questions,
+      );
+    });
   }
 
   void resetQuiz() async {
-    await QuizPersistenceService.clear();
+    await QuizPersistenceService.clearState();
     setState(() {
       _quizState = null;
     });
@@ -66,14 +81,23 @@ class _QuizPageState extends ConsumerState<QuizPage> {
 
     if (_quizState != null) {
       debugPrint("[RJH] Saving quiz state");
-      await QuizPersistenceService.persist(_quizState!);
+      await QuizPersistenceService.persistState(_quizState!);
     }
   }
 
   @override
   Widget build(BuildContext context) {
     if (_quizState == null) {
-      return NewQuizPage(onStart: (settings) => generateNewQuiz(settings));
+      return NewQuizPage(
+        settings: _quizSettings,
+        onStart: generateNewQuiz,
+        onChangeSettings: (settings) {
+          setState(() {
+            _quizSettings = settings;
+            QuizPersistenceService.persistSettings(settings);
+          });
+        },
+      );
     }
 
     final QuizState quiz = _quizState!;
