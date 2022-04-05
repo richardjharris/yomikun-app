@@ -363,7 +363,7 @@ class NameDatabase {
   }) async {
     final db = await database;
 
-    final partWhere = partFilter == null ? '' : ' AND part = ? ';
+    final partWhere = partFilter == null ? '' : ' WHERE part = ? ';
     final values = [];
     if (partFilter != null) {
       values.add(_partId(partFilter));
