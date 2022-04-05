@@ -9,7 +9,7 @@ There are a few types of query you can do:
  - convert kana to kanji
  - convert kanji to kana
  - perform wildcard searches (type a * or ?)
- - produce readings for full kanji names, with or without spaces
+ - produce readings for full person names, with or without spaces
 
 The mode selector to the right of the search box allows you to flip
 through all applicable modes.
@@ -34,6 +34,19 @@ to Anki or your Flashcard program of choice.
 
 You can see stats on the most common names, kanji, info on unisex
 names, and the relationship between kanji and gender in Japan.
+
+## Quiz
+
+See if you know the readings of Japanese names! You can customise
+the number of questions, difficulty and type of name (given name/
+surname).
+
+## Settings
+
+Change theme (light/dark), application language, name display
+format (romaji / kana) and name frequency visual (boxes or pie
+chart). For beginners, dakuten can be emphasised (for example:
+やまさﾞき instead of やまざき).
 
 ## OCR (beta)
 
