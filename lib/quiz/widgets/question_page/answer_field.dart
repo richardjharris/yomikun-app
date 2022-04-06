@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:yomikun/localization/app_localizations_context.dart';
 
 /// Text field that accepts a short single line of text.
 ///
@@ -31,7 +32,9 @@ class AnswerField extends StatelessWidget {
         border: const OutlineInputBorder(),
         // Hide the '0/30' that would appear because [maxLength] is set.
         counterText: '',
-        hintText: onSubmitted != null ? 'Enter answer' : 'No answer',
+        hintText: onSubmitted != null
+            ? context.loc.qzEnterAnswer
+            : context.loc.qzNoAnswer,
         suffixIcon:
             correct != null ? Icon(correct ? Icons.done : Icons.close) : null,
         filled: correct != null,

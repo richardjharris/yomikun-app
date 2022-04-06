@@ -148,5 +148,7 @@
   "qzQuestionCountLabel": "Questions",
   "qzDifficultyLabel": "Difficulty",
   "qzNameTypeLabel": "Type",
-  "qzDoneChangingSettingsButton": "Done"
+  "qzDoneChangingSettingsButton": "Done",
+  "qzEnterAnswer": "Enter answer",
+  "qzNoAnswer": "No answer"
 }

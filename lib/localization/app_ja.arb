@@ -109,5 +109,7 @@
   "qzQuestionCountLabel": "質問の数",
   "qzDifficultyLabel": "難易度",
   "qzNameTypeLabel": "タイプ",
-  "qzDoneChangingSettingsButton": "保存"
+  "qzDoneChangingSettingsButton": "終了",
+  "qzEnterAnswer": "答えを入力してください",
+  "qzNoAnswer": "(スキップ)"
 }
