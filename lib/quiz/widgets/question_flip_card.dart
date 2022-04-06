@@ -38,20 +38,28 @@ class QuestionFlipCard extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final formatPref =
         ref.watch(settingsControllerProvider.select((p) => p.nameFormat));
-    final readings = question.readings
-        .map((r) => formatYomiString(r, formatPref))
-        .join(nameJoinComma(formatPref));
+
+    final readings =
+        question.readings.map((r) => formatYomiString(r, formatPref));
 
     final front = QuestionCard(
-      question.kanji,
+      child: Text(question.kanji,
+          locale: const Locale('ja'), style: const TextStyle(fontSize: 180)),
       part: question.part,
       key: const ValueKey(false),
-      fontSize: 180,
     );
+
+    final double backFontSize = readings.length == 1 ? 120 : 80;
+
     final back = QuestionCard(
-      readings,
+      child: Column(
+        children: readings
+            .map((yomi) => Text(yomi,
+                locale: const Locale('ja'),
+                style: TextStyle(fontSize: backFontSize)))
+            .toList(),
+      ),
       key: const ValueKey(true),
-      fontSize: 100,
     );
 
     return AnimatedSwitcher(

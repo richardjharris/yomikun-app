@@ -5,13 +5,10 @@ import 'package:yomikun/search/models.dart';
 
 /// [Card] that shows a question with optional sublabel.
 class QuestionCard extends StatelessWidget {
-  final String label;
+  final Widget child;
   final NamePart? part;
 
-  /// Maximum font size for the card text. May be scaled down to fit.
-  final double? fontSize;
-
-  const QuestionCard(this.label, {this.part, this.fontSize, Key? key})
+  const QuestionCard({required this.child, this.part, Key? key})
       : super(key: key);
 
   @override
@@ -34,11 +31,7 @@ class QuestionCard extends StatelessWidget {
         children: [
           Expanded(
             child: FittedBox(
-              child: Text(
-                label,
-                locale: const Locale('ja', 'JP'),
-                style: TextStyle(fontSize: fontSize),
-              ),
+              child: child,
               fit: BoxFit.scaleDown,
             ),
           ),
