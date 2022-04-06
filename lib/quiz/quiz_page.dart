@@ -87,19 +87,27 @@ class _QuizPageState extends ConsumerState<QuizPage> {
 
   @override
   Widget build(BuildContext context) {
-    if (_quizState == null) {
-      return NewQuizPage(
-        settings: _quizSettings,
-        onStart: generateNewQuiz,
-        onChangeSettings: (settings) {
-          setState(() {
-            _quizSettings = settings;
-            QuizPersistenceService.persistSettings(settings);
-          });
-        },
-      );
-    }
+    debugPrint('Switcher: _quizState = $_quizState');
+    return AnimatedSwitcher(
+      duration: const Duration(milliseconds: 500),
+      child: _quizState == null ? _buildNewQuizPage() : _buildQuizPage(),
+    );
+  }
 
+  Widget _buildNewQuizPage() {
+    return NewQuizPage(
+      settings: _quizSettings,
+      onStart: generateNewQuiz,
+      onChangeSettings: (settings) {
+        setState(() {
+          _quizSettings = settings;
+          QuizPersistenceService.persistSettings(settings);
+        });
+      },
+    );
+  }
+
+  Widget _buildQuizPage() {
     final QuizState quiz = _quizState!;
     return Scaffold(
       appBar: AppBar(
