@@ -41,7 +41,10 @@
     "description": "Option shown to denote using the system locale (language)"
   },
   "settingsTooltip": "Change settings",
-  "settingsChangedNameFormatToHiragana": "Changed name format to Hiragana",
+  "settingsChangedNameFormatToHiragana": "読みの表示が「ひらがな」に変わりました。",
+  "@settingsChangedNameFormatToHiragana": {
+    "description": "This snackbar is displayed when changing the language from English to Japanese, and the name format is implicitly changed from romaji to hiragana. It should always be in Japanese."
+  },
   "nameVisualization": "Name frequency visual",
   "nameVizTreeMap": "Boxes",
   "nameVizPieChart": "Pie chart",

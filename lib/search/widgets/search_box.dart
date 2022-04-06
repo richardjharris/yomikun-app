@@ -52,7 +52,7 @@ class QueryModeButton extends HookConsumerWidget {
         ref.watch(queryModeAltAvailableProvider).asData?.value ?? false;
 
     return IconButton(
-      icon: Text(queryModeToIcon(queryMode),
+      icon: Text(queryModeToIcon(queryMode, context),
           style: queryModeAltAvailable
               ? const TextStyle(color: Colors.yellow)
               : null),

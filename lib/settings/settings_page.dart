@@ -83,9 +83,11 @@ class SettingsPage extends ConsumerWidget {
     if (newLanguage == AppLanguagePreference.ja &&
         settings.nameFormat == NameFormatPreference.romaji) {
       settings.updateNameFormat(NameFormatPreference.hiragana);
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+
+      final snackbar = SnackBar(
         content: Text(context.loc.settingsChangedNameFormatToHiragana),
-      ));
+      );
+      ScaffoldMessenger.of(context).showSnackBar(snackbar);
     }
   }
 }

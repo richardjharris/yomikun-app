@@ -3,13 +3,13 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:yomikun/core/widgets/error_box.dart';
 import 'package:yomikun/core/widgets/loading_box.dart';
+import 'package:yomikun/core/widgets/placeholder_message.dart';
 import 'package:yomikun/core/widgets/query_list_tile.dart';
 import 'package:yomikun/history/search_history/models/history_grouping.dart';
 import 'package:yomikun/history/search_history/models/search_history_item.dart';
 import 'package:yomikun/history/search_history/providers/search_history_providers.dart';
-import 'package:yomikun/navigation/navigation_drawer.dart';
-import 'package:yomikun/core/widgets/placeholder_message.dart';
 import 'package:yomikun/localization/app_localizations_context.dart';
+import 'package:yomikun/navigation/navigation_drawer.dart';
 
 /// Shows recently visited names, grouped by date.
 class HistoryPage extends ConsumerWidget {
@@ -110,13 +110,14 @@ class HistoryListHeader extends StatelessWidget {
     // e.g. 'Feb 21, 2022 22:38 - Feb 22, 2022 00:37' if diff day,
     // otherwise 'Feb 21, 2022 22:07 - 22:38'
     // Locale-specific.
-    var tag = Localizations.maybeLocaleOf(context)?.toLanguageTag();
-    DateFormat startFormat = DateFormat.yMMMd(tag).add_Hm();
+    var lang = Localizations.maybeLocaleOf(context)?.toLanguageTag();
+    DateFormat startFormat = DateFormat.yMMMd(lang).add_Hm();
     DateFormat endFormat = start.day == end.day
-        ? DateFormat.Hm(tag)
-        : DateFormat.yMMMd(tag).add_Hm();
+        ? DateFormat.Hm(lang)
+        : DateFormat.yMMMd(lang).add_Hm();
 
-    var divider = (tag ?? '').startsWith('ja') ? '−' : '-';
+    // Use full-width hyphen for Japanese
+    var divider = (lang ?? '').startsWith('ja') ? '−' : '-';
 
     String headingText =
         '${startFormat.format(start)} $divider ${endFormat.format(end)}';

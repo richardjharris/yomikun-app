@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:yomikun/localization/app_localizations_context.dart';
 import 'package:yomikun/search/models.dart';
 
 /// Widgets for showing the type of name or search query.
@@ -8,7 +9,7 @@ import 'package:yomikun/search/models.dart';
 class IconData {
   static const mei = IconData(
     '名',
-    'G',
+    'F',
     Color.fromARGB(255, 255, 177, 251),
     Color.fromARGB(255, 199, 93, 194),
   );
@@ -26,13 +27,13 @@ class IconData {
   );
   static const wildcard = IconData(
     '✴',
-    'W',
+    '∗',
     Color.fromARGB(255, 150, 214, 152),
     Color.fromARGB(255, 104, 156, 106),
   );
   static const unknown = IconData(
     '？',
-    'U',
+    '?',
     Color.fromARGB(255, 177, 177, 177),
     Color.fromARGB(255, 129, 128, 128),
   );
@@ -43,6 +44,12 @@ class IconData {
   final Color darkColor;
 
   const IconData(this.iconJa, this.iconEn, this.lightColor, this.darkColor);
+
+  /// Return the correct Icon based on application context (locale)
+  String iconFor(BuildContext? context) {
+    bool japanese = context?.isJapanese ?? false;
+    return japanese ? iconJa : iconEn;
+  }
 
   static IconData forQueryMode(QueryMode mode) {
     switch (mode) {
@@ -69,12 +76,12 @@ class IconData {
   }
 }
 
-String queryModeToIcon(QueryMode mode) {
-  return IconData.forQueryMode(mode).iconJa;
+String queryModeToIcon(QueryMode mode, [BuildContext? context]) {
+  return IconData.forQueryMode(mode).iconFor(context);
 }
 
-String namePartToIcon(NamePart part) {
-  return IconData.forNamePart(part).iconJa;
+String namePartToIcon(NamePart part, [BuildContext? context]) {
+  return IconData.forNamePart(part).iconFor(context);
 }
 
 class QueryModeIcon extends StatelessWidget {
@@ -109,10 +116,9 @@ class NameIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final brightness = Theme.of(context).brightness;
-    final locale = Localizations.localeOf(context);
     final iconColor =
         brightness == Brightness.dark ? data.darkColor : data.lightColor;
-    final iconText = locale.languageCode == 'ja' ? data.iconJa : data.iconEn;
+    final iconText = data.iconFor(context);
 
     // return an icon for the namepart
     return Container(
