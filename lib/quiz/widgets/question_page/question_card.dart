@@ -8,7 +8,11 @@ class QuestionCard extends StatelessWidget {
   final String label;
   final NamePart? part;
 
-  const QuestionCard(this.label, {this.part, Key? key}) : super(key: key);
+  /// Maximum font size for the card text. May be scaled down to fit.
+  final double? fontSize;
+
+  const QuestionCard(this.label, {this.part, this.fontSize, Key? key})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -33,8 +37,9 @@ class QuestionCard extends StatelessWidget {
               child: Text(
                 label,
                 locale: const Locale('ja', 'JP'),
+                style: TextStyle(fontSize: fontSize),
               ),
-              fit: BoxFit.contain,
+              fit: BoxFit.scaleDown,
             ),
           ),
           if (part != null) PartLabel(part: part!)

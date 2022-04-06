@@ -46,8 +46,13 @@ class QuestionFlipCard extends ConsumerWidget {
       question.kanji,
       part: question.part,
       key: const ValueKey(false),
+      fontSize: 180,
     );
-    final back = QuestionCard(readings, key: const ValueKey(true));
+    final back = QuestionCard(
+      readings,
+      key: const ValueKey(true),
+      fontSize: 100,
+    );
 
     return AnimatedSwitcher(
       duration: flipDuration,
