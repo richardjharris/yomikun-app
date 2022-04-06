@@ -22,6 +22,21 @@ void main() {
     expect(q.isCorrectAnswer('danaka'), false);
   });
 
+  test('isCorrectAnswer (nn)', () {
+    const ken = Question(
+      kanji: '健一',
+      part: NamePart.mei,
+      readings: ['けんいち'],
+    );
+    expect(ken.isCorrectAnswer('けんいち'), true);
+    expect(ken.isCorrectAnswer('けんにち'), false, reason: 'kana input is strict');
+    expect(ken.isCorrectAnswer('kennichi'), true);
+    expect(ken.isCorrectAnswer("ken'ichi"), true);
+    expect(ken.isCorrectAnswer('kenichi'), true,
+        reason: 'romaji input is permissive');
+    expect(ken.isCorrectAnswer('tanaka'), false);
+  });
+
   test('Serialization', () {
     final copy = Question.fromMap(q.toMap());
     expect(copy.kanji, q.kanji);

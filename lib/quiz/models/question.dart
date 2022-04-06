@@ -12,9 +12,28 @@ class Question {
     required this.readings,
   });
 
+  /// Includes [readings] plus variants which allow the user to type 'n' without
+  /// doubling it or adding an apostrophe, e.g. けんいち should accept kenichi,
+  /// kennichi and ken'ichi.
+  Set<String> get passableReadings => {
+        ...readings,
+        ...readings
+            .map(kanaToRomaji)
+            .map((kana) => kana.replaceAll("n'", "n"))
+            .map(romajiToKana),
+      };
+
   bool isCorrectAnswer(String answer) {
-    answer = romajiToKana(answer.trim());
-    return readings.contains(answer);
+    answer = answer.trim().toLowerCase();
+    answer = answer.replaceAll("nn", "n'");
+
+    final fromRomaji = romajiToKana(answer);
+    if (fromRomaji != answer) {
+      // Was converted from romaji, allow n variations
+      return passableReadings.contains(fromRomaji);
+    } else {
+      return readings.contains(answer);
+    }
   }
 
   @override
