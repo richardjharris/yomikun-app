@@ -4,23 +4,18 @@ import 'package:yomikun/quiz/models/quiz_name_type.dart';
 import 'package:yomikun/quiz/models/quiz_settings.dart';
 
 /// Generate a new quiz
-Future<List<Question>> generateQuiz(QuizSettings settings,
-    {required NameDatabase db}) async {
-  // Returns most popular kanji w/ most common readings.
-  final future = db.getQuizData(
-    limit: settings.questionCount * 20,
-    offset: (settings.difficulty - 1) * 100,
-    partFilter: settings.nameType.toNamePart(),
-  );
+Future<List<Question>> generateQuiz({
+  required NameDatabase db,
+  required QuizSettings settings,
+}) async {
+  // Collect a large sample of Question objects to sample the quiz from.
+  // For QuizNameType.both, we sample sei and mei separately, otherwise the more
+  // common (by hit count) sei type tends to dominate.
+  final List<Question> deck = [];
+  for (final part in settings.nameType.toNameParts()) {
+    deck.addAll(await db.getQuizData(part, settings.difficulty));
+  }
 
-  final data = (await future).toList()..shuffle();
-
-  return data
-      .take(settings.questionCount)
-      .map((row) => Question(
-            kanji: row.kaki,
-            part: row.part,
-            readings: row.yomi,
-          ))
-      .toList();
+  deck.shuffle();
+  return deck.take(settings.questionCount).toList();
 }

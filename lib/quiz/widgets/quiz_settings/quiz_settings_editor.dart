@@ -52,10 +52,16 @@ class QuizSettingsEditor extends HookWidget {
                 .map((v) => MapEntry(v.description(context), v))
                 .toList(),
           ),
-          const SizedBox(height: 10),
-          TextButton(
-            onPressed: () => onDone(s.value),
-            child: Text(context.loc.qzDoneChangingSettingsButton),
+          const SizedBox(height: 20),
+          SizedBox(
+            width: double.infinity,
+            child: ElevatedButton(
+              onPressed: () => onDone(s.value),
+              child: Padding(
+                padding: const EdgeInsets.all(10),
+                child: Text(context.loc.qzDoneChangingSettingsButton),
+              ),
+            ),
           ),
         ],
       ),

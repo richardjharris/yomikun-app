@@ -11,6 +11,7 @@ import 'package:yomikun/core/models.dart';
 import 'package:yomikun/core/name_lookup.dart';
 import 'package:yomikun/core/utilities/kana.dart';
 import 'package:yomikun/gen/assets.gen.dart';
+import 'package:yomikun/quiz/models/question.dart';
 import 'package:yomikun/search/models.dart';
 
 /// NamePart values in the same order as stored in SQLite as INT offsets.
@@ -350,70 +351,57 @@ class NameDatabase {
     return result.map(_toNameData).toList();
   }
 
-  /// Returns name data in quiz format.
+  /// Returns name data in quiz question format: kaki, part, all yomi.
   ///
-  /// [limit] and [offset] allow different parts of the most common names to
-  /// be selected. Less common names are generally more difficult.
+  /// [difficulty] is a score from 1 to 10: results will be filtered
+  /// to a subset of names, with 1 preferring more common names and 10
+  /// preferring least common.
   ///
-  /// [partFilter] allows only names of a particular type to be returned.
-  Future<Iterable<QuizQuestionData>> getQuizData({
-    int limit = 200,
-    int offset = 0,
-    NamePart? partFilter,
-  }) async {
+  /// A large number of results will be returned. They should be shuffled and
+  /// sampled.
+  Future<Iterable<Question>> getQuizData(NamePart part, int difficulty) async {
+    assert(difficulty >= 1 && difficulty <= 10);
     final db = await database;
+    final partId = _partId(part);
 
-    final partWhere = partFilter == null ? '' : ' WHERE part = ? ';
-    final values = [];
-    if (partFilter != null) {
-      values.add(_partId(partFilter));
-    }
+    // Get the smallest and largest hit counts for names in the quiz data.
+    // For example, sei is 75~5361, mei is 75~2382
+    final minMax = await db.rawQuery('''
+      SELECT MIN(total) AS min_hits, MAX(total) AS max_hits
+      FROM quiz
+      WHERE part = ?
+    ''', [partId]);
+
+    final minHits = minMax.first['min_hits'] as int;
+    final maxHits = minMax.first['max_hits'] as int;
+
+    // Difficulty (1-10) linearly correlates with 'higher hits'. We define
+    // the highest hit count as 1.0 and the lowest as 0.0.
+    // Therefore a range of (d / 10.0) +/- 0.1 might work. However because
+    // there are very few names with high hit counts (and MANY with lower)
+    // we need to adjust the curve slightly for lower difficulties.
+    final span = 0.1 + ((10 - difficulty) / 10.0 * 0.5);
+
+    final startPoint = (difficulty / 10.0) - span;
+    final endPoint = (difficulty / 10.0) + span;
+
+    final diffMaxHits = maxHits - startPoint * (maxHits - minHits);
+    final diffMinHits = maxHits - endPoint * (maxHits - minHits);
 
     final result = await db.rawQuery('''
-      -- Get top N kaki
-      WITH most_common AS (
-        SELECT kaki, part, SUM(hits_total) total
-        FROM names
-        $partWhere
-        GROUP BY kaki, part
-        ORDER BY total DESC
-        LIMIT $limit
-      ),
-      -- For top N kaki, get all readings and filter to those with >20% share.
-      ungrouped AS (
-        SELECT names.kaki, names.part, yomi, hits_total, most_common.total, hits_total*1.0/most_common.total pc
-        FROM names
-        JOIN most_common ON most_common.kaki = names.kaki AND most_common.part = names.part
-        WHERE pc > 0.2
-        ORDER BY names.kaki, names.part
-      )
-      -- Group concat the readings so we return one row per kaki.
-      SELECT kaki, part, GROUP_CONCAT(yomi) yomi
-      FROM ungrouped
-      GROUP BY kaki, part
-    ''', values);
+      SELECT kaki, part, yomi FROM quiz
+      WHERE total >= ? AND total <= ? AND part = ?
+    ''', [diffMinHits.floor(), diffMaxHits.ceil(), partId]);
 
-    return result.map((row) => QuizQuestionData(
-          kaki: row['kaki'] as String,
+    return result.map((row) => Question(
+          kanji: row['kaki'] as String,
           part: _partName(row['part'] as int),
-          yomi: (row['yomi'] as String)
+          readings: (row['yomi'] as String)
               .split(',')
               .map((yomi) => romajiToKana(yomi))
               .toList(),
         ));
   }
-}
-
-class QuizQuestionData {
-  final String kaki;
-  final NamePart part;
-  final List<String> yomi;
-
-  QuizQuestionData({
-    required this.kaki,
-    required this.part,
-    required this.yomi,
-  });
 }
 
 class KanjiStats {

@@ -16,14 +16,15 @@ extension QuizNameTypeStringExt on String {
 }
 
 extension QuizNameTypeMethods on QuizNameType {
-  NamePart? toNamePart() {
+  /// Returns a list of applicable [NamePart]s for this [QuizNameType].
+  List<NamePart> toNameParts() {
     switch (this) {
       case QuizNameType.sei:
-        return NamePart.sei;
+        return [NamePart.sei];
       case QuizNameType.mei:
-        return NamePart.mei;
+        return [NamePart.mei];
       case QuizNameType.both:
-        return null;
+        return [NamePart.sei, NamePart.mei];
     }
   }
 

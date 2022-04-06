@@ -221,6 +221,7 @@ class _QuizSummaryPanelState extends ConsumerState<QuizSummaryPanel> {
       child: TextButton(
         child: Text(context.loc.qzSummaryNewQuizAction),
         onPressed: widget.onReset,
+        autofocus: true,
       ),
     );
   }
@@ -232,7 +233,6 @@ class _QuizSummaryPanelState extends ConsumerState<QuizSummaryPanel> {
       child: TextButton(
         child: Text(context.loc.qzSummaryQuitAction),
         onPressed: widget.onQuit,
-        autofocus: true,
       ),
     );
   }

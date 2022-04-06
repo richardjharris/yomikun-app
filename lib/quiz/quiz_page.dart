@@ -56,7 +56,7 @@ class _QuizPageState extends ConsumerState<QuizPage> {
 
   Future<void> generateNewQuiz() async {
     final questions = await generateQuiz(
-      _quizSettings,
+      settings: _quizSettings,
       db: ref.watch(databaseProvider),
     );
 

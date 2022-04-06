@@ -105,7 +105,7 @@ packages:
       name: camera
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.9.4+18"
+    version: "0.9.4+19"
   camera_platform_interface:
     dependency: transitive
     description:
@@ -447,6 +447,13 @@ packages:
       name: image_picker
       url: "https://pub.dartlang.org"
     source: hosted
+    version: "0.8.5"
+  image_picker_android:
+    dependency: transitive
+    description:
+      name: image_picker_android
+      url: "https://pub.dartlang.org"
+    source: hosted
     version: "0.8.4+11"
   image_picker_for_web:
     dependency: transitive
@@ -455,6 +462,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.6"
+  image_picker_ios:
+    dependency: transitive
+    description:
+      name: image_picker_ios
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.8.4+11"
   image_picker_platform_interface:
     dependency: transitive
     description:
@@ -559,16 +573,14 @@ packages:
       name: package_info_plus
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.4.0"
+    version: "1.4.2"
   package_info_plus_linux:
-    dependency: "direct overridden"
+    dependency: transitive
     description:
-      path: "packages/package_info_plus/package_info_plus_linux"
-      ref: main
-      resolved-ref: "5f15844aa4531a9de13c1659883f247938833f19"
-      url: "https://github.com/fluttercommunity/plus_plugins.git"
-    source: git
-    version: "1.0.3"
+      name: package_info_plus_linux
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.5"
   package_info_plus_macos:
     dependency: transitive
     description:
@@ -589,16 +601,14 @@ packages:
       name: package_info_plus_web
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.0.4"
+    version: "1.0.5"
   package_info_plus_windows:
-    dependency: "direct overridden"
+    dependency: transitive
     description:
-      path: "packages/package_info_plus/package_info_plus_windows"
-      ref: main
-      resolved-ref: "5f15844aa4531a9de13c1659883f247938833f19"
-      url: "https://github.com/fluttercommunity/plus_plugins.git"
-    source: git
-    version: "1.0.4"
+      name: package_info_plus_windows
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.5"
   path:
     dependency: "direct main"
     description:
@@ -897,7 +907,7 @@ packages:
       name: sqlite3
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.6.0"
+    version: "1.6.2"
   stack_trace:
     dependency: transitive
     description:
@@ -1072,7 +1082,7 @@ packages:
       name: win32
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.5.0"
+    version: "2.5.1"
   xdg_directories:
     dependency: transitive
     description:
