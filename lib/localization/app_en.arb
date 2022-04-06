@@ -139,5 +139,14 @@
   "qzNextQuestionAction": "Next",
   "qzSummaryNewQuizAction": "New quiz",
   "qzSummaryQuitAction": "Quit",
-  "qzTooltipNewQuiz": "New quiz"
+  "qzTooltipNewQuiz": "New quiz",
+  "qzStartNewQuizButton": "Start New Quiz",
+  "qzChangeQuizSettings": "Change",
+  "qzGivenNames": "Given names",
+  "qzFamilyNames": "Family names",
+  "qzAllNames": "All names",
+  "qzQuestionCountLabel": "Questions",
+  "qzDifficultyLabel": "Difficulty",
+  "qzNameTypeLabel": "Type",
+  "qzDoneChangingSettingsButton": "Done"
 }

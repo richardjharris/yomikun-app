@@ -101,5 +101,13 @@
   "qzNextQuestionAction": "結果を見る",
   "qzSummaryNewQuizAction": "もう一回",
   "qzSummaryQuitAction": "やめる",
-  "qzTooltipNewQuiz": "クイズを作り直す"
+  "qzTooltipNewQuiz": "クイズを作り直す",
+  "qzChangeQuizSettings": "設定",
+  "qzGivenNames": "下の名前",
+  "qzFamilyNames": "名字",
+  "qzAllNames": "すべて",
+  "qzQuestionCountLabel": "質問の数",
+  "qzDifficultyLabel": "難易度",
+  "qzNameTypeLabel": "タイプ",
+  "qzDoneChangingSettingsButton": "保存"
 }

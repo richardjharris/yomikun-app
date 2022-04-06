@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:yomikun/localization/app_localizations_context.dart';
 import 'package:yomikun/quiz/models/quiz_name_type.dart';
 import 'package:yomikun/quiz/models/quiz_settings.dart';
 
@@ -15,9 +16,10 @@ class QuizSettingsOverview extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        _Row('Questions', '${settings.questionCount}'),
-        _Row('Difficulty', '${settings.difficulty}'),
-        _Row('Type', settings.nameType.description(context)),
+        _Row(context.loc.qzQuestionCountLabel, '${settings.questionCount}'),
+        _Row(context.loc.qzDifficultyLabel, '${settings.difficulty}'),
+        _Row(context.loc.qzNameTypeLabel,
+            settings.nameType.description(context)),
       ],
     );
   }

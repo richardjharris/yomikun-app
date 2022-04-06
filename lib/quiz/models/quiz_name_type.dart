@@ -1,4 +1,5 @@
 import 'package:flutter/widgets.dart';
+import 'package:yomikun/localization/app_localizations_context.dart';
 import 'package:yomikun/search/models.dart';
 
 /// Type of name to be used in quiz questions.
@@ -29,11 +30,11 @@ extension QuizNameTypeMethods on QuizNameType {
   String description(BuildContext context) {
     switch (this) {
       case QuizNameType.sei:
-        return 'Given names';
+        return context.loc.qzFamilyNames;
       case QuizNameType.mei:
-        return 'Family names';
+        return context.loc.qzGivenNames;
       case QuizNameType.both:
-        return 'All names';
+        return context.loc.qzAllNames;
     }
   }
 }

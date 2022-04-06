@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:yomikun/core/widgets/button_switch_bar.dart';
+import 'package:yomikun/localization/app_localizations_context.dart';
 import 'package:yomikun/quiz/models/quiz_name_type.dart';
 import 'package:yomikun/quiz/models/quiz_settings.dart';
 
@@ -24,7 +25,7 @@ class QuizSettingsEditor extends HookWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          const _Title('Questions'),
+          _Title(context.loc.qzQuestionCountLabel),
           ButtonSwitchBar<int>(
             value: s.value.questionCount,
             onChanged: (value) =>
@@ -32,7 +33,7 @@ class QuizSettingsEditor extends HookWidget {
             items: [5, 10, 20, 50].map((v) => MapEntry('$v', v)).toList(),
           ),
           const SizedBox(height: 10),
-          const _Title('Difficulty'),
+          _Title(context.loc.qzDifficultyLabel),
           Slider(
             divisions: 9,
             min: 1,
@@ -43,7 +44,7 @@ class QuizSettingsEditor extends HookWidget {
                 s.value = s.value.copyWith(difficulty: value.toInt()),
           ),
           const SizedBox(height: 10),
-          const _Title('Type'),
+          _Title(context.loc.qzNameTypeLabel),
           ButtonSwitchBar<QuizNameType>(
             value: s.value.nameType,
             onChanged: (value) => s.value = s.value.copyWith(nameType: value),
@@ -53,7 +54,9 @@ class QuizSettingsEditor extends HookWidget {
           ),
           const SizedBox(height: 10),
           TextButton(
-              onPressed: () => onDone(s.value), child: const Text('Done')),
+            onPressed: () => onDone(s.value),
+            child: Text(context.loc.qzDoneChangingSettingsButton),
+          ),
         ],
       ),
     );

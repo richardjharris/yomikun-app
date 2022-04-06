@@ -29,10 +29,10 @@ class NewQuizPage extends StatelessWidget {
             Expanded(
               child: Center(
                 child: ElevatedButton(
-                  child: const Padding(
-                    padding: EdgeInsets.all(20),
-                    child:
-                        Text('Start New Quiz', style: TextStyle(fontSize: 36)),
+                  child: Padding(
+                    padding: const EdgeInsets.all(20),
+                    child: Text(context.loc.qzStartNewQuizButton,
+                        style: const TextStyle(fontSize: 36)),
                   ),
                   onPressed: onStart,
                 ),
@@ -54,9 +54,10 @@ class NewQuizPage extends StatelessWidget {
                   ),
                 );
               },
-              child: const Padding(
-                padding: EdgeInsets.all(20),
-                child: Text('Change', style: TextStyle(fontSize: 20)),
+              child: Padding(
+                padding: const EdgeInsets.all(20),
+                child: Text(context.loc.qzChangeQuizSettings,
+                    style: const TextStyle(fontSize: 20)),
               ),
             ),
           ],
