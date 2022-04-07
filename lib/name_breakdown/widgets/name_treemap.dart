@@ -14,8 +14,13 @@ import 'package:yomikun/settings/settings_controller.dart';
 class NameTreeMap extends ConsumerWidget {
   final CachedQueryResult results;
   final KakiYomi splitBy;
+  final Function(NameData)? onClick;
 
-  const NameTreeMap({required this.results, required this.splitBy});
+  const NameTreeMap({
+    required this.results,
+    required this.splitBy,
+    this.onClick,
+  });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -62,7 +67,10 @@ class NameTreeMap extends ConsumerWidget {
               return TreeNode.leaf(
                 value: r.hitsTotal,
                 options: TreeNodeOptions(
-                    child: Center(child: textWidget), color: color),
+                  child: Center(child: textWidget),
+                  color: color,
+                  onTap: onClick == null ? null : () => onClick?.call(r),
+                ),
               );
             }).toList(),
           ),

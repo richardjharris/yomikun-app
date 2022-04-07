@@ -22,7 +22,7 @@ import 'package:yomikun/search/models/query_mode.dart';
 import 'package:yomikun/settings/settings_controller.dart';
 import 'package:yomikun/settings/settings_service.dart';
 
-const initialRoute = '/quiz';
+const initialRoute = '/';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();

@@ -59,7 +59,13 @@ class NameBreakdownPage extends HookConsumerWidget {
           viz == NameVisualizationPreference.treeMap) ...[
         Container(
           constraints: const BoxConstraints(maxHeight: 400, maxWidth: 400),
-          child: NameTreeMap(results: cache, splitBy: inverseKy),
+          child: NameTreeMap(
+            results: cache,
+            splitBy: inverseKy,
+            onClick: (name) {
+              debugPrint('[BIZZY] Clicked name $name');
+            },
+          ),
           margin: const EdgeInsets.symmetric(vertical: 10),
         ),
       ],
@@ -67,7 +73,13 @@ class NameBreakdownPage extends HookConsumerWidget {
           viz == NameVisualizationPreference.pieChart) ...[
         Container(
           constraints: const BoxConstraints(maxHeight: 400, maxWidth: 400),
-          child: NamePieChart(results: cache, splitBy: inverseKy),
+          child: NamePieChart(
+            results: cache,
+            splitBy: inverseKy,
+            onClick: (name) {
+              debugPrint('[BIZZY] Clicked name $name');
+            },
+          ),
           margin: const EdgeInsets.all(10),
         ),
       ],

@@ -1,6 +1,6 @@
 import 'package:collection/collection.dart';
-import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
+import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:yomikun/core/utilities/number_format.dart';
 import 'package:yomikun/name_breakdown/cached_query_result.dart';
@@ -13,8 +13,13 @@ import 'package:yomikun/settings/settings_controller.dart';
 class NamePieChart extends ConsumerWidget {
   final CachedQueryResult results;
   final KakiYomi splitBy;
+  final Function(NameData)? onClick;
 
-  const NamePieChart({required this.results, required this.splitBy});
+  const NamePieChart({
+    required this.results,
+    required this.splitBy,
+    this.onClick,
+  });
 
   static final List<Color> pieChartColorsLightMode = [
     Colors.green,
@@ -51,26 +56,46 @@ class NamePieChart extends ConsumerWidget {
     final formatPref =
         ref.watch(settingsControllerProvider.select((p) => p.nameFormat));
 
+    final data = pieChartData();
+    final sections = pieChartSections(data, context, formatPref);
+
     return AspectRatio(
       aspectRatio: 1.0,
       child: PieChart(
         PieChartData(
-          sections: pieChartSections(context, formatPref),
-          //pieTouchData: PieTouchData(touchCallback: (pieTouchResponse) {
-          //  print(pieTouchResponse);
-          //}),
+          sections: sections,
+          pieTouchData: onClick == null || data.isEmpty
+              ? null
+              : PieTouchData(touchCallback: (flEvent, pieTouchResponse) {
+                  if (flEvent is! FlTapUpEvent) return;
+                  final sectionIndex =
+                      pieTouchResponse?.touchedSection?.touchedSectionIndex;
+                  if (sectionIndex == null) return;
+
+                  try {
+                    onClick?.call(data[sectionIndex]);
+                  } catch (e) {
+                    debugPrint('Error in pie chart onClick: $e');
+                  }
+                }),
         ),
       ),
     );
   }
 
-  List<PieChartSectionData> pieChartSections(
-      BuildContext context, NameFormatPreference formatPref) {
+  List<NameData> pieChartData() {
     List<NameData> pieResults = results.withAtLeastOneHit().toList();
     // Sort results by name. Sorting by hits desc leads to the small items being
     // bunched together, and their labels cannot be read.
     pieResults.sortBy<String>((e) => e.key());
+    return pieResults;
+  }
 
+  List<PieChartSectionData> pieChartSections(
+    List<NameData> data,
+    BuildContext context,
+    NameFormatPreference formatPref,
+  ) {
     var colors = pieChartColorsLightMode;
     if (Theme.of(context).brightness == Brightness.dark) {
       colors = pieChartColorsDarkMode;
@@ -81,7 +106,7 @@ class NamePieChart extends ConsumerWidget {
     final int total = results.totalHits;
     double threshold;
     double buffer = 0;
-    if (pieResults.length < 5) {
+    if (data.length < 5) {
       threshold = 0;
       // Pad out smaller answers so they're easier to see, even if it's not
       // strictly proportional.
@@ -90,7 +115,7 @@ class NamePieChart extends ConsumerWidget {
       threshold = total * 0.01;
     }
 
-    var sections = pieResults.mapIndexed((i, row) {
+    var sections = data.mapIndexed((i, row) {
       var label = row.format(splitBy, formatPref);
       //var sizeMult = (row.hitsTotal.toDouble() / total).clamp(0.1, 1.0);
 
