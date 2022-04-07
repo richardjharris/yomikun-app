@@ -54,6 +54,10 @@ class NameBreakdownPage extends HookConsumerWidget {
 
     List<NameData> items = cache.sortedByHitsDescending().toList();
 
+    void _onNameClick(NameData data) {
+      Navigator.pushNamed(context, '/name', arguments: data.toRouteArgs());
+    }
+
     List<Widget> charts = [
       if (cache.hasAtLeastOneHit &&
           viz == NameVisualizationPreference.treeMap) ...[
@@ -62,9 +66,7 @@ class NameBreakdownPage extends HookConsumerWidget {
           child: NameTreeMap(
             results: cache,
             splitBy: inverseKy,
-            onClick: (name) {
-              debugPrint('[BIZZY] Clicked name $name');
-            },
+            onClick: _onNameClick,
           ),
           margin: const EdgeInsets.symmetric(vertical: 10),
         ),
@@ -76,9 +78,7 @@ class NameBreakdownPage extends HookConsumerWidget {
           child: NamePieChart(
             results: cache,
             splitBy: inverseKy,
-            onClick: (name) {
-              debugPrint('[BIZZY] Clicked name $name');
-            },
+            onClick: _onNameClick,
           ),
           margin: const EdgeInsets.all(10),
         ),
