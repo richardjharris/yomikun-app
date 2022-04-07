@@ -68,6 +68,9 @@ class NamePageInner extends HookConsumerWidget {
     final isBookmarked =
         ref.watch(bookmarkDatabaseProvider).isBookmarked(nameUrl);
 
+    final bottomButtonStyle =
+        ButtonStyle(minimumSize: MaterialStateProperty.all(const Size(0, 60)));
+
     return SingleChildScrollView(
       child: Padding(
         padding: const EdgeInsets.all(10),
@@ -113,33 +116,45 @@ class NamePageInner extends HookConsumerWidget {
                 children: [
                   Text(context.loc.npFictionalHits),
                   const Spacer(),
-                  Text(data.hitsTotal.toString()),
+                  Text(data.hitsPseudo.toString()),
                 ],
               ),
             ),
-            const SizedBox(height: 30),
-            OutlinedButton(
-              onPressed: () {
-                Navigator.restorablePushNamed(context, '/result', arguments: {
-                  'text': data.kaki,
-                  'mode': (data.part.toQueryMode() ?? QueryMode.mei)
-                      .name
-                      .toString(),
-                });
-              },
-              child: Text(context.loc.npSeeNamesWithSameKanji),
-            ),
-            const SizedBox(height: 20),
-            OutlinedButton(
-              onPressed: () {
-                Navigator.restorablePushNamed(context, '/result', arguments: {
-                  'text': data.yomi,
-                  'mode': (data.part.toQueryMode() ?? QueryMode.mei)
-                      .name
-                      .toString(),
-                });
-              },
-              child: Text(context.loc.npSeeNamesWithSameReading),
+            const SizedBox(height: 10),
+            Row(
+              children: [
+                Expanded(
+                  child: TextButton(
+                    style: bottomButtonStyle,
+                    onPressed: () {
+                      Navigator.restorablePushNamed(context, '/result',
+                          arguments: {
+                            'text': data.kaki,
+                            'mode': (data.part.toQueryMode() ?? QueryMode.mei)
+                                .name
+                                .toString(),
+                          });
+                    },
+                    child: Text(context.loc.npSeeNamesWithSameKanji),
+                  ),
+                ),
+                const SizedBox(width: 10),
+                Expanded(
+                  child: TextButton(
+                    style: bottomButtonStyle,
+                    onPressed: () {
+                      Navigator.restorablePushNamed(context, '/result',
+                          arguments: {
+                            'text': data.yomi,
+                            'mode': (data.part.toQueryMode() ?? QueryMode.mei)
+                                .name
+                                .toString(),
+                          });
+                    },
+                    child: Text(context.loc.npSeeNamesWithSameReading),
+                  ),
+                ),
+              ],
             ),
           ],
         ),
