@@ -108,7 +108,7 @@ class NameBreakdownPage extends HookConsumerWidget {
                         : context.loc.sbBookmarkRemoved),
                   ));
                 },
-                onShare: () => shareNameBreakdownData(cache, ref),
+                onShare: () => shareNameBreakdownData(cache, context, ref),
               ),
             ],
           ),
@@ -139,10 +139,15 @@ class NameBreakdownPage extends HookConsumerWidget {
   }
 
   /// Shares up to five popular readings for the current name.
-  void shareNameBreakdownData(CachedQueryResult cache, WidgetRef ref) {
+  void shareNameBreakdownData(
+    CachedQueryResult cache,
+    BuildContext context,
+    WidgetRef ref,
+  ) {
     final nameFormat = ref.read(settingsControllerProvider).nameFormat;
 
-    final String front = '${query.text} (${queryModeToIcon(query.mode)})';
+    final String front =
+        '${query.text} (${queryModeToIcon(query.mode, context)})';
 
     final String back = cache.sortedByHitsDescending().take(5).map((row) {
       String label = query.ky == KakiYomi.kaki ? row.yomi : row.kaki;
