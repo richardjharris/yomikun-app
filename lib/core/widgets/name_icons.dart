@@ -76,11 +76,11 @@ class IconData {
   }
 }
 
-String queryModeToIcon(QueryMode mode, [BuildContext? context]) {
+String queryModeToIcon(QueryMode mode, BuildContext context) {
   return IconData.forQueryMode(mode).iconFor(context);
 }
 
-String namePartToIcon(NamePart part, [BuildContext? context]) {
+String namePartToIcon(NamePart part, BuildContext context) {
   return IconData.forNamePart(part).iconFor(context);
 }
 

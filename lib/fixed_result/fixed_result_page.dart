@@ -27,7 +27,7 @@ class FixedResultPage extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("${query.text} (${queryModeToIcon(query.mode)})"),
+        title: Text("${query.text} (${queryModeToIcon(query.mode, context)})"),
         actions: <Widget>[
           Padding(
             padding: const EdgeInsets.only(right: 10.0),
