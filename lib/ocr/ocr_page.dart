@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:google_ml_kit/google_ml_kit.dart';
+import 'package:google_mlkit_text_recognition/google_mlkit_text_recognition.dart';
 import 'package:yomikun/core/providers/core_providers.dart';
 import 'package:yomikun/localization/app_localizations_context.dart';
 import 'package:yomikun/ocr/utilities/text_detector_painter.dart';
@@ -17,7 +17,8 @@ class OcrPage extends StatefulWidget {
 }
 
 class OcrPageState extends State<OcrPage> {
-  TextDetectorV2 textDetector = GoogleMlKit.vision.textDetectorV2();
+  TextRecognizer textDetector =
+      TextRecognizer(script: TextRecognitionScript.japanese);
   bool isBusy = false;
   CustomPaint? customPaint;
 
@@ -65,8 +66,7 @@ class OcrPageState extends State<OcrPage> {
   void processImage(InputImage inputImage) async {
     if (isBusy) return;
     isBusy = true;
-    final recognisedText = await textDetector.processImage(inputImage,
-        script: TextRecognitionOptions.JAPANESE);
+    final recognisedText = await textDetector.processImage(inputImage);
     if (inputImage.inputImageData?.size != null &&
         inputImage.inputImageData?.imageRotation != null) {
       final painter = TextDetectorPainter(

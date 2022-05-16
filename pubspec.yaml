@@ -23,7 +23,7 @@ dependencies:
   flutter_riverpod: ^2.0.0-dev.3
   flutter_slidable: ^1.1.0
   freezed_annotation: null
-  google_ml_kit: ^0.7.3
+  google_mlkit_text_recognition: ^0.3.0
   hive: ^2.0.5
   hive_flutter: ^1.1.0
   hooks_riverpod: ^2.0.0-dev.3
