@@ -108,6 +108,9 @@ class NameDatabase {
     var column = ky.name;
 
     if (ky == KakiYomi.yomi) {
+      // TODO should handle case where user types 'anna' but actually expects
+      // a search for "an'na" (あんな) (anna is ambiguous, and under IME rules
+      // would result in あんあ)
       prefix = kanaToRomaji(prefix);
     }
 
