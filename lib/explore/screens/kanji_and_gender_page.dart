@@ -18,7 +18,7 @@ class KanjiAndGenderPage extends HookConsumerWidget {
   const KanjiAndGenderPage({Key? key}) : super(key: key);
 
   static const String routeName = '/explore/kanji-and-gender';
-  static int initialMinHits = 1000;
+  static const int initialMinHits = 3000;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -43,7 +43,7 @@ class KanjiAndGenderPage extends HookConsumerWidget {
             Text(context.loc.exKanjiAndGenderMinHits + ' ${minHits.value}'),
             Slider(
               value: minHits.value.toDouble(),
-              max: 1000,
+              max: initialMinHits.toDouble(),
               onChanged: (value) => minHits.value = value.round(),
             ),
             Expanded(
