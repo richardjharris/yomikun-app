@@ -83,12 +83,14 @@ class MyApp extends ConsumerWidget {
           AppRouter.onGenerateRoute(context, ref, settings),
       initialRoute: initialRoute,
       // Show debug banner in custom position
-      builder: (context, child) => Banner(
-        message: context.loc.debugBanner,
-        textDirection: TextDirection.ltr,
-        location: BannerLocation.bottomStart,
-        child: child,
-      ),
+      builder: (context, child) => kReleaseMode
+          ? Container(child: child)
+          : Banner(
+              message: context.loc.debugBanner,
+              textDirection: TextDirection.ltr,
+              location: BannerLocation.bottomStart,
+              child: child,
+            ),
       debugShowCheckedModeBanner: false,
     );
   }
