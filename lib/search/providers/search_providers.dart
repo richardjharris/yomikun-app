@@ -41,7 +41,7 @@ final queryProvider = FutureProvider<Query>((ref) async {
   final history = ref.watch(searchHistoryServiceProvider);
 
   String text = ref.watch(searchTextProvider).text.trim();
-  print('queryProvider:' + text);
+  print('queryProvider:$text');
   QueryMode mode = ref.watch(queryModeProvider);
   final allowedQueryModes = await ref.watch(allowedQueryModesProvider.future);
 

@@ -204,7 +204,7 @@ class NameDatabase {
           r'([kstnmrgzdbp]?[aiueo]|fu|shi|chi|tsu|y[auo]|w[ao]|nn?|ji|(ky|sh|ch|ny|hy|my|ry|gy|j|by|py)[auo])';
 
       String filter = r'^' + kanaToRomaji(query) + r'$';
-      filter = filter.replaceAll(RegExp(r'[\*＊]', unicode: true), mora + '*');
+      filter = filter.replaceAll(RegExp(r'[\*＊]', unicode: true), '$mora*');
       filter = filter.replaceAll(RegExp(r'[\?？]', unicode: true), mora);
       final filterRe = RegExp(filter);
       results = results.where((r) => filterRe.hasMatch(r['yomi'] as String));

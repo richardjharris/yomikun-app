@@ -54,7 +54,7 @@ class NameBreakdownPage extends HookConsumerWidget {
 
     List<NameData> items = cache.sortedByHitsDescending().toList();
 
-    void _onNameClick(NameData data) {
+    void onNameClick(NameData data) {
       Navigator.pushNamed(context, '/name', arguments: data.toRouteArgs());
     }
 
@@ -63,24 +63,24 @@ class NameBreakdownPage extends HookConsumerWidget {
           viz == NameVisualizationPreference.treeMap) ...[
         Container(
           constraints: const BoxConstraints(maxHeight: 400, maxWidth: 400),
+          margin: const EdgeInsets.symmetric(vertical: 10),
           child: NameTreeMap(
             results: cache,
             splitBy: inverseKy,
-            onClick: _onNameClick,
+            onClick: onNameClick,
           ),
-          margin: const EdgeInsets.symmetric(vertical: 10),
         ),
       ],
       if (cache.hasAtLeastOneHit &&
           viz == NameVisualizationPreference.pieChart) ...[
         Container(
           constraints: const BoxConstraints(maxHeight: 400, maxWidth: 400),
+          margin: const EdgeInsets.all(10),
           child: NamePieChart(
             results: cache,
             splitBy: inverseKy,
-            onClick: _onNameClick,
+            onClick: onNameClick,
           ),
-          margin: const EdgeInsets.all(10),
         ),
       ],
     ];

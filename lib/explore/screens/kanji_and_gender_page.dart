@@ -40,7 +40,7 @@ class KanjiAndGenderPage extends HookConsumerWidget {
               ),
             ),
             const SizedBox(height: 10),
-            Text(context.loc.exKanjiAndGenderMinHits + ' ${minHits.value}'),
+            Text('${context.loc.exKanjiAndGenderMinHits} ${minHits.value}'),
             Slider(
               value: minHits.value.toDouble(),
               max: initialMinHits.toDouble(),
@@ -87,6 +87,7 @@ class KanjiGrid extends StatelessWidget {
                   width: 42,
                   height: 42,
                   color: tileColor,
+                  key: ValueKey(item.kanji),
                   child: Center(
                     child: Text(
                       item.kanji,
@@ -98,7 +99,6 @@ class KanjiGrid extends StatelessWidget {
                       ),
                     ),
                   ),
-                  key: ValueKey(item.kanji),
                 );
               },
               childCount: items.length,

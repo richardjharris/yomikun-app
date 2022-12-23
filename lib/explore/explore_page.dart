@@ -3,8 +3,8 @@ import 'package:yomikun/explore/screens/kanji_and_gender_page.dart';
 import 'package:yomikun/explore/screens/most_common_kanji_page.dart';
 import 'package:yomikun/explore/screens/most_common_names_page.dart';
 import 'package:yomikun/explore/screens/unisex_names_page.dart';
-import 'package:yomikun/navigation/navigation_drawer.dart';
 import 'package:yomikun/localization/app_localizations_context.dart';
+import 'package:yomikun/navigation/side_navigation_drawer.dart';
 
 /// Displays a list of articles or name listings that might be interesting to
 /// the user, such as the most common names or kanji.
@@ -47,7 +47,7 @@ class ExplorePage extends StatelessWidget {
     ];
 
     return Scaffold(
-      drawer: NavigationDrawer(),
+      drawer: SideNavigationDrawer(),
       appBar: AppBar(
         title: Text(context.loc.explore),
       ),

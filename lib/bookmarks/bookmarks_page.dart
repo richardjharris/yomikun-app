@@ -3,15 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:yomikun/bookmarks/models/bookmark.dart';
 import 'package:yomikun/bookmarks/services/bookmark_database.dart';
 import 'package:yomikun/core/providers/core_providers.dart';
 import 'package:yomikun/core/widgets/name_icons.dart';
-import 'package:yomikun/core/widgets/query_list_tile.dart';
-import 'package:yomikun/navigation/navigation_drawer.dart';
 import 'package:yomikun/core/widgets/placeholder_message.dart';
+import 'package:yomikun/core/widgets/query_list_tile.dart';
 import 'package:yomikun/localization/app_localizations_context.dart';
+import 'package:yomikun/navigation/side_navigation_drawer.dart';
 import 'package:yomikun/search/models.dart';
-import 'package:yomikun/bookmarks/models/bookmark.dart';
 
 final bookmarkSortModeProvider = Provider((_) => BookmarkSortMode.newestFirst);
 final bookmarkListProvider = Provider((ref) {
@@ -33,7 +33,7 @@ class BookmarksPage extends HookConsumerWidget {
     final lastDeletedBookmarkId = useState<int>(0);
 
     return Scaffold(
-      drawer: NavigationDrawer(),
+      drawer: SideNavigationDrawer(),
       appBar: AppBar(
         title: Text(context.loc.bookmarks),
       ),
@@ -76,10 +76,6 @@ class BookmarksPage extends HookConsumerWidget {
             final Bookmark bookmark = items[index];
             bool isDeleted = bookmark == lastDeleted.value;
             return Slidable(
-              child: BookmarkListTile(
-                bookmark: bookmark,
-                isDeleted: isDeleted,
-              ),
               groupTag: this,
               endActionPane: ActionPane(
                 extentRatio: 0.4,
@@ -109,6 +105,10 @@ class BookmarksPage extends HookConsumerWidget {
                       label: context.loc.removeBookmarkAction,
                     ),
                 ],
+              ),
+              child: BookmarkListTile(
+                bookmark: bookmark,
+                isDeleted: isDeleted,
               ),
             );
           },

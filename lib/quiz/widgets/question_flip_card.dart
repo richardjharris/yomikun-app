@@ -43,15 +43,16 @@ class QuestionFlipCard extends ConsumerWidget {
         question.readings.map((r) => formatYomiString(r, formatPref));
 
     final front = QuestionCard(
-      child: Text(question.kanji,
-          locale: const Locale('ja'), style: const TextStyle(fontSize: 180)),
       part: question.part,
       key: const ValueKey(false),
+      child: Text(question.kanji,
+          locale: const Locale('ja'), style: const TextStyle(fontSize: 180)),
     );
 
     final double backFontSize = readings.length == 1 ? 120 : 80;
 
     final back = QuestionCard(
+      key: const ValueKey(true),
       child: Column(
         children: readings
             .map((yomi) => Text(yomi,
@@ -59,15 +60,14 @@ class QuestionFlipCard extends ConsumerWidget {
                 style: TextStyle(fontSize: backFontSize)))
             .toList(),
       ),
-      key: const ValueKey(true),
     );
 
     return AnimatedSwitcher(
       duration: flipDuration,
       transitionBuilder: _transitionBuilder,
-      child: showCardFront ? front : back,
       switchInCurve: Curves.easeInBack,
       switchOutCurve: Curves.easeInBack.flipped,
+      child: showCardFront ? front : back,
     );
   }
 
@@ -93,8 +93,8 @@ class QuestionFlipCard extends ConsumerWidget {
             isUnder ? min(rotateAnim.value, pi / 2) : rotateAnim.value;
         return Transform(
           transform: Matrix4.rotationY(value)..setEntry(3, 0, tilt),
-          child: widget,
           alignment: Alignment.center,
+          child: widget,
         );
       },
     );

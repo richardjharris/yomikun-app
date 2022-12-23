@@ -22,7 +22,7 @@ class QuizSummaryPanel extends ConsumerStatefulWidget {
       : super(key: key);
 
   @override
-  _QuizSummaryPanelState createState() => _QuizSummaryPanelState();
+  ConsumerState<QuizSummaryPanel> createState() => _QuizSummaryPanelState();
 }
 
 class _QuizSummaryPanelState extends ConsumerState<QuizSummaryPanel> {
@@ -109,12 +109,12 @@ class _QuizSummaryPanelState extends ConsumerState<QuizSummaryPanel> {
           children: [
             Text(
               context.loc.qzYourScore,
-              style: Theme.of(context).textTheme.headline6,
+              style: Theme.of(context).textTheme.titleLarge,
             ),
             const SizedBox(height: 8),
             Text(
               '${quiz.score} / ${quiz.questionsDone}',
-              style: Theme.of(context).textTheme.headline2,
+              style: Theme.of(context).textTheme.displayMedium,
             ),
             const SizedBox(),
           ],
@@ -219,9 +219,9 @@ class _QuizSummaryPanelState extends ConsumerState<QuizSummaryPanel> {
       height: 50,
       width: double.infinity,
       child: TextButton(
-        child: Text(context.loc.qzSummaryNewQuizAction),
         onPressed: widget.onReset,
         autofocus: true,
+        child: Text(context.loc.qzSummaryNewQuizAction),
       ),
     );
   }
@@ -231,8 +231,8 @@ class _QuizSummaryPanelState extends ConsumerState<QuizSummaryPanel> {
       height: 50,
       width: double.infinity,
       child: TextButton(
-        child: Text(context.loc.qzSummaryQuitAction),
         onPressed: widget.onQuit,
+        child: Text(context.loc.qzSummaryQuitAction),
       ),
     );
   }

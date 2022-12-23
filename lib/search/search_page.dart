@@ -3,9 +3,9 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:yomikun/core/providers/core_providers.dart';
 import 'package:yomikun/core/widgets/error_box.dart';
 import 'package:yomikun/core/widgets/loading_box.dart';
+import 'package:yomikun/navigation/side_navigation_drawer.dart';
 import 'package:yomikun/search/models.dart';
 import 'package:yomikun/search/providers/search_providers.dart';
-import 'package:yomikun/navigation/navigation_drawer.dart';
 import 'package:yomikun/search/widgets/search_box.dart';
 import 'package:yomikun/search/widgets/search_results.dart';
 
@@ -25,7 +25,7 @@ class SearchPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: NavigationDrawer(),
+      drawer: SideNavigationDrawer(),
       appBar: AppBar(
         title: const SearchBox(),
         titleSpacing: 5,

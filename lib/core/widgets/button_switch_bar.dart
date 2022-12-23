@@ -30,17 +30,17 @@ class ButtonSwitchBar<T> extends StatelessWidget {
   Widget build(BuildContext context) {
     final isSelected = items.map((item) => item.value == value).toList();
     return ToggleButtons(
+      onPressed: (int index) {
+        onChanged(items[index].value);
+      },
+      isSelected: isSelected,
+      borderRadius: const BorderRadius.all(Radius.circular(10)),
       children: items
           .map((item) => Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 8),
                 child: Text(item.key),
               ))
           .toList(),
-      onPressed: (int index) {
-        onChanged(items[index].value);
-      },
-      isSelected: isSelected,
-      borderRadius: const BorderRadius.all(Radius.circular(10)),
     );
   }
 }

@@ -13,7 +13,7 @@ import 'package:yomikun/quiz/quiz_page.dart';
 import 'package:yomikun/settings/settings_page.dart';
 
 /// Slide-out drawer for navigation (bookmarks, history, settings etc.)
-class NavigationDrawer extends ConsumerWidget {
+class SideNavigationDrawer extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final splashOpacity =
@@ -24,16 +24,16 @@ class NavigationDrawer extends ConsumerWidget {
         padding: EdgeInsets.zero,
         children: [
           DrawerHeader(
-            child: Text(context.loc.appTitle,
-                style: const TextStyle(color: Colors.white, fontSize: 25)),
             decoration: BoxDecoration(
               color: Theme.of(context).primaryColor,
               image: DecorationImage(
                   fit: BoxFit.fill,
-                  image: Assets.sidemenuSplash,
+                  image: Assets.sidemenuSplash.provider(),
                   filterQuality: FilterQuality.medium, // no aliasing
                   opacity: splashOpacity),
             ),
+            child: Text(context.loc.appTitle,
+                style: const TextStyle(color: Colors.white, fontSize: 25)),
           ),
           ListTile(
             leading: const Icon(Icons.search),

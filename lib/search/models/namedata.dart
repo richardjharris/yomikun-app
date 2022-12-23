@@ -42,7 +42,7 @@ class NameData extends Equatable {
   List<Object> get props => [kaki, yomi, part];
 
   String key() {
-    return kaki + "|" + yomi + "|" + part.name.toString();
+    return "$kaki|$yomi|${part.name}";
   }
 
   String format(KakiYomi ky, NameFormatPreference pref) {

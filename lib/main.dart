@@ -52,7 +52,7 @@ Future<void> main() async {
     ProviderScope(
       observers: kDebugMode ? [ProviderLogger()] : [],
       overrides: [
-        settingsControllerProvider.overrideWithValue(settingsController),
+        settingsControllerProvider.overrideWith((_) => settingsController),
       ],
       child: const MyApp(),
     ),

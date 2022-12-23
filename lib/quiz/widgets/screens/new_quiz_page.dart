@@ -29,12 +29,12 @@ class NewQuizPage extends StatelessWidget {
             Expanded(
               child: Center(
                 child: ElevatedButton(
+                  onPressed: onStart,
                   child: Padding(
                     padding: const EdgeInsets.all(20),
                     child: Text(context.loc.qzStartNewQuizButton,
                         style: const TextStyle(fontSize: 36)),
                   ),
-                  onPressed: onStart,
                 ),
               ),
             ),

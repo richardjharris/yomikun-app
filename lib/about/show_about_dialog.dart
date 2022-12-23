@@ -2,10 +2,10 @@ import 'dart:convert';
 
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:yomikun/gen/assets.gen.dart';
 import 'package:yomikun/localization/app_localizations_context.dart';
-import 'package:package_info_plus/package_info_plus.dart';
 
 final String developerEmail =
     String.fromCharCodes(base64.decode('cmljaGFyZGpoYXJyaXMreWtAZ21haWwuY29t'));
@@ -18,7 +18,7 @@ const String splashLogoSource =
 /// Pops up an about dialog with app credits.
 Future<void> showYomikunAboutDialog(
     BuildContext context, int databaseVersion) async {
-  final style = Theme.of(context).textTheme.bodyText2;
+  final style = Theme.of(context).textTheme.bodyMedium;
 
   TextSpan devCredit =
       TextSpan(style: style, text: context.loc.aboutDevCredit(developerEmail));
@@ -42,13 +42,13 @@ Future<void> showYomikunAboutDialog(
 
   showAboutDialog(
     context: context,
-    applicationIcon: const Image(
-        image: Assets.appicon,
+    applicationIcon: Image(
+        image: Assets.appicon.provider(),
         width: 40,
         height: 40,
         filterQuality: FilterQuality.medium),
     applicationVersion: versionString,
-    applicationLegalese: '\u{a9} 2022 ' + context.loc.aboutAuthors,
+    applicationLegalese: '\u{a9} 2022 ${context.loc.aboutAuthors}',
     children: [
       const SizedBox(height: 20),
       RichText(text: devCredit),
@@ -83,7 +83,7 @@ TextSpan linkify(
           ),
           recognizer: TapGestureRecognizer()
             ..onTap = () {
-              launch(url);
+              launchUrl(Uri.parse(url));
             },
         ),
         TextSpan(

@@ -103,5 +103,5 @@ class Test {
     this.message,
   });
 
-  String get name => '[$query]' + (message != null ? " ($message)" : "");
+  String get name => '[$query]${message != null ? " ($message)" : ""}';
 }

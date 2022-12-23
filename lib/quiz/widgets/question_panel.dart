@@ -106,12 +106,12 @@ class _QuestionPanelState extends State<QuestionPanel> {
             height: 50,
             child: ElevatedButton(
               onPressed: _nextQuestion,
+              autofocus: true,
               child: Text(
                 widget.quiz.isLastQuestion
                     ? context.loc.qzShowQuizResults
                     : context.loc.qzNextQuestionAction,
               ),
-              autofocus: true,
             ),
           ),
         if (!showNextButton)
@@ -120,19 +120,19 @@ class _QuestionPanelState extends State<QuestionPanel> {
             builder: (context, value, child) => Row(
               children: [
                 TextButton(
-                  child: Text(context.loc.qzClearAnswerAction),
                   onPressed: disableButtons || value.text.isEmpty
                       ? null
                       : _clearAnswer,
+                  child: Text(context.loc.qzClearAnswerAction),
                 ),
                 TextButton(
-                    child: Text(context.loc.qzSkipQuestionAction),
-                    onPressed: disableButtons ? null : _skipQuestion),
+                    onPressed: disableButtons ? null : _skipQuestion,
+                    child: Text(context.loc.qzSkipQuestionAction)),
                 ElevatedButton(
-                    child: Text(context.loc.qzSubmitAnswerAction),
                     onPressed: disableButtons || value.text.isEmpty
                         ? null
-                        : _submitAnswer),
+                        : _submitAnswer,
+                    child: Text(context.loc.qzSubmitAnswerAction)),
               ]
                   .map((e) => Expanded(child: SizedBox(height: 50, child: e)))
                   .toList(),

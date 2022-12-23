@@ -57,7 +57,7 @@ class GradientProgressIndicator extends StatefulWidget {
         super(key: key);
 
   @override
-  _GradientProgressIndicatorState createState() =>
+  State<GradientProgressIndicator> createState() =>
       _GradientProgressIndicatorState();
 }
 

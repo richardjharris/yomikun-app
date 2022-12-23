@@ -36,15 +36,15 @@ class BasicNameRow extends ConsumerWidget {
     // Styles depend on current theme (light/dark)
     final theme = Theme.of(context).primaryTextTheme;
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final kakiStyle = theme.headline1!.copyWith(
+    final kakiStyle = theme.displayLarge!.copyWith(
         fontSize: 20.0,
         fontWeight: FontWeight.w500,
         color: isDark ? Colors.white : Colors.black);
-    final yomiStyle = theme.headline2!.copyWith(
+    final yomiStyle = theme.displayMedium!.copyWith(
         fontSize: 18.0,
         color: isDark ? Colors.white70 : Colors.black87,
         fontWeight: isDark ? FontWeight.w400 : FontWeight.w500);
-    final hitsStyle = theme.bodyText1!.copyWith(
+    final hitsStyle = theme.bodyLarge!.copyWith(
       fontSize: 14.0,
       color: isDark ? Colors.white54 : Colors.black45,
       fontWeight: isDark ? FontWeight.w400 : FontWeight.w500,
@@ -58,9 +58,9 @@ class BasicNameRow extends ConsumerWidget {
       titleWidgets = [
         Text(nameData.kaki, style: kakiStyle, locale: const Locale('ja')),
         Container(
+            margin: const EdgeInsets.only(left: 10.0),
             child: Text(nameData.formatYomi(formatPref),
-                style: yomiStyle, locale: const Locale('ja')),
-            margin: const EdgeInsets.only(left: 10.0)),
+                style: yomiStyle, locale: const Locale('ja'))),
       ];
     } else if (showOnly == KakiYomi.kaki) {
       titleWidgets = [Text(nameData.kaki, locale: const Locale('ja'))];
@@ -119,6 +119,7 @@ class GenderBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Align(
+      alignment: Alignment.topLeft,
       child: SizedBox(
         width: 60,
         child: ClipRRect(
@@ -130,7 +131,6 @@ class GenderBar extends StatelessWidget {
           ),
         ),
       ),
-      alignment: Alignment.topLeft,
     );
   }
 }

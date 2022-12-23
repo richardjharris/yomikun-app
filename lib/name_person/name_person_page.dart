@@ -111,9 +111,9 @@ class _NamePartBox extends ConsumerWidget {
       children: [
         if (label != null)
           Text(label!, style: const TextStyle(fontWeight: FontWeight.bold)),
-        Text(name.kaki, style: Theme.of(context).textTheme.headline3),
+        Text(name.kaki, style: Theme.of(context).textTheme.displaySmall),
         Text(name.formatYomi(formatPref),
-            style: Theme.of(context).textTheme.headline6),
+            style: Theme.of(context).textTheme.titleLarge),
       ],
     );
   }

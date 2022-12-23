@@ -31,8 +31,8 @@ class QuestionCard extends StatelessWidget {
         children: [
           Expanded(
             child: FittedBox(
-              child: child,
               fit: BoxFit.scaleDown,
+              child: child,
             ),
           ),
           if (part != null) PartLabel(part: part!)
@@ -63,12 +63,12 @@ class PartLabel extends StatelessWidget {
       borderRadius: BorderRadius.circular(5),
       child: Container(
         color: color,
+        padding: const EdgeInsets.all(10),
+        alignment: Alignment.center,
         child: Text(
           label,
           style: const TextStyle(fontSize: 24),
         ),
-        padding: const EdgeInsets.all(10),
-        alignment: Alignment.center,
       ),
     );
   }

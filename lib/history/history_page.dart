@@ -9,7 +9,7 @@ import 'package:yomikun/history/search_history/models/history_grouping.dart';
 import 'package:yomikun/history/search_history/models/search_history_item.dart';
 import 'package:yomikun/history/search_history/providers/search_history_providers.dart';
 import 'package:yomikun/localization/app_localizations_context.dart';
-import 'package:yomikun/navigation/navigation_drawer.dart';
+import 'package:yomikun/navigation/side_navigation_drawer.dart';
 
 /// Shows recently visited names, grouped by date.
 class HistoryPage extends ConsumerWidget {
@@ -38,7 +38,7 @@ class HistoryPage extends ConsumerWidget {
     );
 
     return Scaffold(
-      drawer: NavigationDrawer(),
+      drawer: SideNavigationDrawer(),
       appBar: AppBar(
         title: Text(context.loc.history),
         actions: [

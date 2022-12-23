@@ -37,16 +37,6 @@ class SlidableNameRow extends ConsumerWidget {
         ref.watch(bookmarkDatabaseProvider).isBookmarked(nameUrl);
 
     return Slidable(
-      child: BasicNameRow(
-        key: ValueKey(data.key()),
-        nameData: data,
-        showOnly: showOnly,
-        totalHits: totalHits,
-        showNamePart: showNamePart,
-        onTap: () {
-          Navigator.pushNamed(context, '/name', arguments: data.toRouteArgs());
-        },
-      ),
       key: ValueKey(data.key()),
       groupTag: groupTag,
       endActionPane: ActionPane(
@@ -83,6 +73,16 @@ class SlidableNameRow extends ConsumerWidget {
             label: context.loc.shareAction,
           ),
         ],
+      ),
+      child: BasicNameRow(
+        key: ValueKey(data.key()),
+        nameData: data,
+        showOnly: showOnly,
+        totalHits: totalHits,
+        showNamePart: showNamePart,
+        onTap: () {
+          Navigator.pushNamed(context, '/name', arguments: data.toRouteArgs());
+        },
       ),
     );
   }
