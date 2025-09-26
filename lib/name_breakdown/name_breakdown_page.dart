@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:share_plus/share_plus.dart';
 import 'package:yomikun/core/models.dart';
 import 'package:yomikun/core/providers/core_providers.dart';
+import 'package:yomikun/core/services/share_service.dart';
 import 'package:yomikun/core/widgets/button_switch_bar.dart';
 import 'package:yomikun/core/widgets/name_icons.dart';
 import 'package:yomikun/core/widgets/name_page_action_buttons.dart';
@@ -157,7 +157,6 @@ class NameBreakdownPage extends HookConsumerWidget {
       return '$label ($percent%)';
     }).join('; ');
 
-    Share.share(back, subject: front);
-    debugPrint("Shared $front ($back)");
+    ShareService(context).shareCard(front, back);
   }
 }

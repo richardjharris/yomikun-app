@@ -21,7 +21,7 @@ class PressableNameRow extends ConsumerWidget {
   final bool showNamePart;
 
   const PressableNameRow({
-    required key,
+    required Key key,
     required this.data,
     this.showOnly,
     this.totalHits,
@@ -79,7 +79,7 @@ class PressableNameRow extends ConsumerWidget {
             ));
             break;
           case Actions.share:
-            await ShareService.shareNameData(data);
+            await ShareService(context).shareNameData(data);
             break;
           case null:
             break;

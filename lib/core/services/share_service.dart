@@ -1,29 +1,31 @@
-import 'dart:ui';
-
 import 'package:flutter/widgets.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:yomikun/search/models.dart';
 
 class ShareService {
+  final BuildContext context;
+
+  ShareService(this.context);
+
+  Rect get sharePositionOrigin {
+    final box = context.findRenderObject() as RenderBox?;
+    return box!.localToGlobal(Offset.zero) & box.size;
+  }
+
+  Future<void> shareCard(String front, String back) {
+    debugPrint("ShareService: sharing $front ($back)");
+    return SharePlus.instance.share(ShareParams(
+      text: back,
+      subject: front,
+      sharePositionOrigin: sharePositionOrigin,
+    ));
+  }
+
   /// Share NameData to the user's selected app.
   ///
   /// On iPad, [sharePositionOrigin] is required. This can be computed with the
   /// helper method [getSharePositionOrigin(context)].
-  static Future<void> shareNameData(NameData data,
-      {Rect? sharePositionOrigin}) {
-    final front = data.kaki;
-    final back = data.yomi;
-    return SharePlus.instance.share(
-      ShareParams(
-        text: back,
-        subject: front,
-        sharePositionOrigin: sharePositionOrigin,
-      ),
-    );
+  Future<void> shareNameData(NameData data) {
+    return shareCard(data.kaki, data.yomi);
   }
-}
-
-Rect getSharePositionOrigin(BuildContext context) {
-  final box = context.findRenderObject() as RenderBox?;
-  return box!.localToGlobal(Offset.zero) & box.size;
 }

@@ -20,7 +20,7 @@ class SlidableNameRow extends ConsumerWidget {
   final bool showNamePart;
 
   const SlidableNameRow({
-    required key,
+    required Key key,
     required this.data,
     required this.groupTag,
     this.showOnly,
@@ -66,9 +66,7 @@ class SlidableNameRow extends ConsumerWidget {
           SlidableAction(
             backgroundColor: Colors.blue.shade900,
             foregroundColor: Colors.white,
-            onPressed: (context) {
-              ShareService.shareNameData(data);
-            },
+            onPressed: (context) => ShareService(context).shareNameData(data),
             icon: Icons.share,
             label: context.loc.shareAction,
           ),
