@@ -48,7 +48,7 @@ Future<void> showYomikunAboutDialog(
         height: 40,
         filterQuality: FilterQuality.medium),
     applicationVersion: versionString,
-    applicationLegalese: '\u{a9} 2022 ${context.loc.aboutAuthors}',
+    applicationLegalese: '\u{a9} 2025 ${context.loc.aboutAuthors}',
     children: [
       const SizedBox(height: 20),
       RichText(text: devCredit),
