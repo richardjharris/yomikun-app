@@ -46,7 +46,7 @@ class GradientProgressIndicator extends StatefulWidget {
   final Duration animateDuration;
 
   const GradientProgressIndicator({
-    key,
+    Key? key,
     required this.barStartColor,
     required this.barEndColor,
     required this.backgroundColor,

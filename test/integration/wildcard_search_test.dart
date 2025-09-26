@@ -59,8 +59,7 @@ final tests = [
     ),
   ],
   ...['', '*', '?', '*?', '?*', '?*?', ' *', '? ', '？', '＊', '＊＊']
-      .map((q) => Test(q, hasNoResults: true, message: 'wildcard only'))
-      .toList(),
+      .map((q) => Test(q, hasNoResults: true, message: 'wildcard only')),
 ];
 
 void main() {

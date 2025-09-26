@@ -126,13 +126,13 @@ class HistoryListHeader extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 1),
       padding: const EdgeInsets.fromLTRB(10, 5, 10, 5),
-      color: Theme.of(context).colorScheme.background,
+      color: Theme.of(context).colorScheme.surface,
       child: Text(
         headingText,
         style: TextStyle(
             fontSize: 16,
             fontWeight: FontWeight.bold,
-            color: Theme.of(context).colorScheme.onBackground),
+            color: Theme.of(context).colorScheme.onSurface),
       ),
     );
   }

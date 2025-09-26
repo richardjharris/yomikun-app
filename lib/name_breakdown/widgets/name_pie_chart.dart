@@ -48,7 +48,7 @@ class NamePieChart extends ConsumerWidget {
 
   static final List<Color> pieChartColorsDarkMode =
       pieChartColorsLightMode.map((c) {
-    return c.withOpacity(0.75);
+    return c.withValues(alpha: 0.75);
   }).toList();
 
   @override

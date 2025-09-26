@@ -69,7 +69,7 @@ class NamePageInner extends HookConsumerWidget {
         ref.watch(bookmarkDatabaseProvider).isBookmarked(nameUrl);
 
     final bottomButtonStyle =
-        ButtonStyle(minimumSize: MaterialStateProperty.all(const Size(0, 60)));
+        ButtonStyle(minimumSize: WidgetStateProperty.all(const Size(0, 60)));
 
     return SingleChildScrollView(
       child: Padding(
@@ -219,15 +219,13 @@ class GenderSplitGraph extends StatelessWidget {
             ),
           ),
         ),
-        ...items
-            .map((item) => Padding(
-                padding: const EdgeInsets.all(5),
-                child: Row(children: [
-                  Text(item.label),
-                  const Spacer(),
-                  Text('${item.count}')
-                ])))
-            .toList(),
+        ...items.map((item) => Padding(
+            padding: const EdgeInsets.all(5),
+            child: Row(children: [
+              Text(item.label),
+              const Spacer(),
+              Text('${item.count}')
+            ]))),
       ],
     );
   }

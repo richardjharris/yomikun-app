@@ -67,12 +67,14 @@ class OcrPageState extends State<OcrPage> {
     if (isBusy) return;
     isBusy = true;
     final recognisedText = await textDetector.processImage(inputImage);
-    if (inputImage.inputImageData?.size != null &&
-        inputImage.inputImageData?.imageRotation != null) {
+
+    if (inputImage.metadata?.size != null &&
+        inputImage.metadata?.rotation != null) {
       final painter = TextDetectorPainter(
-          recognisedText,
-          inputImage.inputImageData!.size,
-          inputImage.inputImageData!.imageRotation);
+        recognisedText,
+        inputImage.metadata!.size,
+        inputImage.metadata!.rotation,
+      );
       customPaint = CustomPaint(painter: painter);
     } else {
       customPaint = null;
