@@ -93,7 +93,10 @@ class NamePageInner extends HookConsumerWidget {
                           : context.loc.sbBookmarkRemoved),
                     ));
                   },
-                  onShare: () => ShareService.shareNameData(data),
+                  onShare: () => ShareService.shareNameData(
+                    data,
+                    sharePositionOrigin: getSharePositionOrigin(context),
+                  ),
                 ),
               ],
             ),
