@@ -64,7 +64,7 @@ class QuizState {
 
   /// True if the front side of a question card is displayed (i.e. user is
   /// answering)
-  bool get showingQuestion =>
+  bool get isShowingQuestion =>
       currentQuestionState == CurrentQuestionState.question;
 
   /// True if the back side of a question card is displayed (i.e. user has

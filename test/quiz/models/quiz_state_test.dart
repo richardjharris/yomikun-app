@@ -18,7 +18,7 @@ void main() {
     expect(quiz.currentQuestionState, CurrentQuestionState.question);
     expect(quiz.currentUserAnswer, '');
     expect(quiz.showingAnswer, false);
-    expect(quiz.showingQuestion, true);
+    expect(quiz.isShowingQuestion, true);
     expect(quiz.score, 0);
     expect(quiz.finished, false);
     expect(quiz.progressRatio, 0);

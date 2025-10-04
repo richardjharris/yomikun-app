@@ -52,7 +52,7 @@ class _QuestionPanelState extends State<QuestionPanel> {
     final quiz = widget.quiz;
     final question = quiz.currentQuestion;
 
-    flipCardState = quiz.showingQuestion
+    flipCardState = quiz.isShowingQuestion
         ? flipCardState = QuestionFlipCardState.front
         : flipCardState = QuestionFlipCardState.back;
 
