@@ -40,6 +40,8 @@ Future<void> showYomikunAboutDialog(
   final versionString =
       '${packageInfo.version}+${packageInfo.buildNumber} (db ${dbVersionAsString(databaseVersion)})';
 
+  final currentYear = DateTime.now().year;
+
   showAboutDialog(
     context: context,
     applicationIcon: Image(
@@ -48,7 +50,7 @@ Future<void> showYomikunAboutDialog(
         height: 40,
         filterQuality: FilterQuality.medium),
     applicationVersion: versionString,
-    applicationLegalese: '\u{a9} 2025 ${context.loc.aboutAuthors}',
+    applicationLegalese: '\u{a9} $currentYear ${context.loc.aboutAuthors}',
     children: [
       const SizedBox(height: 20),
       RichText(text: devCredit),
