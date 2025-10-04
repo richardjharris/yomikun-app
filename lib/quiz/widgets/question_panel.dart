@@ -80,65 +80,76 @@ class _QuestionPanelState extends State<QuestionPanel> {
   Widget build(BuildContext context) {
     final disableButtons = flipCardState != QuestionFlipCardState.front;
     final showNextButton = flipCardState == QuestionFlipCardState.back;
+    final bottomInset = MediaQuery.of(context).viewInsets.bottom;
 
-    return Column(
-      children: [
-        // As explained above, using an ObjectKey does not work, the card loses
-        // its animation.
-        QuestionFlipCard(
-          key: globalKey,
-          question: widget.quiz.currentQuestion,
-          showCardFront: flipCardState == QuestionFlipCardState.front,
-          flipDuration: flipDuration,
-          onFlipCompleted: _onFlipCompleted,
-        ),
-        const Spacer(),
-        AnswerField(
-          controller: answerController,
-          focusNode: focusNode,
-          onSubmitted: disableButtons ? null : _submitAnswer,
-          wasCorrect: wasCorrect,
-        ),
-        const SizedBox(height: 15),
-        if (showNextButton)
-          SizedBox(
-            width: double.infinity,
-            height: 50,
-            child: ElevatedButton(
-              onPressed: _nextQuestion,
-              autofocus: true,
-              child: Text(
-                widget.quiz.isLastQuestion
-                    ? context.loc.qzShowQuizResults
-                    : context.loc.qzNextQuestionAction,
+    return AnimatedPadding(
+      duration: const Duration(milliseconds: 200),
+      curve: Curves.easeOutCubic,
+      padding: EdgeInsets.only(bottom: bottomInset),
+      child: Column(
+        children: [
+          // As explained above, using an ObjectKey does not work, the card loses
+          // its animation.
+          Expanded(
+            child: Align(
+              alignment: Alignment.topCenter,
+              child: QuestionFlipCard(
+                key: globalKey,
+                question: widget.quiz.currentQuestion,
+                showCardFront: flipCardState == QuestionFlipCardState.front,
+                flipDuration: flipDuration,
+                onFlipCompleted: _onFlipCompleted,
               ),
             ),
           ),
-        if (!showNextButton)
-          ValueListenableBuilder<TextEditingValue>(
-            valueListenable: answerController,
-            builder: (context, value, child) => Row(
-              children: [
-                TextButton(
-                  onPressed: disableButtons || value.text.isEmpty
-                      ? null
-                      : _clearAnswer,
-                  child: Text(context.loc.qzClearAnswerAction),
+          const SizedBox(height: 15),
+          AnswerField(
+            controller: answerController,
+            focusNode: focusNode,
+            onSubmitted: disableButtons ? null : _submitAnswer,
+            wasCorrect: wasCorrect,
+          ),
+          const SizedBox(height: 15),
+          if (showNextButton)
+            SizedBox(
+              width: double.infinity,
+              height: 50,
+              child: ElevatedButton(
+                onPressed: _nextQuestion,
+                autofocus: true,
+                child: Text(
+                  widget.quiz.isLastQuestion
+                      ? context.loc.qzShowQuizResults
+                      : context.loc.qzNextQuestionAction,
                 ),
-                TextButton(
-                    onPressed: disableButtons ? null : _skipQuestion,
-                    child: Text(context.loc.qzSkipQuestionAction)),
-                ElevatedButton(
+              ),
+            ),
+          if (!showNextButton)
+            ValueListenableBuilder<TextEditingValue>(
+              valueListenable: answerController,
+              builder: (context, value, child) => Row(
+                children: [
+                  TextButton(
                     onPressed: disableButtons || value.text.isEmpty
                         ? null
-                        : _submitAnswer,
-                    child: Text(context.loc.qzSubmitAnswerAction)),
-              ]
-                  .map((e) => Expanded(child: SizedBox(height: 50, child: e)))
-                  .toList(),
+                        : _clearAnswer,
+                    child: Text(context.loc.qzClearAnswerAction),
+                  ),
+                  TextButton(
+                      onPressed: disableButtons ? null : _skipQuestion,
+                      child: Text(context.loc.qzSkipQuestionAction)),
+                  ElevatedButton(
+                      onPressed: disableButtons || value.text.isEmpty
+                          ? null
+                          : _submitAnswer,
+                      child: Text(context.loc.qzSubmitAnswerAction)),
+                ]
+                    .map((e) => Expanded(child: SizedBox(height: 50, child: e)))
+                    .toList(),
+              ),
             ),
-          ),
-      ],
+        ],
+      ),
     );
   }
 
