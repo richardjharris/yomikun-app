@@ -65,8 +65,8 @@ class QuestionFlipCard extends ConsumerWidget {
     return AnimatedSwitcher(
       duration: flipDuration,
       transitionBuilder: _transitionBuilder,
-      switchInCurve: Curves.easeInBack,
-      switchOutCurve: Curves.easeInBack.flipped,
+      switchInCurve: Curves.easeInOut,
+      switchOutCurve: Curves.easeInOut.flipped,
       child: showCardFront ? front : back,
     );
   }
