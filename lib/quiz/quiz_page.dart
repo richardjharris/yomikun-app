@@ -136,8 +136,15 @@ class _QuizPageState extends ConsumerState<QuizPage> {
 
   Widget _buildQuizPage() {
     final QuizState quiz = _quizState!;
-    return WillPopScope(
-      onWillPop: () => _onWillPopQuiz(quiz),
+    return PopScope(
+      canPop: false,
+      onPopInvokedWithResult: (bool didPop, _) async {
+        if (didPop) return;
+        if (await _onWillPopQuiz(quiz) && mounted) {
+          // Either user confirmed abandoning quiz, or it's on the finish screen
+          Navigator.of(context).pop();
+        }
+      },
       child: _buildQuizScaffold(quiz),
     );
   }
