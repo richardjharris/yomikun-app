@@ -150,5 +150,8 @@
   "qzNameTypeLabel": "Type",
   "qzDoneChangingSettingsButton": "Done",
   "qzEnterAnswer": "Enter answer",
-  "qzNoAnswer": "No answer"
+  "qzNoAnswer": "No answer",
+  "qzAbandonQuizTitle": "Leave quiz?",
+  "qzAbandonQuizMessage": "Leaving now will abandon your current quiz.",
+  "qzAbandonQuizConfirm": "Leave quiz"
 }

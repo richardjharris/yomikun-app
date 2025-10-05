@@ -358,4 +358,14 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get qzNoAnswer => 'No answer';
+
+  @override
+  String get qzAbandonQuizTitle => 'Leave quiz?';
+
+  @override
+  String get qzAbandonQuizMessage =>
+      'Leaving now will abandon your current quiz.';
+
+  @override
+  String get qzAbandonQuizConfirm => 'Leave quiz';
 }

@@ -32,25 +32,19 @@ class _QuizPageState extends ConsumerState<QuizPage> {
   @override
   void initState() {
     super.initState();
-    loadQuizState();
+    _loadQuizSettings();
   }
 
-  /// Load quiz state from persistent storage, or create a new one.
-  void loadQuizState() async {
+  Future<void> _loadQuizSettings() async {
     try {
       final savedSettings = await QuizPersistenceService.loadSettings();
-      if (savedSettings != null) {
-        _quizSettings = savedSettings;
+      if (savedSettings != null && mounted) {
+        setState(() {
+          _quizSettings = savedSettings;
+        });
       }
     } catch (e, stack) {
       debugPrint('[RJH] Error loading quiz settings, ignoring: $e\n$stack');
-    }
-
-    try {
-      _quizState = await QuizPersistenceService.loadState();
-      setState(() {});
-    } catch (e, stack) {
-      debugPrint("[RJH] Error loading quiz state, ignoring: $e\n$stack");
     }
   }
 
@@ -60,6 +54,10 @@ class _QuizPageState extends ConsumerState<QuizPage> {
       db: ref.watch(databaseProvider),
     );
 
+    if (!mounted) {
+      return;
+    }
+
     setState(() {
       _quizState = QuizState(
         questions: questions,
@@ -67,22 +65,51 @@ class _QuizPageState extends ConsumerState<QuizPage> {
     });
   }
 
-  void resetQuiz() async {
-    await QuizPersistenceService.clearState();
+  void _clearQuizState() {
     setState(() {
       _quizState = null;
     });
   }
 
-  @override
-  void dispose() async {
-    // Must be done first, before async code
-    super.dispose();
-
-    if (_quizState != null) {
-      debugPrint("[RJH] Saving quiz state");
-      await QuizPersistenceService.persistState(_quizState!);
+  Future<void> _handleResetPressed() async {
+    final quiz = _quizState;
+    if (quiz == null) {
+      _clearQuizState();
+      return;
     }
+
+    if (quiz.finished || await _confirmAbandonQuiz()) {
+      _clearQuizState();
+    }
+  }
+
+  void _handleQuitPressed() {
+    _clearQuizState();
+    if (mounted) {
+      Navigator.of(context).pop();
+    }
+  }
+
+  Future<bool> _confirmAbandonQuiz() async {
+    final shouldLeave = await showDialog<bool>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text(context.loc.qzAbandonQuizTitle),
+        content: Text(context.loc.qzAbandonQuizMessage),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(false),
+            child: Text(context.loc.cancelAction),
+          ),
+          ElevatedButton(
+            onPressed: () => Navigator.of(context).pop(true),
+            child: Text(context.loc.qzAbandonQuizConfirm),
+          ),
+        ],
+      ),
+    );
+
+    return shouldLeave ?? false;
   }
 
   @override
@@ -109,12 +136,34 @@ class _QuizPageState extends ConsumerState<QuizPage> {
 
   Widget _buildQuizPage() {
     final QuizState quiz = _quizState!;
+    return WillPopScope(
+      onWillPop: () => _onWillPopQuiz(quiz),
+      child: _buildQuizScaffold(quiz),
+    );
+  }
+
+  Future<bool> _onWillPopQuiz(QuizState quiz) async {
+    if (quiz.finished) {
+      _clearQuizState();
+      return true;
+    }
+
+    final shouldLeave = await _confirmAbandonQuiz();
+    if (shouldLeave) {
+      _clearQuizState();
+    }
+    return shouldLeave;
+  }
+
+  Widget _buildQuizScaffold(QuizState quiz) {
     return Scaffold(
       appBar: AppBar(
         title: Text(context.loc.quiz),
         actions: [
           IconButton(
-            onPressed: resetQuiz,
+            onPressed: () {
+              _handleResetPressed();
+            },
             icon: const Icon(Icons.refresh),
             tooltip: context.loc.qzTooltipNewQuiz,
           ),
@@ -130,10 +179,10 @@ class _QuizPageState extends ConsumerState<QuizPage> {
               child: quiz.finished
                   ? QuizSummaryPanel(
                       quiz: quiz,
-                      onReset: resetQuiz,
-                      onQuit: () {
-                        Navigator.of(context).pop();
+                      onReset: () {
+                        _clearQuizState();
                       },
+                      onQuit: _handleQuitPressed,
                     )
                   : QuestionPanel(
                       quiz: quiz,

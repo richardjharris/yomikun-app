@@ -112,5 +112,8 @@
   "qzNameTypeLabel": "タイプ",
   "qzDoneChangingSettingsButton": "終了",
   "qzEnterAnswer": "答えを入力してください",
-  "qzNoAnswer": "(スキップ)"
+  "qzNoAnswer": "(スキップ)",
+  "qzAbandonQuizTitle": "クイズを終了しますか？",
+  "qzAbandonQuizMessage": "いま離れると進行中のクイズは破棄されます。",
+  "qzAbandonQuizConfirm": "終了する"
 }

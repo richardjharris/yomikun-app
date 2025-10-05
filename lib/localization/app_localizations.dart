@@ -781,6 +781,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'No answer'**
   String get qzNoAnswer;
+
+  /// No description provided for @qzAbandonQuizTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Leave quiz?'**
+  String get qzAbandonQuizTitle;
+
+  /// No description provided for @qzAbandonQuizMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Leaving now will abandon your current quiz.'**
+  String get qzAbandonQuizMessage;
+
+  /// No description provided for @qzAbandonQuizConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Leave quiz'**
+  String get qzAbandonQuizConfirm;
 }
 
 class _AppLocalizationsDelegate

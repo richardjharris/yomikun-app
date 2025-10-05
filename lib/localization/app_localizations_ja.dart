@@ -357,4 +357,13 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get qzNoAnswer => '(スキップ)';
+
+  @override
+  String get qzAbandonQuizTitle => 'クイズを終了しますか？';
+
+  @override
+  String get qzAbandonQuizMessage => 'いま離れると進行中のクイズは破棄されます。';
+
+  @override
+  String get qzAbandonQuizConfirm => '終了する';
 }
